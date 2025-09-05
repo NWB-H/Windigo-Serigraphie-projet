@@ -79,7 +79,7 @@ Route::prefix('workshops')->group(function () {
 Route::get('/workshops/{workshop_id}/sessions/available', [BookingController::class, 'availableSessions']); // Sessions disponibles pour un atelier donné
 
 Route::controller(BookingController::class)->prefix('bookings')->group(function () {
-    Route::get('/', 'index');
+    Route::get('', 'index');
     Route::post('/{session_id}', 'store');
     Route::delete('/{id}', 'destroy');
 });

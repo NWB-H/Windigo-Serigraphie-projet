@@ -46,7 +46,8 @@ function clearAll() {
       </ul>
 
       <div class="d-flex justify-content-between align-items-center">
-        <h4>Total : {{ cartStore.total }} €</h4>
+        <h4>Total : {{ cartStore.totalPrice }} €</h4>
+        <h4>Total : {{ cartStore.totalQuantity }} </h4>
         <button class="btn btn-warning" @click="clearAll">Vider le panier</button>
       </div>
     </div>

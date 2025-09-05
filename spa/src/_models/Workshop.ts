@@ -8,7 +8,7 @@ export interface Workshop {
   description?: string;          
   images?: string[];             
   first_image_url?: string;      
-  workshopSessions?: WorkshopSession[];
+  workshop_sessions?: WorkshopSession[];
 }
 
 export interface WorkshopSession {
@@ -17,5 +17,5 @@ export interface WorkshopSession {
   session_number: number;
   date: string;
   capacity: number;
-  remaining_places?: number;
+  remaining_places: number;
 }

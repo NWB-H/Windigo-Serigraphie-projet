@@ -13,6 +13,12 @@ export const useWorkshopStore = defineStore("workshops", {
     error: null as string | null
   }),
 
+  getters: {
+    workshopSession(state) {
+      return state.currentWorkshop
+    }
+  },
+
   actions: {
     async fetchWorkshops(isAdmin = false) {
       this.loading = true
@@ -32,7 +38,7 @@ export const useWorkshopStore = defineStore("workshops", {
       this.error = null
       try {
         const res = await WorkshopService.getById(id)
-        this.currentWorkshop = res.data
+        this.currentWorkshop = res.data;
       } catch (err: any) {
         this.error = err.message
         this.currentWorkshop = null
@@ -94,12 +100,15 @@ export const useWorkshopStore = defineStore("workshops", {
       try {
         const res = await WorkshopService.bookSession(sessionId)
         this.reservations.push(res.data)
-        return res.data
+        const session = this.currentWorkshop?.workshop_sessions?.find(i => i.id == sessionId)
+        if (session && session?.remaining_places > 0) {
+          session.remaining_places -= 1
+        }
+        this.loading = false
+        return true
       } catch (err: any) {
         this.error = err.message
-        return null
-      } finally {
-        this.loading = false
+        return false
       }
     },
 
@@ -122,7 +131,7 @@ export const useWorkshopStore = defineStore("workshops", {
       this.error = null
       try {
         const res = await WorkshopService.getById(workshopId) // ou un endpoint admin dédié
-        this.sessions = res.data.workshopSessions ?? []
+        this.sessions = res.data.workshop_sessions ?? []
       } catch (err: any) {
         this.error = err.message
         this.sessions = []

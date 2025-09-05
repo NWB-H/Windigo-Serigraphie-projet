@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
@@ -18,12 +19,17 @@ class PortfolioController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'image' => 'required|image|mimes:jpg,jpeg,png,gif|max:2048',
+            'image' => [
+                'required',
+                'file', // On vérifie juste que c’est un fichier
+                'mimes:jpg,jpeg,png,JPG,JPEG,PNG,webp', // Extensions seulement
+                'max:2048', // Taille max 2 Mo
+            ],
             'titre' => 'nullable|string',
         ]);
 
         $path = $request->file('image')->store('portfolio', 'public');
-        $url = '/storage/' . $path;
+        $url = env('APP_URL').'/storage/' . $path;
 
         $image = PortfolioImage::create([
             'titre' => $request->titre,

@@ -48,52 +48,52 @@ class WorkshopController extends Controller
         return response()->json($workshop);
     }
 
-    public function show(Workshop $workshop)
+    public function show(int $id)
     {
-        $workshop->first_image_url = $workshop->first_image_url; // accessor
+        $workshop = Workshop::with('workshopSessions')->findOrFail($id);
         return response()->json($workshop);
     }
 
-   public function update(Request $request, Workshop $workshop)
-{
-    $formFields = $request->validate([
-        'name' => 'string',
-        'type' => 'string',
-        'price' => 'integer',
-        'duration' => 'integer',
-        'age' => 'integer',
-        'description' => 'nullable|string',
-        'images.*' => 'nullable|image|max:2048',
-    ]);
+    public function update(Request $request, Workshop $workshop)
+    {
+        $formFields = $request->validate([
+            'name' => 'string',
+            'type' => 'string',
+            'price' => 'integer',
+            'duration' => 'integer',
+            'age' => 'integer',
+            'description' => 'nullable|string',
+            'images.*' => 'nullable|image|max:2048',
+        ]);
 
-    // Conserver les anciennes images
-    $existingImages = $workshop->images ?? [];
+        // Conserver les anciennes images
+        $existingImages = $workshop->images ?? [];
 
-    // Ajouter les nouvelles images uploadées
-    if ($request->hasFile('images')) {
-        foreach ($request->file('images') as $image) {
-            $existingImages[] = $image->store('workshops', 'public');
+        // Ajouter les nouvelles images uploadées
+        if ($request->hasFile('images')) {
+            foreach ($request->file('images') as $image) {
+                $existingImages[] = $image->store('workshops', 'public');
+            }
         }
-    }
 
-    // Supprimer les images demandées
-    if ($request->has('removed_images')) {
-        foreach ($request->removed_images as $img) {
-            // Supprime le fichier du storage
-            Storage::disk('public')->delete($img);
-            // Retirer du tableau
-            $existingImages = array_filter($existingImages, fn($i) => $i !== $img);
+        // Supprimer les images demandées
+        if ($request->has('removed_images')) {
+            foreach ($request->removed_images as $img) {
+                // Supprime le fichier du storage
+                Storage::disk('public')->delete($img);
+                // Retirer du tableau
+                $existingImages = array_filter($existingImages, fn($i) => $i !== $img);
+            }
         }
+
+        $formFields['images'] = array_values($existingImages); // remettre à jour le tableau
+
+        $workshop->update($formFields);
+
+        $workshop->first_image_url = $workshop->first_image_url; // accessor
+
+        return response()->json($workshop);
     }
-
-    $formFields['images'] = array_values($existingImages); // remettre à jour le tableau
-
-    $workshop->update($formFields);
-
-    $workshop->first_image_url = $workshop->first_image_url; // accessor
-
-    return response()->json($workshop);
-}
 
 
     public function destroy(Workshop $workshop)

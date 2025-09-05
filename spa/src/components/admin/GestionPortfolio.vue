@@ -8,8 +8,11 @@ const titre = ref("");
 const file = ref<File | null>(null);
 
 onMounted(() => {
-  portfolioStore.fetchPhotos();
+  portfolioStore.fetchPhotos().then(() => {
+   console.log(portfolioStore.photos.map(p => p.src));
+  });
 });
+
 
 function onFileSelected(event: Event) {
   const input = event.target as HTMLInputElement;

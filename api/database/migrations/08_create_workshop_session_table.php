@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('workshop_sessions', function (Blueprint $table) {
             $table->id();
-            $table->integer('session_number')->change();
+            $table->integer('session_number');
             $table->integer('capacity');
             $table->foreignId('workshop_id')->constrained()->onDelete('cascade');
             $table->dateTime('date');

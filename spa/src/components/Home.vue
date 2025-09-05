@@ -3,9 +3,11 @@ import { ref, onMounted } from 'vue';
 import { getProducts } from '@/_services/ProductService';
 import type { Product } from '@/_models/Product';
 import { useWorkshopStore } from '@/stores/Workshop';
+import { usePortfolioStore } from '@/stores/Portfolio';
 
 const randomProducts = ref<Product[]>([]);
 const workshopStore = useWorkshopStore();
+const portfolioStore = usePortfolioStore();
 
 onMounted(async () => {
   try {
@@ -17,6 +19,7 @@ onMounted(async () => {
   }
 
   workshopStore.fetchWorkshops();
+  portfolioStore.fetchPhotos();
 });
 </script>
 
@@ -25,7 +28,6 @@ onMounted(async () => {
 
     <!-- A propos + Boutique + Nouveautés -->
     <div class="row mb-5">
-      <!-- Colonne gauche : Description + Boutique -->
       <div class="col-lg-8 d-flex flex-column mb-4 mb-lg-0">
         <!-- Description -->
         <div class="row align-items-center mb-4">
@@ -50,14 +52,16 @@ onMounted(async () => {
         </div>
 
         <!-- Boutique -->
-        <div>
+        <div class="p-3 bg-light rounded shadow-sm mb-4">
           <h2 class="mb-4">Boutique</h2>
           <div class="row g-3">
             <div v-for="product in randomProducts" :key="product.id" class="col-md-4">
               <router-link :to="{ name: 'produit-detail', params: { id: product.id } }"
                 class="text-decoration-none text-dark">
-                <div class="card h-100 shadow-sm border-0 rounded-3">
-                  <img v-if="product.picture_url" :src="product.picture_url" class="card-img-top" alt="product.name" />
+                <div class="card h-100 shadow-sm border-0 rounded-3 product-card bg-white">
+                  <div class="product-img-wrapper">
+                    <img v-if="product.picture_url" :src="product.picture_url" class="card-img-top product-img" alt="product.name" />
+                  </div>
                   <div class="card-body text-center">
                     <h5 class="card-title text-truncate">{{ product.name }}</h5>
                     <p class="fw-bold">{{ product.price }} €</p>
@@ -69,13 +73,12 @@ onMounted(async () => {
         </div>
       </div>
 
-      <!-- Colonne droite : Nouveautés pleine hauteur -->
+      <!-- Colonne droite : Nouveautés -->
       <div class="col-lg-4 h-100 d-flex flex-column">
         <div class="bg-light p-3 rounded shadow-sm flex-grow-1 d-flex flex-column justify-content-start">
           <h2 class="mb-4">Nouveautés</h2>
           <div v-for="i in 3" :key="i" class="d-flex align-items-center mb-3">
-            <img :src="`@/assets/nouveaute${i}.png`" class="img-thumbnail me-3"
-              style="width:100px; height:100px; object-fit:cover;" alt="">
+            <img :src="`@/assets/nouveaute${i}.png`" class="img-thumbnail me-3 nouveaute-img" alt="">
             <p class="mb-0 small">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.
             </p>
@@ -83,22 +86,26 @@ onMounted(async () => {
         </div>
       </div>
     </div>
+
     <!-- Ateliers + Portfolio -->
     <div class="row mb-5">
       <div class="col-lg-6 mb-4 mb-lg-0">
         <h2 class="mb-4">Nos ateliers proposés</h2>
         <div class="row g-3">
           <div v-for="workshop in workshopStore.workshops" :key="workshop.id" class="col-md-6">
-            <div class="card h-100 shadow-sm border-0 rounded-3">
+            <div class="card h-100 shadow-sm border-0 rounded-3 workshop-card">
               <router-link :to="{ name: 'atelier-detail', params: { id: workshop.id } }"
-                class="text-decoration-none text-dark">
-                <img v-if="workshop.first_image_url" :src="workshop.first_image_url" class="card-img-top"
-                  :alt="workshop.name" />
-                <div class="card-body">
-                  <h5 class="card-title">{{ workshop.name }}</h5>
-                  <h6 class="card-subtitle mb-2 text-muted">{{ workshop.type }}</h6>
-                  <p class="card-text mb-1"><strong>Prix :</strong> {{ workshop.price }} €</p>
-                  <button class="btn btn-primary w-100 mt-2">Voir détails & Réserver</button>
+                class="text-decoration-none text-dark d-flex flex-column h-100">
+                <div class="workshop-img-wrapper">
+                  <img v-if="workshop.first_image_url" :src="workshop.first_image_url" class="card-img-top workshop-img" :alt="workshop.name" />
+                </div>
+                <div class="card-body d-flex flex-column justify-content-between">
+                  <div>
+                    <h5 class="card-title">{{ workshop.name }}</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">{{ workshop.type }}</h6>
+                    <p class="card-text mb-1"><strong>Prix :</strong> {{ workshop.price }} €</p>
+                  </div>
+                  <button class="btn btn-outline-primary w-100 mt-2">Voir détails & Réserver</button>
                 </div>
               </router-link>
             </div>
@@ -106,43 +113,30 @@ onMounted(async () => {
         </div>
       </div>
 
+      <!-- Portfolio avec carousel dynamique -->
       <div class="col-lg-6">
         <h2 class="mb-4">Portfolio</h2>
-        <div id="carouselExample" class="carousel slide shadow-sm rounded overflow-hidden" data-bs-ride="carousel">
-          <div class="carousel-inner">
-            <div v-for="(c, i) in [1, 2, 3, 4]" :key="i" :class="['carousel-item', { active: i === 0 }]">
-              <img :src="`@/assets/carousel${c}.jpg`" class="d-block w-100" alt="">
+        <RouterLink to="/portfolio">
+          <div id="portfolioCarousel" class="carousel slide shadow-sm rounded overflow-hidden" data-bs-ride="carousel">
+            <div class="carousel-inner">
+              <div v-for="(photo, i) in portfolioStore.photos" :key="photo.id"
+                :class="['carousel-item', { active: i === 0 }]">
+                <img :src="photo.src" class="d-block w-100 carousel-img" :alt="photo.titre">
+              </div>
             </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#portfolioCarousel" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon"></span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#portfolioCarousel" data-bs-slide="next">
+              <span class="carousel-control-next-icon"></span>
+            </button>
           </div>
-          <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon"></span>
-          </button>
-          <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
-            <span class="carousel-control-next-icon"></span>
-          </button>
-        </div>
+        </RouterLink>
       </div>
     </div>
 
-    <!-- Avis -->
-    <div class="mb-5">
-      <div class="card shadow-sm">
-        <div class="card-body">
-          <div class="mb-2">
-            <span class="text-warning fs-4">★★★★★</span>
-          </div>
-          <h5 class="card-title">Topissime</h5>
-          <h6 class="card-subtitle mb-2 text-muted">Sujet : Atelier</h6>
-          <p class="card-text">
-            Découverte de la sérigraphie à travers cet atelier convivial et intimiste. Clément est très sympa, le temps
-            passe vite, et on repart avec un très joli T-shirt ! Au plaisir de revenir !
-          </p>
-        </div>
-      </div>
-    </div>
-
-    <!-- Formulaire -->
-    <div class="mb-5">
+    <!-- Contact -->
+    <div class="mb-5 p-3 bg-light rounded shadow-sm">
       <h2 class="mb-4">Contact</h2>
       <form>
         <div class="mb-3">
@@ -153,7 +147,7 @@ onMounted(async () => {
           <label for="message" class="form-label">Demande</label>
           <textarea class="form-control" id="message" rows="3"></textarea>
         </div>
-        <button type="submit" class="btn btn-primary">Envoyer</button>
+        <button type="submit" class="btn btn-outline-secondary">Envoyer</button>
       </form>
     </div>
 
@@ -163,7 +157,6 @@ onMounted(async () => {
 <style scoped>
 .card-img-top {
   object-fit: cover;
-  height: 200px;
 }
 
 .text-truncate {
@@ -172,7 +165,53 @@ onMounted(async () => {
   text-overflow: ellipsis;
 }
 
-.carousel-inner img {
+/* ---- Boutique ---- */
+.product-card {
+  display: flex;
+  flex-direction: column;
+  height: 320px;
+}
+.product-img-wrapper {
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+  border-top-left-radius: 0.5rem;
+  border-top-right-radius: 0.5rem;
+}
+.product-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ---- Ateliers ---- */
+.workshop-card {
+  display: flex;
+  flex-direction: column;
+  height: 360px;
+}
+.workshop-img-wrapper {
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+  border-top-left-radius: 0.5rem;
+  border-top-right-radius: 0.5rem;
+}
+.workshop-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ---- Nouveautés ---- */
+.nouveaute-img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+}
+
+/* ---- Carousel ---- */
+.carousel-img {
   height: 300px;
   object-fit: cover;
 }

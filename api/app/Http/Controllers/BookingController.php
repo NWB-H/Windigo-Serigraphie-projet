@@ -43,7 +43,7 @@ class BookingController extends Controller
         $user = Auth::user();
 
         $session = WorkshopSession::findOrFail($session_id);
-
+ 
         if ($session->reservations()->count() >= $session->capacity) {
             return response()->json([
                 'success' => false,

@@ -5,4 +5,5 @@ export interface Reservation {
   user_id: number;
   workshop_session_id: number;
   session?: WorkshopSession;
+  remaining_places:number;
 }

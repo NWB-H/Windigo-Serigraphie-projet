@@ -14,11 +14,19 @@ class WorkshopSession extends Model
         'capacity',
         'workshop_id',
         'date',
+        'avalaible_capacity'
     ];
 
     protected $casts = [
         'date' => 'datetime:Y-m-d H:i',
     ];
+
+    protected $appends = ['remaining_places'];
+
+    public function getRemainingPlacesAttribute()
+    {
+        return $this->capacity - count($this->reservations);
+    }
 
     public function workshop()
     {

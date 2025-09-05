@@ -39,14 +39,13 @@ onMounted(async () => {
   }
 })
 
-const formatDate = (dateStr: string) => {
+const formatDate = (dateStr: string): string => {
   const d = new Date(dateStr)
   return d.toLocaleDateString('fr-FR', { weekday: 'long', day: '2-digit', month: 'long', year: 'numeric' })
 }
 
 const handleBooking = async (sessionId: number) => {
   const result = await workshopStore.bookSession(sessionId)
-
   if (result) {
     toastMessage.value = "Votre réservation a bien été enregistrée ✅"
     toastType.value = "success"
@@ -104,16 +103,18 @@ const handleBooking = async (sessionId: number) => {
     </div>
 
     <h4 class="mt-5">Sessions disponibles</h4>
-    <ul v-if="workshop.workshopSessions?.length" class="list-group">
-      <li v-for="session in workshop.workshopSessions" :key="session.id"
-        class="list-group-item d-flex justify-content-between align-items-center">
-        {{ formatDate(session.date) }} - N°{{ session.session_number }}
-        <button class="btn btn-success btn-sm" :disabled="workshopStore.loading" @click="handleBooking(session.id)">
-          <span v-if="workshopStore.loading" class="spinner-border spinner-border-sm"></span>
-          <span v-else>Réserver</span>
-        </button>
-      </li>
-    </ul>
+    <!-- Sessions -->
+    <div v-if="workshop.workshop_sessions?.length" class="mt-auto">
+      <h6>Sessions :</h6>
+      <ul class="list-group list-group-flush">
+        <li v-for="session in workshop.workshop_sessions" :key="session.id"
+          class="list-group-item d-flex justify-content-between align-items-center">
+          {{ formatDate(session.date) }} - N°{{ session.session_number }}
+          <span class="badge bg-primary rounded-pill">{{ session.remaining_places }} places</span>
+          <button @click="handleBooking(session.id)"> Reserver </button>
+        </li>
+      </ul>
+    </div>
     <p v-else>Aucune session prévue pour le moment.</p>
   </div>
 

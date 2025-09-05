@@ -52,18 +52,6 @@ const formatDate = (dateStr: string) => {
               <p class="card-text mb-2"><strong>Durée :</strong> {{ workshop.duration }} min</p>
               <p class="card-text mb-2"><strong>Âge minimum :</strong> {{ workshop.age }} ans</p>
 
-              <!-- Sessions -->
-              <div v-if="workshop.workshopSessions?.length" class="mt-auto">
-                <h6>Sessions :</h6>
-                <ul class="list-group list-group-flush">
-                  <li v-for="session in workshop.workshopSessions" :key="session.id"
-                    class="list-group-item d-flex justify-content-between align-items-center">
-                    {{ formatDate(session.date) }} - N°{{ session.session_number }}
-                    <span class="badge bg-primary rounded-pill">{{ session.capacity }} places</span>
-                  </li>
-                </ul>
-              </div>
-
               <RouterLink class="btn btn-primary mt-3 w-100"
                 :to="{ name: 'atelier-detail', params: { id: workshop.id } }">
                 Voir détails & Réserver
