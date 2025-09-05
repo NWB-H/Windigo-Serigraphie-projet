@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<!-- <script setup lang="ts">
 import { onMounted } from 'vue';
 import { useCartStore } from '@/stores/Cart';
 import { useUserStore } from '@/stores/User';
@@ -44,4 +44,4 @@ async function checkout() {
       <button @click="checkout">Commander</button>
     </div>
   </div>
-</template>
+</template> -->
