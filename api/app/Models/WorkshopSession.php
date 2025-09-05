@@ -10,10 +10,14 @@ class WorkshopSession extends Model
     use HasFactory;
 
     protected $fillable = [
-    'session_number',
-    'capacity',
-    'workshop_id',
-    'date',
+        'session_number',
+        'capacity',
+        'workshop_id',
+        'date',
+    ];
+
+    protected $casts = [
+        'date' => 'datetime:Y-m-d H:i',
     ];
 
     public function workshop()

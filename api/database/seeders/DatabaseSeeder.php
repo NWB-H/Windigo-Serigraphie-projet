@@ -55,8 +55,8 @@ class DatabaseSeeder extends Seeder
     Cart::factory(2)->create();
     Order::factory(5)->create();
     OrderProduct::factory(5)->create();
-    WorkshopSession::factory(10)->create();
-    Reservation::factory(3)->create();
-    CustomerReview::factory(5)->create();
+    // WorkshopSession::factory(10)->create();
+    // Reservation::factory(3)->create();
+    // CustomerReview::factory(5)->create();
   }
 }

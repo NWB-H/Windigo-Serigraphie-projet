@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('workshop_sessions', function (Blueprint $table) {
             $table->id();
-            $table->string('session_number')->unique();
+            $table->integer('session_number')->change();
             $table->integer('capacity');
             $table->foreignId('workshop_id')->constrained()->onDelete('cascade');
-            $table->date('date');
+            $table->dateTime('date');
             $table->timestamps();
         });
     }

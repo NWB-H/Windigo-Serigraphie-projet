@@ -18,9 +18,10 @@ return new class extends Migration
             $table->integer('stock');
             $table->text('description');
             $table->boolean('archived');
-            $table->foreignId('option_id')->references('id')->on('options')->onDelete('cascade');
-            $table->foreignId('category_id')->references('id')->on('categories')->onDelete('cascade');
+            $table->foreignId('option_id')->references('id')->on('options');
+            $table->foreignId('category_id')->references('id')->on('categories');
             $table->string('picture')->nullable();
+            $table->timestamps();
         });
     }
 

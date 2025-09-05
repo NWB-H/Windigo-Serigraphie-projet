@@ -12,13 +12,12 @@ class CategorySeeder extends Seeder
      */
     public function run(): void
     {
-    $name = ['T-shirt', 'Sweat-shirts', 'Cartes et papeterie', 'Affiche'];
-    foreach ($name as $value) {
-        Category::create([
-            'name' => $value,
+        $name = ['T-shirt', 'Sweat-shirts', 'Cartes et papeterie', 'Affiche'];
+        foreach ($name as $value) {
+            Category::create([
+                'name' => $value,
 
-        ]);
+            ]);
+        }
     }
-
-}
 }

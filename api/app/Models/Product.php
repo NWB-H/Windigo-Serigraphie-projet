@@ -4,7 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Storage;
 
 class Product extends Model
 {
@@ -23,7 +22,7 @@ class Product extends Model
         'picture',
     ];
 
-    // --- Mutator pour récupérer l'URL complète de l'image ---
+    // --- pour récupérer l'URL complète de l'image ---
     protected $appends = ['picture_url'];
 
     public function getPictureUrlAttribute(): ?string

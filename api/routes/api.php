@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\OptionController;
+use App\Http\Controllers\Admin\PortfolioController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\Admin\ProductController;
@@ -71,7 +72,7 @@ Route::controller(ControllersProductController::class)->prefix('products')->grou
 Route::prefix('workshops')->group(function () {
     Route::get('', [WorkshopController::class, 'index']); // liste des ateliers
     Route::get('/{workshop}', [WorkshopController::class, 'show']); // détail d’un atelier
-  });  
+});
 
 
 //Gestion des réservations
@@ -114,8 +115,11 @@ Route::controller(OrderController::class)->prefix('orders')->group(function () {
     Route::delete('/{id}', 'destroy');
 });
 
+//Vue du portfolio
+Route::get('/portfolio', [PortfolioController::class, 'index']);
+
 //Routes Admin
-Route::/*middleware(['auth:sanctum', 'admin'])->*/prefix('admin')->group(function () {
+Route::middleware(['auth:sanctum'/*, 'admin'*/])->prefix('admin')->group(function () {
     // Produits
     Route::controller(ProductController::class)->prefix('products')->group(function () {
         Route::get('', 'index');
@@ -134,10 +138,11 @@ Route::/*middleware(['auth:sanctum', 'admin'])->*/prefix('admin')->group(functio
     });
     //Gestion des sessions
     Route::controller(WorkshopSessionController::class)->prefix('workshops')->group(function () {
-    Route::post('/{workshop}/sessions', 'store');
-    Route::put('/{workshop}/sessions/{id}', 'update');
-    Route::delete('/{workshop}/sessions/{id}', 'destroy');
-});
+        Route::get('/{workshop}/sessions', 'index');
+        Route::post('/{workshop}/sessions', 'store');
+        Route::put('/{workshop}/sessions/{id}', 'update');
+        Route::delete('/{workshop}/sessions/{id}', 'destroy');
+    });
     // Catégories & options
     Route::controller(CategoryController::class)->prefix('categories')->group(function () {
         Route::get('', 'index');
@@ -152,5 +157,10 @@ Route::/*middleware(['auth:sanctum', 'admin'])->*/prefix('admin')->group(functio
         Route::post('', 'store');
         Route::put('/{option}', 'update');
         Route::delete('/{option}', 'destroy');
+    });
+    // Portfolio
+    Route::controller(PortfolioController::class)->prefix('portfolio')->group(function () {
+        Route::post('/', 'store');
+        Route::delete('/{id}', 'destroy');
     });
 });

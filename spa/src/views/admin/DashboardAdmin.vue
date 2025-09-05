@@ -37,6 +37,7 @@ import GestionProduit from '@/components/admin/GestionProduit.vue'
 import GestionAtelier from '@/components/admin/GestionAtelier.vue'
 import GestionCategorie from '@/components/admin/GestionCategorie.vue'
 import GestionOption from '@/components/admin/GestionOption.vue'
+import GestionPortfolio from '@/components/admin/GestionPortfolio.vue'
 
 // Liens avec icônes Bootstrap Icons
 const links = [
@@ -44,6 +45,7 @@ const links = [
   { name: 'Ateliers', component: GestionAtelier, icon: 'bi bi-brush' },
   { name: 'Catégories', component: GestionCategorie, icon: 'bi bi-tags' },
   { name: 'Options', component: GestionOption, icon: 'bi bi-sliders' },
+  { name: 'Portfolio', component: GestionPortfolio, icon: '' },
 ]
 
 const currentTab = ref(links[0].component)

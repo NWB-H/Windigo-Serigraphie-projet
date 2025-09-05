@@ -10,6 +10,9 @@ import Panier from '@/components/Panier.vue';
 import { fetchUser } from '@/_services/AuthService';
 import AtelierDetailView from '@/components/AtelierDetailView.vue';
 import ProduitDetailView from '@/components/ProduitDetailView.vue';
+import GestionSession from '@/components/admin/GestionSession.vue';
+import APropos from '@/components/APropos.vue';
+import PortFolio from '@/components/PortFolio.vue';
 
 
 const router = createRouter({
@@ -26,7 +29,7 @@ const router = createRouter({
       component: Boutique
     },
 
-        {
+    {
       path: '/produits/:id',
       name: 'produit-detail',
       component: ProduitDetailView,
@@ -55,6 +58,25 @@ const router = createRouter({
       path: '/ateliers/:id',
       name: 'atelier-detail',
       component: AtelierDetailView,
+      props: true
+    },
+
+    {
+      path: '/apropos',
+      name: 'APropos',
+      component: APropos
+    },
+
+    {
+      path :'/portfolio',
+      name : 'Portfolio',
+      component: PortFolio
+    },
+    
+    {
+      path: "/admin/workshops/:id/sessions",
+      name: "admin.workshop.sessions",
+      component: GestionSession,
       props: true
     },
 

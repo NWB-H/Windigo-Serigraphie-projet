@@ -1,315 +1,179 @@
 <script setup lang="ts">
+import { ref, onMounted } from 'vue';
+import { getProducts } from '@/_services/ProductService';
+import type { Product } from '@/_models/Product';
+import { useWorkshopStore } from '@/stores/Workshop';
 
+const randomProducts = ref<Product[]>([]);
+const workshopStore = useWorkshopStore();
 
+onMounted(async () => {
+  try {
+    const products = await getProducts();
+    const shuffled = [...products].sort(() => 0.5 - Math.random());
+    randomProducts.value = shuffled.slice(0, 3);
+  } catch (error) {
+    console.error('Erreur récupération produits :', error);
+  }
+
+  workshopStore.fetchWorkshops();
+});
 </script>
 
 <template>
+  <div class="container my-5">
 
-  <body>
-    <div class="home-container">
-      <div class="row">
-        <div class="col-8">
-          <div class="about">
-            <div class="about-img">
-              <img class="card-img-top" src="@/assets/apropos.png" alt="Card image cap">
-            </div>
-            <div class="about-txt">
-              <div class="banner-content-title h1">Description</div>
-              <p class="u-text-justify">Windigo est un petit atelier de sérigraphie artisanale basé au Mans
-                spécialisé dans l'impression sur supports textiles et papiers.
-
-                Windigo propose une collection de vêtements et sacs imprimés et d'articles de papeterie, disponibles
-                sur etsy.
-
-                Je suis également à votre disposition pour toute question concernant un besoin particulier :
-                windigo.serigraphie@gmail.com</p>
-            </div>
+    <!-- A propos + Boutique + Nouveautés -->
+    <div class="row mb-5">
+      <!-- Colonne gauche : Description + Boutique -->
+      <div class="col-lg-8 d-flex flex-column mb-4 mb-lg-0">
+        <!-- Description -->
+        <div class="row align-items-center mb-4">
+          <div class="col-md-6 mb-3 mb-md-0">
+            <img src="@/assets/apropos.png" class="img-fluid rounded shadow" alt="Atelier Windigo">
           </div>
-          <div class="banner-content-title h1">Boutique</div>
-          <div class="liste-produit">
-            <div class="produit">
-              <div class="card text-center mb-3" style="width: 100%;">
-                <div class="card-body">
-                  <img src="@/assets/produit1.png" class="img-fluid object-fit-cover border rounded"
-                    alt="Card image cap">
-                  <h6 class="card-title">Illustration sérigraphiée - Van life</h6>
-                  <span class="card-text">40,00€</span>
-                </div>
-              </div>
-            </div>
-            <div class="produit">
-              <div class="card text-center mb-3" style="width: 100%;">
-                <div class="card-body">
-                  <img src="@/assets/produit2.png" class="img-fluid object-fit-cover border rounded"
-                    alt="Card image cap">
-                  <h6 class="card-title">Illustration sérigraphiée - Fortune teller</h6>
-                  <span class="card-text">30,00€</span>
-                </div>
-              </div>
-            </div>
-            <div class="produit">
-              <div class="card text-center mb-3" style="width: 100%;">
-                <div class="card-body">
-                  <img src="@/assets/produit3.png" class="img-fluid object-fit-cover border rounded"
-                    alt="Card image cap">
-                  <h6 class="card-title">T-shirt manches longues - Unleash the beast</h6>
-                  <span class="card-text">27,00€</span>
-                </div>
-              </div>
-            </div>
-            <div class="produit">
-              <div class="card text-center mb-3" style="width: 100%;">
-                <div class="card-body">
-                  <img src="@/assets/produit4.png" class="img-fluid object-fit-cover border rounded"
-                    alt="Card image cap">
-                  <h6 class="card-title">T-shirt unisexe - Nocturnal</h6>
-                  <span class="card-text">32,00€</span>
-                </div>
-              </div>
-            </div>
+          <div class="col-md-6">
+            <h1 class="mb-3">Description</h1>
+            <p class="text-justify">
+              Windigo est un petit atelier de sérigraphie artisanale basé au Mans spécialisé dans l'impression sur
+              supports textiles et papiers.
+            </p>
+            <p class="text-justify">
+              Windigo propose une collection de vêtements et sacs imprimés et d'articles de papeterie, disponibles sur
+              Etsy.
+            </p>
+            <p class="text-justify">
+              Pour toute question particulière :
+              <a href="mailto:windigo.serigraphie@gmail.com">windigo.serigraphie@gmail.com</a>
+            </p>
           </div>
         </div>
-        <div class="col-4">
-          <div class="p-3 mb-2 bg-body-secondary" style="height: 100%;">
-            <div class="banner-content-title h1">Nouveautés</div>
-            <div class="list-news">
-              <div class="news">
-                <img class="img-fluid object-fit-cover border rounded" src="@/assets/nouveaute1.png"
-                  alt="Card image cap">
-                <p class="u-text-justify">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                  tempor incididunt ut labore et dolore magna aliqua.</p>
-              </div>
-              <div class="news">
-                <img class="img-fluid object-fit-cover border rounded" src="@/assets/nouveaute2.png"
-                  alt="Card image cap">
-                <p class="u-text-justify">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                  tempor incididunt ut labore et dolore magna aliqua.</p>
-              </div>
-              <div class="news">
-                <img class="img-fluid object-fit-cover border rounded" src="@/assets/nouveaute3.png"
-                  alt="Card image cap">
-                <p class="u-text-justify">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                  tempor incididunt ut labore et dolore magna aliqua.</p>
-              </div>
+
+        <!-- Boutique -->
+        <div>
+          <h2 class="mb-4">Boutique</h2>
+          <div class="row g-3">
+            <div v-for="product in randomProducts" :key="product.id" class="col-md-4">
+              <router-link :to="{ name: 'produit-detail', params: { id: product.id } }"
+                class="text-decoration-none text-dark">
+                <div class="card h-100 shadow-sm border-0 rounded-3">
+                  <img v-if="product.picture_url" :src="product.picture_url" class="card-img-top" alt="product.name" />
+                  <div class="card-body text-center">
+                    <h5 class="card-title text-truncate">{{ product.name }}</h5>
+                    <p class="fw-bold">{{ product.price }} €</p>
+                  </div>
+                </div>
+              </router-link>
             </div>
           </div>
         </div>
       </div>
 
-      <div class="row">
-        <div class="col-6">
-          <div class="banner-content-title h1">Ateliers</div>
-          <div class="ateliers">
-            <div class="atelier-info">
-              <div class="card">
-                <img src="@/assets/atelier1.png" class="card-img-top" alt="Card image cap">
-                <div class="card-body">
-                  <h5 class="card-title">TEXTILE</h5>
-                  <p class="card-text">Sérigraphiez votre T-shirt ou votre sac sur-mesure.</p>
-                  <a href="#" class="btn btn-primary">En savoir plus ...</a>
-                </div>
-              </div>
-            </div>
-            <div class="atelier-info">
-              <div class="card">
-                <img src="@/assets/atelier2.png" class="card-img-top" alt="Card image cap">
-                <div class="card-body">
-                  <h5 class="card-title">PAPIER</h5>
-                  <p class="card-text">Initiez-vous à la sérigraphie sur papier.</p>
-                  <a href="#" class="btn btn-primary">En savoir plus ...</a>
-                </div>
-              </div>
-            </div>
-          </div>
-
-        </div>
-        <div class="col-6">
-          <div class="banner-content-title h1">Port-Folio</div>
-          <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
-            <div class="carousel-inner">
-              <div class="carousel-item active">
-                <img src="@/assets/carousel1.jpg" class="d-block w-100" alt="Card image cap">
-              </div>
-              <div class="carousel-item">
-                <img src="@/assets/carousel2.jpg" class="d-block w-100" alt="Card image cap">
-              </div>
-              <div class="carousel-item">
-                <img src="@/assets/carousel3.jpg" class="d-block w-100" alt="Card image cap">
-              </div>
-              <div class="carousel-item">
-                <img src="@/assets/carousel4.jpg" class="d-block w-100" alt="Card image cap">
-              </div>
-            </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying"
-              data-bs-slide="prev">
-              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-              <span class="visually-hidden">Previous</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying"
-              data-bs-slide="next">
-              <span class="carousel-control-next-icon" aria-hidden="true"></span>
-              <span class="visually-hidden">Next</span>
-            </button>
+      <!-- Colonne droite : Nouveautés pleine hauteur -->
+      <div class="col-lg-4 h-100 d-flex flex-column">
+        <div class="bg-light p-3 rounded shadow-sm flex-grow-1 d-flex flex-column justify-content-start">
+          <h2 class="mb-4">Nouveautés</h2>
+          <div v-for="i in 3" :key="i" class="d-flex align-items-center mb-3">
+            <img :src="`@/assets/nouveaute${i}.png`" class="img-thumbnail me-3"
+              style="width:100px; height:100px; object-fit:cover;" alt="">
+            <p class="mb-0 small">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.
+            </p>
           </div>
         </div>
       </div>
-      <div class="avis">
-        <div class="card">
-          <div class="card-body">
-            <div class="rating">
-              <input value="5" name="rate" id="star5" type="radio">
-              <label title="text" for="star5"></label>
-              <input value="4" name="rate" id="star4" type="radio">
-              <label title="text" for="star4"></label>
-              <input value="3" name="rate" id="star3" type="radio">
-              <label title="text" for="star3"></label>
-              <input value="2" name="rate" id="star2" type="radio">
-              <label title="text" for="star2"></label>
-              <input value="1" name="rate" id="star1" type="radio">
-              <label title="text" for="star1"></label>
-            </div>
-            <h5 class="card-title">Topissime</h5>
-            <h6 class="card-subtitle mb-2 text-body-secondary">Sujet : Atelier</h6>
-            <p class="card-text" style="">Découverte de la sérigraphie à travers cet atelier convivial et
-              intimiste en
-              petit groupe. Clément est très sympa, le temps passe vite, et on repart avec un très jolie T-shirt !
-              Au
-              plaisir de revenir !</p>
-          </div>
-        </div>
-      </div>
-      <div class="formualire">
-        <div class="mb-3">
-          <label for="exampleFormControlInput1" class="form-label">Email address</label>
-          <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
-        </div>
-        <div class="mb-3">
-          <label for="exampleFormControlTextarea1" class="form-label">Demande</label>
-          <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-        </div>
-      </div>
-
     </div>
-  </body>
+    <!-- Ateliers + Portfolio -->
+    <div class="row mb-5">
+      <div class="col-lg-6 mb-4 mb-lg-0">
+        <h2 class="mb-4">Nos ateliers proposés</h2>
+        <div class="row g-3">
+          <div v-for="workshop in workshopStore.workshops" :key="workshop.id" class="col-md-6">
+            <div class="card h-100 shadow-sm border-0 rounded-3">
+              <router-link :to="{ name: 'atelier-detail', params: { id: workshop.id } }"
+                class="text-decoration-none text-dark">
+                <img v-if="workshop.first_image_url" :src="workshop.first_image_url" class="card-img-top"
+                  :alt="workshop.name" />
+                <div class="card-body">
+                  <h5 class="card-title">{{ workshop.name }}</h5>
+                  <h6 class="card-subtitle mb-2 text-muted">{{ workshop.type }}</h6>
+                  <p class="card-text mb-1"><strong>Prix :</strong> {{ workshop.price }} €</p>
+                  <button class="btn btn-primary w-100 mt-2">Voir détails & Réserver</button>
+                </div>
+              </router-link>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6">
+        <h2 class="mb-4">Portfolio</h2>
+        <div id="carouselExample" class="carousel slide shadow-sm rounded overflow-hidden" data-bs-ride="carousel">
+          <div class="carousel-inner">
+            <div v-for="(c, i) in [1, 2, 3, 4]" :key="i" :class="['carousel-item', { active: i === 0 }]">
+              <img :src="`@/assets/carousel${c}.jpg`" class="d-block w-100" alt="">
+            </div>
+          </div>
+          <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon"></span>
+          </button>
+          <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+            <span class="carousel-control-next-icon"></span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Avis -->
+    <div class="mb-5">
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <div class="mb-2">
+            <span class="text-warning fs-4">★★★★★</span>
+          </div>
+          <h5 class="card-title">Topissime</h5>
+          <h6 class="card-subtitle mb-2 text-muted">Sujet : Atelier</h6>
+          <p class="card-text">
+            Découverte de la sérigraphie à travers cet atelier convivial et intimiste. Clément est très sympa, le temps
+            passe vite, et on repart avec un très joli T-shirt ! Au plaisir de revenir !
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Formulaire -->
+    <div class="mb-5">
+      <h2 class="mb-4">Contact</h2>
+      <form>
+        <div class="mb-3">
+          <label for="email" class="form-label">Adresse email</label>
+          <input type="email" class="form-control" id="email" placeholder="name@example.com">
+        </div>
+        <div class="mb-3">
+          <label for="message" class="form-label">Demande</label>
+          <textarea class="form-control" id="message" rows="3"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Envoyer</button>
+      </form>
+    </div>
+
+  </div>
 </template>
 
 <style scoped>
-.home-container {
-  width: 90%;
-  margin: 5%
+.card-img-top {
+  object-fit: cover;
+  height: 200px;
 }
 
-.about {
-  display: flex;
-  flex-direction: row;
-  gap: 5%;
+.text-truncate {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-.about-img {
-  display: flex;
-  flex: 1;
-}
-
-.about-txt {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-}
-
-.list-news {
-  justify-content: space-between;
-  height: 100%;
-}
-
-.news {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  height: 30%;
-}
-
-.news img {
-  width: 10vw;
-  height: 100% !important;
-  margin-right: 1vw;
-  flex: 1;
-}
-
-.news p {
-  margin-bottom: 0 !important;
-  flex: 1;
-  font-size: 1vw;
-}
-
-.liste-produit {
-  display: flex;
-  flex-direction: row;
-  gap: 1vw;
-}
-
-.produit {
-  width: 100%;
-  height: auto;
-
-}
-
-.produit img {
-  width: 100%;
-  height: 15vw !important;
-}
-
-.produit h6 {
-  height: 5vw;
-}
-
-
-.ateliers {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 1vw;
-}
-
-.atelier-info {
-  width: 100%;
-}
-
-.avis {
-  margin-top: 1vw;
-  margin-bottom: 1vw;
-  grid-column: 1/-1;
-}
-
-.rating:not(:checked)>input {
-  position: absolute;
-  appearance: none;
-}
-
-.rating:not(:checked)>label {
-  float: right;
-  cursor: pointer;
-  font-size: 30px;
-  color: #666;
-}
-
-.rating:not(:checked)>label:before {
-  content: '★';
-}
-
-.rating>input:checked+label:hover,
-.rating>input:checked+label:hover~label,
-.rating>input:checked~label:hover,
-.rating>input:checked~label:hover~label,
-.rating>label:hover~input:checked~label {
-  color: #e58e09;
-}
-
-.rating:not(:checked)>label:hover,
-.rating:not(:checked)>label:hover~label {
-  color: #ff9e0b;
-}
-
-.rating>input:checked~label {
-  color: #ffa723;
+.carousel-inner img {
+  height: 300px;
+  object-fit: cover;
 }
 </style>

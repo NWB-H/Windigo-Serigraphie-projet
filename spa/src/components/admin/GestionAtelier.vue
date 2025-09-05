@@ -40,10 +40,13 @@
                 : workshop.description)
               : 'Aucune description' }}
           </td>
-
           <td class="border px-2 py-1 space-x-2">
             <button @click="editWorkshop(workshop)" class="px-2 py-1 bg-yellow-400 rounded">✏️</button>
             <button @click="deleteWorkshop(workshop.id)" class="px-2 py-1 bg-red-500 text-white rounded">🗑️</button>
+            <RouterLink :to="{ name: 'admin.workshop.sessions', params: { id: workshop.id } }"
+              class="px-2 py-1 bg-blue-500 text-white rounded">
+              📅 Sessions
+            </RouterLink>
           </td>
         </tr>
       </tbody>
@@ -54,7 +57,8 @@
       <input v-model="form.name" placeholder="Nom" class="border p-2 w-full" required />
       <input v-model="form.type" placeholder="Type" class="border p-2 w-full" required />
       <input v-model.number="form.price" type="number" placeholder="Prix" class="border p-2 w-full" required />
-      <input v-model.number="form.duration" type="number" placeholder="Durée (min)" class="border p-2 w-full" required />
+      <input v-model.number="form.duration" type="number" placeholder="Durée (min)" class="border p-2 w-full"
+        required />
       <input v-model.number="form.age" type="number" placeholder="Age minimum" class="border p-2 w-full" required />
 
       <!-- Description -->
@@ -70,7 +74,7 @@
       <div class="flex flex-wrap gap-2 mt-2">
         <!-- Images existantes -->
         <div v-for="(img, index) in visibleImages" :key="'existing-' + index" class="relative">
-          <img :src="`http://localhost:8000/storage/${img}`"  class="table-image border" />
+          <img :src="`http://localhost:8000/storage/${img}`" class="table-image border" />
           <button type="button" @click="removedImages.push(img)"
             class="absolute top-0 right-0 bg-red-600 text-white rounded-full w-5 h-5 text-xs flex items-center justify-center">x</button>
         </div>

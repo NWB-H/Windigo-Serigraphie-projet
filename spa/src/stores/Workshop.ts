@@ -114,6 +114,62 @@ export const useWorkshopStore = defineStore("workshops", {
       } finally {
         this.loading = false
       }
+    },
+
+    // Récupérer les sessions d’un workshop pour l’admin
+    async fetchWorkshopSessions(workshopId: number) {
+      this.loading = true
+      this.error = null
+      try {
+        const res = await WorkshopService.getById(workshopId) // ou un endpoint admin dédié
+        this.sessions = res.data.workshopSessions ?? []
+      } catch (err: any) {
+        this.error = err.message
+        this.sessions = []
+      } finally {
+        this.loading = false
+      }
+    },
+
+    async createSession(workshopId: number, session: Partial<WorkshopSession>) {
+      this.loading = true
+      this.error = null
+      try {
+        const res = await WorkshopService.createSession(workshopId, session)
+        this.sessions.push(res.data)
+      } catch (err: any) {
+        this.error = err.message
+      } finally {
+        this.loading = false
+      }
+    },
+
+    async updateSession(workshopId: number, sessionId: number, session: Partial<WorkshopSession>) {
+      this.loading = true
+      this.error = null
+      try {
+        const res = await WorkshopService.updateSession(workshopId, sessionId, session)
+        const idx = this.sessions.findIndex(s => s.id === sessionId)
+        if (idx !== -1) this.sessions[idx] = res.data
+      } catch (err: any) {
+        this.error = err.message
+      } finally {
+        this.loading = false
+      }
+    },
+
+    async deleteSession(workshopId: number, sessionId: number) {
+      this.loading = true
+      this.error = null
+      try {
+        await WorkshopService.deleteSession(workshopId, sessionId)
+        this.sessions = this.sessions.filter(s => s.id !== sessionId)
+      } catch (err: any) {
+        this.error = err.message
+      } finally {
+        this.loading = false
+      }
     }
+
   }
 })

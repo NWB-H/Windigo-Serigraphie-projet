@@ -15,8 +15,10 @@ const toastType = ref<'success' | 'danger'>('success');
 onMounted(async () => {
   try {
     const data = await getProducts();
-    productStore.setProducts(data);
-    data.forEach(p => (quantities.value[p.id] = 1));
+    // Assurer que data est un tableau
+    const productsArray = Array.isArray(data) ? data : [];
+    productStore.setProducts(productsArray);
+    productsArray.forEach(p => (quantities.value[p.id] = 1));
   } catch (error) {
     console.error('Erreur récupération produits :', error);
   }

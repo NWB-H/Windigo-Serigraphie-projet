@@ -44,8 +44,8 @@ onMounted(() => {
         <nav class="nav-links">
           <RouterLink to="/boutique">BOUTIQUE</RouterLink>
           <RouterLink to="/ateliers">ATELIERS</RouterLink>
-          <RouterLink to="/">PORTFOLIO</RouterLink>
-          <RouterLink to="/">A PROPOS</RouterLink>
+          <RouterLink to="/portfolio">PORTFOLIO</RouterLink>
+          <RouterLink to="/apropos">A PROPOS</RouterLink>
         </nav>
 
         <div class="user-actions">
