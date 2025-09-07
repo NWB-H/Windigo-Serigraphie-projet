@@ -2,7 +2,7 @@
 import axios from 'axios';
 
 const Axios = axios.create({
-    baseURL: 'http://localhost:8000',
+    baseURL: 'http://windigoprint-backend.fohu7030.odns.fr',
     headers: {
       Accept: 'application/json'
     },
