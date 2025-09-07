@@ -48,3 +48,13 @@ jobs:
           tags: |
             ghcr.io/nwb-h/windigo-serigraphie-projet-spa:latest
             ghcr.io/nwb-h/windigo-serigraphie-projet-spa:${{ github.sha }}
+
+  ftptO2switch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploiement continue
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+        server: ${{ secrets.SERVER }}
+        username: ${{ secrets.USERNAME }}
+        password: ${{ secrets.PASSWORD }}
