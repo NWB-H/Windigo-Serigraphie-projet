@@ -1,7 +1,7 @@
 const axios = require('axios');
 
 const Axios = axios.create({
-    baseURL: 'http://windigoprint-backend.fohu7030.odns.fr/api',
+    baseURL: 'https://windigoprint-backend.fohu7030.odns.fr/api',
     headers: {
         Accept: 'application/json'
     }
@@ -148,20 +148,20 @@ describe("Admin Products DELETE", () => {
 
 async function login(user, credentials) {
     await Axios.get('/logout', {
-        baseURL: 'http://windigoprint-backend.fohu7030.odns.fr'
+        baseURL: 'https://windigoprint-backend.fohu7030.odns.fr'
     });
 
     const res = await Axios.get('/sanctum/csrf-cookie', {
-        baseURL: 'http://windigoprint-backend.fohu7030.odns.fr'
+        baseURL: 'https://windigoprint-backend.fohu7030.odns.fr'
     });
 
     Axios.defaults.headers.cookie = res.headers['set-cookie'];
     Axios.defaults.headers.common['X-XSRF-TOKEN'] = parseCSRFToken(res.headers['set-cookie']);
-    Axios.defaults.headers.common['Origin'] = 'http://windigoprint-backend.fohu7030.odns.fr';
-    Axios.defaults.headers.common['Referer'] = 'http://windigoprint-backend.fohu7030.odns.fr';
+    Axios.defaults.headers.common['Origin'] = 'https://windigoprint-backend.fohu7030.odns.fr';
+    Axios.defaults.headers.common['Referer'] = 'https://windigoprint-backend.fohu7030.odns.fr';
 
     const auth = await Axios.post('/authenticate', credentials, {
-        baseURL: 'http://windigoprint-backend.fohu7030.odns.fr',
+        baseURL: 'https://windigoprint-backend.fohu7030.odns.fr',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
     });
 

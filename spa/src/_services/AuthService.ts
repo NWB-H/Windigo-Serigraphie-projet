@@ -3,7 +3,7 @@ import { useUserStore } from '@/stores/User';
 
 export async function login(credentials: { email: string, password: string }): Promise<void> {
     await Axios.get('/sanctum/csrf-cookie', {
-        baseURL: 'http://windigoprint-backend.fohu7030.odns.fr'
+        baseURL: 'https://windigoprint-backend.fohu7030.odns.fr'
     });
 
     const res = await Axios.post('/authenticate', credentials, {
@@ -48,7 +48,7 @@ export async function logout() {
 
 export async function register(payload:any) {
     await Axios.get('/sanctum/csrf-cookie', {
-        baseURL: 'http://windigoprint-backend.fohu7030.odns.fr'
+        baseURL: 'https://windigoprint-backend.fohu7030.odns.fr'
     });
     
     return await Axios.post('/api/register', payload)
