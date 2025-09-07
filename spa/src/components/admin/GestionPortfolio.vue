@@ -9,7 +9,7 @@ const file = ref<File | null>(null);
 
 onMounted(() => {
   portfolioStore.fetchPhotos().then(() => {
-   console.log(portfolioStore.photos.map(p => p.src));
+  //  console.log(portfolioStore.photos.map(p => p.src));
   });
 });
 

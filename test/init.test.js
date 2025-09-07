@@ -34,11 +34,12 @@ describe("Products GET", () => {
 });
 
 describe("products POST", () => {
-    test("Create with good data", async (data = { name: 'Jaune Impérial', price: 34, stock: 5, description: 'Reprehenderit reprehenderit ipsum est est illo error. Sint suscipit nihil id dolor dignissimos rerum.', archived: 0, option: 4, category: 4 }) => {
+    test("Create with good data", async (data = { name: 'Jaune Impérial', price: 34, stock: 5, description: 'Reprehenderit reprehenderit ipsum est est illo error. Sint suscipit nihil id dolor dignissimos rerum.', archived: 0, option_id: 4, category_id: 4, picture: null}) => {
         const old = await Axios.get('/products');
+
         const oldNumProducts = old.data.products.length;
         // before
-        const createRes = await Axios.post('/products', data);
+            const createRes = await Axios.post('/admin/products', data);
         // after
         const cur = await Axios.get('/products');
         const curNumProducts = cur.data.products.length;
@@ -47,11 +48,11 @@ describe("products POST", () => {
         expect(curNumProducts).toBe(oldNumProducts + 1);
     });
 
-    test("Create with bad data", async (data = { name: 'Jaune Impérial', price: 54, stock: 5, description: 'Reprehenderit reprehenderit ipsum est est illo error. Sint suscipit nihil id dolor dignissimos rerum.', archived: 0, option: 4, category: 4 }) => {
+    test("Create with bad data", async (data = { name: 'Jaune Impérial', price: 54, stock: 5, description: 'Reprehenderit reprehenderit ipsum est est illo error. Sint suscipit nihil id dolor dignissimos rerum.', archived: 0, option_id: 4, category_id: 4, picture: null }) => {
         const old = await Axios.get('/products');
         const oldNumProducts = old.data.products.length;
         // before
-        const createRes = await Axios.post('/products', data, { validateStatus: () => true });
+        const createRes = await Axios.post('/admin/products', data, { validateStatus: () => true });
         // after
         const cur = await Axios.get('/products');
         const curNumProducts = cur.data.products.length;
@@ -122,7 +123,8 @@ describe("Admin products PUT", () => {
     test("Update as admin", async (data = { name: 'New name', _method: 'PUT' }) => {
       const res = await Axios.get('/products');
       const product = res.data.products.find(c => c.user_id != user.id);
-      await Axios.post('/products/' + product.id, data);
+
+      await Axios.post('/admin/products/' + product.id, data);
       const updateProduct = await Axios.get('/products/' + product.id);
       expect(updateProduct.data.name).toBe('New name');
     });
@@ -134,7 +136,7 @@ describe("Admin Products DELETE", () => {
         const product = old.data.products.find(c => c.user_id != user.id);
         const oldNumProduct = old.data.products.length;
         // before
-        const deleteRes = await Axios.delete('/products/' + product.id);
+        const deleteRes = await Axios.delete('/admin/products/' + product.id);
         // after
         const cur = await Axios.get('/products');
         const curNumProduct = cur.data.products.length;

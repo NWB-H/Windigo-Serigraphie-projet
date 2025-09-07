@@ -1,6 +1,20 @@
 <script setup lang="ts">
 import { onMounted } from "vue";
 import { usePortfolioStore } from "@/stores/Portfolio";
+import { useHead } from "@vueuse/head";
+
+useHead({
+  title: 'Portfolio | Windigo',
+  meta: [
+    { name: 'description', content: "Parcourez notre portfolio de sérigraphie artisanale : projets créatifs, textiles personnalisés et créations uniques Windigo." },
+    { property: 'og:title', content: 'Portfolio | Windigo' },
+    { property: 'og:description', content: "Découvrez les réalisations artisanales de notre atelier de sérigraphie : t-shirts, textiles et créations graphiques." },
+    { property: 'og:url', content: 'https://windigo.com/portfolio' }
+  ],
+  link: [
+    { rel: 'canonical', href: 'https://windigo.com/portfolio' }
+  ]
+})
 
 const portfolioStore = usePortfolioStore();
 

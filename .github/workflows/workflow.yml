@@ -1,0 +1,50 @@
+name: workflow.yml
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-image-api:
+    permissions:
+      packages: write
+      contents: read
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Connexion à GHCR
+        uses: docker/login-action@v2
+        with:
+          registry: https://ghcr.io
+          username: Triitx
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v6
+        with:
+          context: api
+          push: true
+          tags: |
+            ghcr.io/triitx/windigo-serigraphie-projet-api:latest
+            ghcr.io/triitx/windigo-serigraphie-projet-api:${{ github.sha }}
+
+  build-image-spa:
+    permissions: write-all
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Connexion à GHCR
+        uses: docker/login-action@v2
+        with:
+          registry: https://ghcr.io
+          username: Triitx
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v6
+        with:
+          context: spa
+          push: true
+          tags: |
+            ghcr.io/triitx/windigo-serigraphie-projet-spa:latest
+            ghcr.io/triitx/windigo-serigraphie-projet-spa:${{ github.sha }}

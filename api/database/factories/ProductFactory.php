@@ -24,8 +24,8 @@ class ProductFactory extends Factory
             'stock' => random_int(0,20),
             'description' => $this->faker->paragraph(1),
             'archived' => random_int(0,1),
-            'option_id' => Option::inRandomOrder()->value('id'),
-            'category_id' => Category::inRandomOrder()->value('id'),
+            'option_id' => Option::factory(),
+            'category_id' => Category::factory(),
         ];
     }
 }

@@ -7,14 +7,19 @@ import { createPinia } from 'pinia';
 import { useUserStore } from '@/stores/User';
 import { useCartStore } from './stores/Cart';
 import { getCart } from './_services/CartService';
+import { createHead } from '@vueuse/head'
 
 // 🔹 Vue app
 const pinia = createPinia();
 const app = createApp(App);
+const head = createHead()
+
+app.use(head);
 app.use(router);
 app.use(pinia);
 
 app.mount('#app');
+
 
 // Recharge l'utilisateur si présent en localStorage
 const userStore = useUserStore()

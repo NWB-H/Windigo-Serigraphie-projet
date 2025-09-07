@@ -5,6 +5,20 @@ import { useCartStore } from '@/stores/Cart';
 import { getProducts } from '@/_services/ProductService';
 import { setCart } from '@/_services/CartService';
 import AppToast from '@/components/AppToast.vue';
+import { useHead } from '@vueuse/head';
+
+useHead({
+  title: 'Boutique | Windigo',
+  meta: [
+    { name: 'description', content: "Explorez notre boutique de sérigraphie artisanale : t-shirts, textiles et créations uniques faits main, disponibles en ligne." },
+    { property: 'og:title', content: 'Boutique | Windigo' },
+    { property: 'og:description', content: "T-shirts sérigraphiés et textiles uniques faits main. Découvrez la boutique artisanale Windigo." },
+    { property: 'og:url', content: 'https://windigo.com/boutique' }
+  ],
+  link: [
+    { rel: 'canonical', href: 'https://windigo.com/boutique' }
+  ]
+})
 
 const productStore = useProductStore();
 const cartStore = useCartStore();

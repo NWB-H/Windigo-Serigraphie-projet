@@ -7,7 +7,7 @@ import type { Product } from '@/_models/Product';
 // -------------------
 export async function getProducts(): Promise<Product[]> {
   const res = await Axios.get('api/products');
-  return res.data.products; // <- clé "products"
+  return res.data.products; 
 }
 
 export async function getProduct(id: number): Promise<Product> {
@@ -20,7 +20,7 @@ export async function getProduct(id: number): Promise<Product> {
 // -------------------
 export async function getAdminProducts(): Promise<Product[]> {
   const res = await Axios.get('api/admin/products');
-  return res.data; // ici pas de clé "products", ton contrôleur renvoie Product::all()
+  return res.data; 
 }
 
 export async function getAdminProduct(id: number): Promise<Product> {

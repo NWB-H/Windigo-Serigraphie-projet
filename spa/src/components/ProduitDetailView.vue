@@ -5,6 +5,7 @@ import { useCartStore } from '@/stores/Cart';
 import { getProduct } from '@/_services/ProductService';
 import { setCart } from '@/_services/CartService';
 import AppToast from '@/components/AppToast.vue';
+import { useHead } from '@vueuse/head';
 
 const route = useRoute();
 const router = useRouter();
@@ -22,6 +23,20 @@ onMounted(async () => {
   const id = Number(route.params.id);
   try {
     product.value = await getProduct(id);
+
+    useHead({
+      title: `${product.value.name} | Windigo`,
+      meta: [
+        { name: 'description', content: product.value.description?.substring(0, 155) },
+        { property: 'og:title', content: `${product.value.name} | Windigo` },
+        { property: 'og:description', content: product.value.description },
+        { property: 'og:image', content: product.value.picture_url || product.value.images_urls?.[0] },
+        { property: 'og:url', content: `https://windigo.com/produit/${product.value.id}` }
+      ],
+      link: [
+        { rel: 'canonical', href: `https://windigo.com/produit/${product.value.id}` }
+      ]
+    })
 
     // Normaliser les images pour toujours avoir un tableau d'URLs
     product.value.images_urls = [];

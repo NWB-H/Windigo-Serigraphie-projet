@@ -1,6 +1,20 @@
 <script setup lang="ts">
 import { onMounted } from 'vue';
 import { useWorkshopStore } from '@/stores/Workshop';
+import { useHead } from '@vueuse/head';
+
+useHead({
+  title: 'Ateliers de sérigraphie | Windigo',
+  meta: [
+    { name: 'description', content: "Participez à nos ateliers de sérigraphie artisanale : apprenez à créer et personnaliser vos textiles dans une ambiance conviviale." },
+    { property: 'og:title', content: 'Ateliers de sérigraphie | Windigo' },
+    { property: 'og:description', content: "Initiez-vous à la sérigraphie avec nos ateliers créatifs. Réservez votre séance et créez vos propres textiles." },
+    { property: 'og:url', content: 'https://windigo.com/ateliers' }
+  ],
+  link: [
+    { rel: 'canonical', href: 'https://windigo.com/ateliers' }
+  ]
+})
 
 const workshopStore = useWorkshopStore();
 

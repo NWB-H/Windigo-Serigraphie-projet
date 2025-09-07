@@ -4,6 +4,7 @@ import { useRoute } from 'vue-router'
 import { useWorkshopStore } from '@/stores/Workshop'
 import AppToast from '@/components/AppToast.vue'
 import router from '@/router'
+import { useHead } from '@vueuse/head'
 
 const route = useRoute()
 const workshopStore = useWorkshopStore()
@@ -20,6 +21,22 @@ const thumbnailsContainer = ref<HTMLElement | null>(null)
 onMounted(async () => {
   await workshopStore.fetchWorkshopById(Number(route.params.id))
   workshop.value = workshopStore.currentWorkshop
+
+  if (workshop.value) {
+    useHead({
+      title: `${workshop.value.name} | Ateliers Windigo`,
+      meta: [
+        { name: 'description', content: workshop.value.description?.substring(0, 155) || "Atelier de sérigraphie artisanale à découvrir chez Windigo." },
+        { property: 'og:title', content: `${workshop.value.name} | Ateliers Windigo` },
+        { property: 'og:description', content: workshop.value.description },
+        { property: 'og:image', content: workshop.value.images?.length ? `http://localhost:8000/storage/${workshop.value.images[0]}` : '' },
+        { property: 'og:url', content: `https://windigo.com/atelier/${workshop.value.id}` }
+      ],
+      link: [
+        { rel: 'canonical', href: `https://windigo.com/atelier/${workshop.value.id}` }
+      ]
+    })
+  }
 
   await nextTick() // attendre que le DOM soit rendu
 

@@ -23,7 +23,7 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
-Route::middleware(['web', 'throttle:login'])->group(function () {
+Route::middleware(['web', 'throttle:authenticate'])->group(function () {
     Route::post('/authenticate', [AuthController::class, 'authenticate']);
     Route::get('/logout', [AuthController::class, 'logout']);
 });

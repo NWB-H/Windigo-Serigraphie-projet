@@ -4,6 +4,21 @@ import { getProducts } from '@/_services/ProductService';
 import type { Product } from '@/_models/Product';
 import { useWorkshopStore } from '@/stores/Workshop';
 import { usePortfolioStore } from '@/stores/Portfolio';
+import { useHead } from '@vueuse/head';
+
+useHead({
+  title: 'Accueil | Windigo',
+  meta: [
+    { name: 'description', content: "Découvrez notre atelier de sérigraphie artisanale : créations uniques, boutique en ligne et ateliers personnalisés pour t-shirts et textiles." },
+    { property: 'og:title', content: 'Accueil | Windigo' },
+    { property: 'og:description', content: "Sérigraphie artisanale et créations uniques. Boutique, ateliers et personnalisation textile." },
+    { property: 'og:url', content: 'https://windigo.com/home' }
+  ],
+  link: [
+    { rel: 'canonical', href: 'https://windigo.com/home'  }
+  ]
+})
+
 
 const randomProducts = ref<Product[]>([]);
 const workshopStore = useWorkshopStore();

@@ -1,3 +1,36 @@
+<script setup lang="ts">
+import type { Product } from '@/_models/Product';
+import { getProducts } from '@/_services/ProductService';
+import router from '@/router';
+import { useHead } from '@vueuse/head';
+import { onMounted, ref } from 'vue';
+
+useHead({
+    title: 'À propos | Windigo',
+    meta: [
+        { name: 'description', content: "Découvrez l’histoire de Windigo, atelier de sérigraphie artisanale passionné par la création textile et le savoir-faire fait main." },
+        { property: 'og:title', content: 'À propos | Windigo' },
+        { property: 'og:description', content: "Un atelier de sérigraphie artisanale animé par la passion et la créativité. Découvrez notre univers." },
+        { property: 'og:url', content: 'https://windigo.com/a-propos' }
+    ],
+    link: [
+        { rel: 'canonical', href: 'https://windigo.com/apropos' }
+    ]
+})
+
+const randomProducts = ref<Product[]>([]);
+
+onMounted(async () => {
+    try {
+        const products = await getProducts();
+        const shuffled = [...products].sort(() => 0.5 - Math.random());
+        randomProducts.value = shuffled.slice(0, 3);
+    } catch (error) {
+        console.error('Erreur récupération produits :', error);
+    }
+});
+</script>
+
 <template>
     <div class="container my-5">
         <div class="row">
@@ -59,15 +92,15 @@
                     <h2 class="mb-4">Boutique</h2>
                     <div class="row g-3">
                         <div v-for="product in randomProducts" :key="product.id" class="col-md-4">
-                           <router-link :to="{ name: 'produit-detail', params: { id: product.id } }">
-                            <div class="card h-100 shadow-sm">
-                                <img v-if="product.picture_url" :src="product.picture_url" class="card-img-top"
-                                    alt="product.name" />
-                                <div class="card-body text-center">
-                                    <h5 class="card-title text-truncate">{{ product.name }}</h5>
+                            <router-link :to="{ name: 'produit-detail', params: { id: product.id } }">
+                                <div class="card h-100 shadow-sm">
+                                    <img v-if="product.picture_url" :src="product.picture_url" class="card-img-top"
+                                        alt="product.name" />
+                                    <div class="card-body text-center">
+                                        <h5 class="card-title text-truncate">{{ product.name }}</h5>
+                                    </div>
                                 </div>
-                            </div>
-                             </router-link>
+                            </router-link>
                         </div>
                     </div>
                     <button class="btn btn-primary btn-lg mt-3" @click="router.push('/boutique')">
@@ -79,24 +112,7 @@
     </div>
 </template>
 
-<script setup lang="ts">
-import type { Product } from '@/_models/Product';
-import { getProducts } from '@/_services/ProductService';
-import router from '@/router';
-import { onMounted, ref } from 'vue';
 
-const randomProducts = ref<Product[]>([]);
-
-onMounted(async () => {
-  try {
-    const products = await getProducts();
-    const shuffled = [...products].sort(() => 0.5 - Math.random());
-    randomProducts.value = shuffled.slice(0, 3);
-  } catch (error) {
-    console.error('Erreur récupération produits :', error);
-  }
-});
-</script>
 
 <style scoped>
 h2 {
