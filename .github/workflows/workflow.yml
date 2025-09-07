@@ -108,6 +108,6 @@ jobs:
           server: ${{ secrets.SERVER }}
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.PASSWORD }}
-          local-dir: ./deploy
+          local-dir: ./deploy/
           server-dir: /www/     # à adapter selon ton hébergement
           
