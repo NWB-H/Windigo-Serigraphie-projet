@@ -113,5 +113,5 @@ jobs:
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.PASSWORD }}
           local-dir: ./deploy/
-          server-dir: /www//tmp/
+          server-dir: /www/
           
