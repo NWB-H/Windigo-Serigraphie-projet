@@ -114,4 +114,4 @@ jobs:
           password: ${{ secrets.PASSWORD }}
           local-dir: ./deploy/
           server-dir: /www/
-          
+          timeout: 190000
