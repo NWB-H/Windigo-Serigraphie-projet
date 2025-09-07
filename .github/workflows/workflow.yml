@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - main
+      - feature-test
 
 jobs:
   build-image-api:
@@ -29,7 +30,9 @@ jobs:
             ghcr.io/nwb-h/windigo-serigraphie-projet-api:${{ github.sha }}
 
   build-image-spa:
-    permissions: write-all
+    permissions:
+      packages: write
+      contents: read
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -49,12 +52,62 @@ jobs:
             ghcr.io/nwb-h/windigo-serigraphie-projet-spa:latest
             ghcr.io/nwb-h/windigo-serigraphie-projet-spa:${{ github.sha }}
 
-  ftptO2switch:
+  build-api:
+    permissions:
+      packages: write
+      contents: read
     runs-on: ubuntu-latest
     steps:
-      - name: Deploiement continue
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Install Composer Dependencies
+        working-directory: api
+        run: composer install
+      - name: Upload API as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: api
+          path: api
+          
+  build-spa:
+    permissions:
+      packages: write
+      contents: read
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Install Node.js Dependencies
+        working-directory: ./spa
+        run: npm install -D sass-embedded && npm run build
+      - name: Upload SPA as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: spa
+          path: spa/dist
+          
+  deploy:
+    needs: [build-api, build-spa]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download API artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: api
+          path: ./deploy/api
+
+      - name: Download SPA artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: spa
+          path: ./deploy/spa
+
+      - name: Deploy to o2switch via FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ${{ secrets.SERVER }}
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.PASSWORD }}
+          local-dir: ./deploy
+          server-dir: /www/     # à adapter selon ton hébergement
+          
