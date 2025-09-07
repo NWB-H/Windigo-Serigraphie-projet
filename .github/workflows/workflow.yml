@@ -64,8 +64,7 @@ jobs:
         working-directory: api
         run: composer install
       - name: Zip project
-        working-directory: api
-        run: tar -czf api.tar.gz *
+        run: tar -czf api.tar.gz -C api .
       - name: Upload API as artifact
         uses: actions/upload-artifact@v4
         with:
@@ -84,8 +83,7 @@ jobs:
         working-directory: spa
         run: npm install -D sass-embedded && npm run build
       - name: Zip project
-        working-directory: spa
-        run: tar -czf spa.tar.gz -C dist .
+        run: tar -czf spa.tar.gz -C spa/dist .
       - name: Upload SPA as artifact
         uses: actions/upload-artifact@v4
         with:
@@ -100,13 +98,13 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: api
-          path: ./deploy/api.tar.gz
+          path: ./deploy
 
       - name: Download SPA artifact
         uses: actions/download-artifact@v4
         with:
           name: spa
-          path: ./deploy/spa.tar.gz
+          path: ./deploy
 
       - name: Deploy to o2switch via FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
@@ -115,5 +113,5 @@ jobs:
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.PASSWORD }}
           local-dir: ./deploy/
-          server-dir: /www/
+          server-dir: /www//tmp
           
