@@ -1,20 +1,20 @@
 import Axios from './CallerService';
 import { useUserStore } from '@/stores/User';
 
-export async function login(credentials: { email: string, password: string }): Promise<void> {
-    await Axios.get('/sanctum/csrf-cookie', {
-        baseURL: 'http://localhost:8000'
-    });
+export async function login(credentials: { email: string, password: string }) {
+  console.log('GET CSRF cookie');
+  await Axios.get('/sanctum/csrf-cookie'); // 🔹 vérifie Network: doit renvoyer 200 et Set-Cookie
 
-    const res = await Axios.post('/authenticate', credentials, {
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
-    });
+  console.log('POST authenticate');
+  const res = await Axios.post('/authenticate', credentials, {
+    headers: { 'Content-Type': 'application/json' }
+  });
 
-      const userStore = useUserStore();
-      userStore.setUser({
-        email: res.data.user.email,
-        role: res.data.user.role
-      });
+  const userStore = useUserStore();
+  userStore.setUser({
+    email: res.data.user.email,
+    role: res.data.user.role
+  });
 }
 
 export async function fetchUser() {
@@ -48,7 +48,7 @@ export async function logout() {
 
 export async function register(payload:any) {
     await Axios.get('/sanctum/csrf-cookie', {
-        baseURL: 'http://localhost:8000'
+        baseURL: 'https://windigoprint-backend.fohu7030.odns.fr'
     });
     
     return await Axios.post('/api/register', payload)

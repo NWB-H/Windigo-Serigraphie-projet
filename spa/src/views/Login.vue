@@ -8,6 +8,19 @@ const auth = ref({
   password: ''
 });
 
+useHead({
+  title: 'Connexion | Windigo',
+  meta: [
+    { name: 'description', content: "Connectez-vous à votre compte Windigo pour gérer vos réservations et accéder à vos ateliers de sérigraphie." },
+    { property: 'og:title', content: 'Connexion | Windigo Sérigraphie' },
+    { property: 'og:description', content: "Accédez à votre espace personnel Windigo pour réserver et suivre vos ateliers de sérigraphie artisanale." },
+    { property: 'og:url', content: 'https://windigo.com/login' }
+  ],
+  link: [
+    { rel: 'canonical', href: 'https://windigo.com/login' }
+  ]
+})
+
 const errors = ref<any>({});
 
 onMounted( () => {

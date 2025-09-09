@@ -22,7 +22,7 @@ class DatabaseSeeder extends Seeder
    */
   public function run(): void
   {
-    User::create([
+    User::updateOrCreate([
       'name' => 'Administrateur',
       'role' => 'ROLE_ADMIN',
       'email' => 'admin@windigo.com',
@@ -33,7 +33,7 @@ class DatabaseSeeder extends Seeder
       'remember_token' => Str::random(10)
     ]);
 
-    User::create([
+    User::updateOrCreate([
       'name' => 'Utilisateur',
       'role' => 'ROLE_USER',
       'email' => 'user@windigo.com',

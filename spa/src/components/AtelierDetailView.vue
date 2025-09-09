@@ -29,7 +29,7 @@ onMounted(async () => {
         { name: 'description', content: workshop.value.description?.substring(0, 155) || "Atelier de sérigraphie artisanale à découvrir chez Windigo." },
         { property: 'og:title', content: `${workshop.value.name} | Ateliers Windigo` },
         { property: 'og:description', content: workshop.value.description },
-        { property: 'og:image', content: workshop.value.images?.length ? `http://localhost:8000/storage/${workshop.value.images[0]}` : '' },
+        { property: 'og:image', content: workshop.value.images?.length ? `http://https://windigoprint-backend.fohu7030.odns.fr/storage/${workshop.value.images[0]}` : '' },
         { property: 'og:url', content: `https://windigo.com/atelier/${workshop.value.id}` }
       ],
       link: [
@@ -87,7 +87,7 @@ const handleBooking = async (sessionId: number) => {
           <div class="carousel-inner">
             <div v-for="(img, index) in workshop.images" :key="index"
               :class="['carousel-item', { active: index === 0 }]">
-              <img :src="`http://localhost:8000/storage/${img}`" class="d-block w-100 rounded" />
+              <img :src="`https://windigoprint-backend.fohu7030.odns.fr/storage/${img}`" class="d-block w-100 rounded" />
             </div>
           </div>
           <button class="carousel-control-prev" type="button" data-bs-target="#workshopCarousel" data-bs-slide="prev">
@@ -101,7 +101,7 @@ const handleBooking = async (sessionId: number) => {
         <div v-if="workshop.images?.length > 1" ref="thumbnailsContainer"
           class="mt-3 d-flex flex-wrap gap-2 justify-content-center">
           <img v-for="(img, index) in workshop.images" :key="'thumb-' + index"
-            :src="`http://localhost:8000/storage/${img}`" class="thumbnail"
+            :src="`https://windigoprint-backend.fohu7030.odns.fr/storage/${img}`" class="thumbnail"
             style="width: 80px; height: 80px; object-fit: cover; cursor: pointer;" :data-bs-target="'#workshopCarousel'"
             :data-bs-slide-to="index" />
         </div>

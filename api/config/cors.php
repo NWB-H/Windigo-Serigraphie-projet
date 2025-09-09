@@ -19,7 +19,7 @@ return [
 
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => ['*'],
+    'allowed_origins' => ['*', 'https://www.windigoprint-frontend.fohu7030.odns.fr', 'https://windigoprint-frontend.fohu7030.odns.fr'],
 
     'allowed_origins_patterns' => [],
 

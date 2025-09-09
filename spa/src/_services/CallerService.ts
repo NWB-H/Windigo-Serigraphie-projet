@@ -2,10 +2,7 @@
 import axios from 'axios';
 
 const Axios = axios.create({
-    baseURL: 'http://localhost:8000',
-    headers: {
-      Accept: 'application/json'
-    },
+    baseURL: 'https://windigoprint-backend.fohu7030.odns.fr',
     withCredentials: true, // axios va copier les cookies d'auth dans le header de la requête
     withXSRFToken: true,
     xsrfCookieName: 'XSRF-TOKEN',
