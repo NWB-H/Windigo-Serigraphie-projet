@@ -48,51 +48,51 @@ jobs:
           tags: |
             ghcr.io/nwb-h/windigo-serigraphie-projet-spa:latest
             ghcr.io/nwb-h/windigo-serigraphie-projet-spa:${{ github.sha }}
-            
-ftptO2switch:
-  runs-on: ubuntu-latest
-  steps:
-    # 1️⃣ Checkout repository
-    - name: Checkout repository
-      uses: actions/checkout@v4
 
-    # 2️⃣ Installer Node.js
-    - name: Setup Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: '20'
+  ftptO2switch:
+    runs-on: ubuntu-latest
+    steps:
+      # 1️⃣ Checkout repository
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-    # 3️⃣ Build frontend Vue.js
-    - name: Build frontend
-      working-directory: ./spa
-      run: |
-        npm install
-        npm run build
+      # 2️⃣ Installer Node.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
 
-    # 4️⃣ Vérifier que le dossier dist existe
-    - name: Ensure dist exists
-      run: |
-        if [ ! -d "./spa/dist" ]; then
-          echo "Error: ./spa/dist not found!"
-          exit 1
-        fi
+      # 3️⃣ Build frontend Vue.js
+      - name: Build frontend
+        working-directory: ./spa
+        run: |
+          npm install
+          npm run build
 
-    # 5️⃣ Déployer frontend via FTP
-    - name: Upload frontend via FTP
-      uses: SamKirkland/FTP-Deploy-Action@v4.3.5
-      with:
-        server: ${{ secrets.SERVER }}
-        username: ${{ secrets.USERNAME }}
-        password: ${{ secrets.PASSWORD }}
-        local-dir: ./spa/dist/
-        server-dir: /www/
+      # 4️⃣ Vérifier que le dossier dist existe
+      - name: Ensure dist exists
+        run: |
+          if [ ! -d "./spa/dist" ]; then
+            echo "Error: ./spa/dist not found!"
+            exit 1
+          fi
 
-    # 6️⃣ Déployer backend Laravel via FTP
-    - name: Upload backend via FTP
-      uses: SamKirkland/FTP-Deploy-Action@v4.3.5
-      with:
-        server: ${{ secrets.SERVER }}
-        username: ${{ secrets.USERNAME }}
-        password: ${{ secrets.PASSWORD }}
-        local-dir: ./api/
-        server-dir: /api/
+      # 5️⃣ Déployer frontend via FTP
+      - name: Upload frontend via FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.SERVER }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          local-dir: ./spa/dist/
+          server-dir: /www/
+
+      # 6️⃣ Déployer backend Laravel via FTP
+      - name: Upload backend via FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.SERVER }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          local-dir: ./api/
+          server-dir: /api/
