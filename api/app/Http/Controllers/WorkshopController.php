@@ -31,7 +31,7 @@ class WorkshopController extends Controller
             'duration' => 'required|integer',
             'age' => 'required|integer',
             'description' => 'nullable|string',
-            'images.*' => 'nullable|image|max:2048',
+            'images.*' => 'nullable|image|jpg,jpeg,png,webp,JPG,JPEG,PNG,WEBP,GIF,gif|max:2048',
         ]);
 
         $images = [];
@@ -63,7 +63,7 @@ class WorkshopController extends Controller
             'duration' => 'integer',
             'age' => 'integer',
             'description' => 'nullable|string',
-            'images.*' => 'nullable|image|max:2048',
+            'images.*' => 'nullable|image|jpg,jpeg,png,webp,JPG,JPEG,PNG,WEBP,GIF,gif|max:2048',
         ]);
 
         // Conserver les anciennes images

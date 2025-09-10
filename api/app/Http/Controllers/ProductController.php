@@ -36,7 +36,7 @@ class ProductController extends Controller
             'archived' => 'required|integer',
             'option_id' => 'required|exists:options,id',
             'category_id' => 'required|exists:categories,id',
-            'picture' => 'nullable|image|mimes:jpg,jpeg,png|max:2048'
+            'picture' => 'nullable|image|mimes:jpg,jpeg,png,webp,JPG,JPEG,PNG,WEBP,GIF,gif|max:2048'
         ]);
 
         $product = new Product();
@@ -74,7 +74,7 @@ class ProductController extends Controller
             'archived' => 'integer',
             'option_id' => 'exists:options,id',
             'category_id' => 'exists:categories,id',
-            'picture' => 'nullable|image|mimes:jpg,jpeg,png|max:2048'
+            'picture' => 'nullable|image|mimes:jpg,jpeg,png,webp,JPG,JPEG,PNG,WEBP,GIF,gif|max:2048'
         ]);
 
         // Suppression si l'utilisateur a supprimé l'image

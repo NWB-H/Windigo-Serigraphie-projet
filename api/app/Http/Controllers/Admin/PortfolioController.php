@@ -22,7 +22,7 @@ class PortfolioController extends Controller
             'image' => [
                 'required',
                 'file', // On vérifie juste que c’est un fichier
-                'mimes:jpg,jpeg,png,JPG,JPEG,PNG,webp', // Extensions seulement
+                'mimes:jpg,jpeg,png,webp,JPG,JPEG,PNG,WEBP,GIF,gif', // Extensions seulement
                 'max:2048', // Taille max 2 Mo
             ],
             'titre' => 'nullable|string',
