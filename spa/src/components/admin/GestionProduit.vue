@@ -177,7 +177,9 @@ async function deleteProduct(id: number) {
           <td>{{ product.name }}</td>
           <td>{{ product.price }} €</td>
           <td>{{ product.stock }}</td>
-          <td>{{ product.description }}</td>
+          <td>
+            {{ product.description.length > 50 ? product.description.slice(0, 50) + '...' : product.description }}
+          </td>
           <td>{{ product.category?.name || '-' }}</td>
           <td>{{ product.option?.name || '-' }}</td>
           <td>{{ product.archived ? 'Oui' : 'Non' }}</td>

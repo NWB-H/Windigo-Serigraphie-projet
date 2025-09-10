@@ -43,7 +43,7 @@ class ProductController extends Controller
             'archived' => 'boolean',
             'option_id' => 'required|exists:options,id',
             'category_id' => 'required|exists:categories,id',
-            'picture' => 'nullable|image|jpg,jpeg,png,webp,JPG,JPEG,PNG,WEBP,GIF,gif|max:2048'
+            'picture' => 'nullable|image|mimes:jpg,jpeg,png,webp,JPG,JPEG,PNG,WEBP,GIF,gif|max:2048'
         ]);
 
         // Gestion de l'image
@@ -73,7 +73,7 @@ class ProductController extends Controller
             'archived' => 'boolean',
             'option_id' => 'exists:options,id',
             'category_id' => 'exists:categories,id',
-            'picture' => 'nullable|image|jpg,jpeg,png,webp,JPG,JPEG,PNG,WEBP,GIF,gif|max:2048'
+            'picture' => 'nullable|image|mimes:jpg,jpeg,png,webp,JPG,JPEG,PNG,WEBP,GIF,gif|max:2048'
         ]);
 
         // Gestion de la nouvelle image
