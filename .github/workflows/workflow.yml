@@ -89,6 +89,7 @@ jobs:
           password: ${{ secrets.PASSWORD }}
           local-dir: ./spa/dist/
           server-dir: /windigoprint-frontend.fohu7030.odns.fr/
+          dangerous-clean-slate: true
 
       # 6️⃣ Déployer backend Laravel via FTP
       - name: Upload backend via FTP
@@ -99,3 +100,4 @@ jobs:
           password: ${{ secrets.PASSWORD }}
           local-dir: ./api/
           server-dir: /windigoprint-backend.fohu7030.odns.fr/Windigo-Serigraphie-projet-main/api/
+          dangerous-clean-slate: true
