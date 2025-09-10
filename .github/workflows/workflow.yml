@@ -48,7 +48,7 @@ jobs:
           tags: |
             ghcr.io/nwb-h/windigo-serigraphie-projet-spa:latest
             ghcr.io/nwb-h/windigo-serigraphie-projet-spa:${{ github.sha }}
-
+            
 ftptO2switch:
   runs-on: ubuntu-latest
   steps:
