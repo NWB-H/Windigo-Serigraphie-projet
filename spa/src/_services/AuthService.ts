@@ -48,7 +48,7 @@ export async function logout() {
 
 export async function register(payload:any) {
     await Axios.get('/sanctum/csrf-cookie', {
-        baseURL: 'https://windigoprint-backend.fohu7030.odns.fr'
+        baseURL: 'https://back.windigoprint.com'
     });
     
     return await Axios.post('/api/register', payload)

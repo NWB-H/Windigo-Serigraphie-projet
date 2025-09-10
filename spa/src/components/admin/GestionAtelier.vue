@@ -74,7 +74,7 @@
       <div class="flex flex-wrap gap-2 mt-2">
         <!-- Images existantes -->
         <div v-for="(img, index) in visibleImages" :key="'existing-' + index" class="relative">
-          <img :src="`https://windigoprint-backend.fohu7030.odns.fr/storage/${img}`" class="table-image border" />
+          <img :src="`https://back.windigoprint.com/storage/${img}`" class="table-image border" />
           <button type="button" @click="removedImages.push(img)"
             class="absolute top-0 right-0 bg-red-600 text-white rounded-full w-5 h-5 text-xs flex items-center justify-center">x</button>
         </div>
