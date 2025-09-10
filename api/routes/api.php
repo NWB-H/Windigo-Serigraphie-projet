@@ -39,18 +39,18 @@ Route::controller(ForgotPasswordController::class)->group(function () {
 });
 
 //Gestion des utilisateurs
-Route::middleware('auth:sanctum')->get('/users/me', function (Request $request) {
-    $user = $request->user();
+// Route::middleware('auth:sanctum')->get('/users/me', function (Request $request) {
+//     $user = $request->user();
 
-    if (!$user) {
-        return response()->json(['message' => 'Non authentifié'], 401);
-    }
+//     if (!$user) {
+//         return response()->json(['message' => 'Non authentifié'], 401);
+//     }
 
-    return [
-        'email' => $user->email,
-        'role' => $user->role->value, // récupère la valeur de l'enum
-    ];
-});
+//     return [
+//         'email' => $user->email,
+//         'role' => $user->role->value, // récupère la valeur de l'enum
+//     ];
+// });
 
 Route::controller(UserController::class)->prefix('users')->group(function () {
     Route::get('', 'index');
