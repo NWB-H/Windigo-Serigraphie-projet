@@ -44,7 +44,9 @@ onMounted(async () => {
                             <img :src="''" alt="Entreprise" class="img-fluid rounded shadow-sm">
                         </div>
                         <div class="col-12 col-md-6">
-                            <p></p>
+                            <p>J’ai fondé en 2017 Windigo, un atelier de sérigraphie artisanale sous forme de
+                                micro-entreprise, dans lequel j’imprime mes propres illustrations sur t-shirts et sur
+                                papier, sous forme d’affiches ou cartes.</p>
                         </div>
                     </div>
                 </section>
@@ -52,7 +54,8 @@ onMounted(async () => {
                 <!-- À propos de la sérigraphie -->
                 <section class="mb-5 p-4 bg-light rounded shadow-sm">
                     <h2 class="mb-4">À propos de la sérigraphie</h2>
-                    <p></p>
+                    <p>J'anime depuis plusieurs années des ateliers d'initiation pour faire découvrir au public les
+                        bases techniques et le pouvoir créatif de la sérigraphie.</p>
                     <img :src="''" alt="Sérigraphie" class="img-fluid rounded shadow-sm mt-3">
                     <button class="btn btn-primary btn-lg mt-3" @click="router.push('/ateliers')">
                         Découvrir la sérigraphie
@@ -67,7 +70,9 @@ onMounted(async () => {
                     <h2 class="mb-4">À propos de moi</h2>
                     <div class="row align-items-center">
                         <div class="col-12 col-md-6 order-2 order-md-1">
-                            <p></p>
+                            <p>Je suis Clément Fouquet, j’ai 33 ans et je suis illustrateur et sérigraphe. Après avoir
+                                fait des études de graphisme, je me suis intéressé à la sérigraphie comme moyen d’éditer
+                                moi-même mes propres illustrations.</p>
                         </div>
                         <div class="col-12 col-md-6 order-1 order-md-2 mb-3 mb-md-0">
                             <img :src="''" alt="Moi" class="img-fluid rounded shadow-sm">

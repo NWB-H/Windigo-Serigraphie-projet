@@ -13,6 +13,8 @@ import ProduitDetailView from '@/components/ProduitDetailView.vue';
 import GestionSession from '@/components/admin/GestionSession.vue';
 import APropos from '@/components/APropos.vue';
 import PortFolio from '@/components/PortFolio.vue';
+import Confidentialite from '@/components/Confidentialite.vue';
+import MentionsLegales from '@/components/MentionsLegales.vue';
 
 
 const router = createRouter({
@@ -96,7 +98,16 @@ const router = createRouter({
       name: 'admin.dashboard',
       component: DashboardAdmin,
       meta: { role: 'ROLE_ADMIN' }
-    }
+    },   {
+    path: '/mentions-legales',
+    name: 'MentionsLegales',
+    component: MentionsLegales,
+  },
+  {
+    path: '/politique-confidentialite',
+    name: 'PolitiqueConfidentialite',
+    component: Confidentialite,
+  },
 
   ]
 });

@@ -121,9 +121,10 @@ onMounted(() => {
         </div>
 
         <div class="footer-section contact">
-          <h5>WINDIGO-SÉRIGRAPHIE</h5>
-          <p>6 rue des Acacias<br/>72000 Le Mans</p>
-          <p>📞 06 XX XX XX XX<br/>📞 02 XX XX XX XX</p>
+          <h5>Atelier de sérigraphie Windigo</h5>
+          <h5>Clément Fouquet</h5>
+          <p>39 rue Saint Pavin des champs<br/>72000 Le Mans</p>
+          <p>📞 07 83 28 72 87</p>
         </div>
 
         <div class="footer-section links">
@@ -132,7 +133,7 @@ onMounted(() => {
             <RouterLink to="/login">Mon compte</RouterLink>
           </div>
           <div class="footer-links">
-            <RouterLink to="/confidentialite">Politique de confidentialité</RouterLink> |
+            <RouterLink to="/politique-confidentialite">Politique de confidentialité</RouterLink> |
             <RouterLink to="/mentions-legales">Mentions légales</RouterLink>
           </div>
         </div>
