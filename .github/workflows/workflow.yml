@@ -49,8 +49,11 @@ jobs:
             ghcr.io/nwb-h/windigo-serigraphie-projet-spa:latest
             ghcr.io/nwb-h/windigo-serigraphie-projet-spa:${{ github.sha }}
 
-  ftptO2switch:
+  ftpO2switch:
     runs-on: ubuntu-latest
+    needs:
+      - build-image-spa
+      - build-image-api
     steps:
       # 1️⃣ Checkout repository
       - name: Checkout repository
