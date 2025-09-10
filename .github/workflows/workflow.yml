@@ -88,7 +88,7 @@ jobs:
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.PASSWORD }}
           local-dir: ./spa/dist/
-          server-dir: /windigoprint.com/front.windigoprint.com/
+          server-dir: front.windigoprint.com/
           dangerous-clean-slate: true
 
       # 6️⃣ Déployer backend Laravel via FTP
@@ -99,5 +99,5 @@ jobs:
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.PASSWORD }}
           local-dir: ./api/
-          server-dir: /windigoprint.com/back.windigoprint.com/
+          server-dir: /back.windigoprint.com/
           dangerous-clean-slate: true
