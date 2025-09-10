@@ -2,6 +2,7 @@
 import { ref, onMounted } from 'vue';
 import router from '@/router';
 import * as AuthService from '@/_services/AuthService';
+import { useHead } from '@vueuse/head';
 
 const auth = ref({
   email: '',
