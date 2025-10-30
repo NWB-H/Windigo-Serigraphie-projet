@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
+import { ref } from 'vue';
 import router from '@/router';
 import * as AuthService from '@/_services/AuthService';
 
@@ -10,19 +10,26 @@ const form = ref({
   password_confirmation: ''
 });
 
-const errors = ref<any>({});
-
-onMounted(async () => {
-  console.log('exec on mounted');
-});
+const errors = ref<Record<string, string[]>>({});
+const loading = ref(false);
 
 async function handleRegister() {
+  if (form.value.password !== form.value.password_confirmation) {
+    alert('Les mots de passe ne correspondent pas.');
+    return;
+  }
+
+  loading.value = true;
+  errors.value = {};
+
   try {
     await AuthService.register(form.value);
     alert('Un mail de vérification vous a été envoyé.');
     router.push('/login');
   } catch (e: any) {
     errors.value = e.response?.data?.errors || {};
+  } finally {
+    loading.value = false;
   }
 }
 </script>
@@ -33,29 +40,55 @@ async function handleRegister() {
       <div class="register">
         <h2 class="form-title">Inscription</h2>
         <div class="container-champ">
+
           <div class="form-group">
-            <input v-model="form.name" type="text" class="input" placeholder="Nom" />
+            <input
+              v-model="form.name"
+              type="text"
+              class="input"
+              placeholder="Nom"
+            />
+            <p v-if="errors.name" class="error">{{ errors.name[0] }}</p>
           </div>
-          <!-- <div class="form-group">
-            <input v-model="form.first-name" type="text" class="input" placeholder="Prénom" />
-          </div> -->
+
           <div class="form-group">
-            <input type="text" class="input" v-model="form.email" placeholder="Email" />
+            <input
+              v-model="form.email"
+              type="text"
+              class="input"
+              placeholder="Email"
+            />
+            <p v-if="errors.email" class="error">{{ errors.email[0] }}</p>
           </div>
+
           <div class="form-group">
-            <input type="password" class="input" v-model="form.password" placeholder="Mot de passe" />
+            <input
+              type="password"
+              class="input"
+              v-model="form.password"
+              placeholder="Mot de passe"
+            />
+            <p v-if="errors.password" class="error">{{ errors.password[0] }}</p>
           </div>
-          <!-- <div class="form-group">
-            <input type="password" class="input" v-model="form.password_confirmation" placeholder="Confirmer mot de passe" />
-          </div> -->
+
           <div class="form-group">
-            <button type="submit" class="button">Créer un compte</button>
+            <input
+              type="password"
+              class="input"
+              v-model="form.password_confirmation"
+              placeholder="Confirmer le mot de passe"
+            />
           </div>
+
+          <div class="form-group">
+            <button type="submit" class="button" :disabled="loading">
+              {{ loading ? 'Envoi...' : 'Créer un compte' }}
+            </button>
+          </div>
+
           <p class="register">
             Déjà inscrit ?
-            <router-link to="/login">
-              Connectez-vous
-            </router-link>
+            <router-link to="/login">Connectez-vous</router-link>
           </p>
         </div>
       </div>
@@ -72,16 +105,6 @@ async function handleRegister() {
   padding: 3vw 2vw;
   flex-direction: row;
   gap: 3vw;
-}
-
-.login {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  background-color: #d2baaa;
-  padding: 2vw 2vw;
 }
 
 .register {
@@ -104,7 +127,7 @@ async function handleRegister() {
   height: 2.3em;
   margin: 0.5em;
   background: white;
-  color: #A78770;
+  color: #a78770;
   border: none;
   border-radius: 0.625em;
   font-size: 20px;
@@ -134,10 +157,8 @@ button:after {
 
 button:hover:after {
   transform: skewX(-45deg) scale(1, 1);
-  -webkit-transition: all 0.5s;
   transition: all 0.5s;
 }
-
 
 .container-champ {
   display: flex;
@@ -146,5 +167,11 @@ button:hover:after {
   align-items: center;
   position: relative;
   gap: 2vw;
+}
+
+.error {
+  color: #b00020;
+  font-size: 0.9em;
+  margin-top: 0.25em;
 }
 </style>

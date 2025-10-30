@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Mail\RegisterEmail;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Str;
@@ -20,6 +21,7 @@ class RegisterController extends Controller
             'delivery_address' => 'nullable|exists:cities,id',
             'billing_address' => 'nullable|exists:cities,id',
         ]);
+        $formFields['password'] = Hash::make($formFields['password']);
 
         $user = new User();
         $user->fill($formFields);
@@ -41,15 +43,16 @@ class RegisterController extends Controller
         ]);
 
         $user = User::where('email', $formFields['email'])
-        ->where('token', $formFields['token'])
-        ->first();
+            ->where('token', $formFields['token'])
+            ->first();
 
         if (!$user) {
-            return response()->json(['failed' => 'failed', 400]);
+            return response()->json(['failed' => 'failed'], 400);
         }
 
 
         $user->email_verified_at = now();
+        $user->token = null;
         $user->save();
 
         return response()->json(['success' => 'success']);

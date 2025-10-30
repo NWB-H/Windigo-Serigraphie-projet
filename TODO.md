@@ -8,6 +8,9 @@
 //Boutique
 [ ] CSS
 [ ] Modifier le router link sur les cards
+[ ] proposer plusieurs options aux produits
+[ ] ajouter plusieurs photos aux produits
+
 
 //Ateliers
 [ ] Changer le bouton retour "boutique" par "atelier"

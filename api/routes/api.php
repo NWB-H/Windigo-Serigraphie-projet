@@ -30,7 +30,7 @@ Route::middleware(['web', 'throttle:authenticate'])->group(function () {
 
 Route::controller(RegisterController::class)->group(function () {
     Route::post('/register', 'register');
-    Route::post('/verification', 'verification');
+    Route::match(['get', 'post'], '/verification', 'verification');
 });
 
 Route::controller(ForgotPasswordController::class)->group(function () {
