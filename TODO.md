@@ -37,7 +37,3 @@
 //Panier
 [ ] Donner la possibilité d'avoir un panier sans être connecté.
 [ ] Donner de la persistance au panier
-
-//Site complet
-[ ] Rendre le site responsive
-[ ] Menu burger sur le header
