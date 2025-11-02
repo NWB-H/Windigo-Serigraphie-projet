@@ -1,8 +1,9 @@
 <template>
     <div>
         <AppHeader />
-        <main>
+        <main class="position-relative">
             <slot />
+            <NotificationsContainer />
         </main>
         <AppFooter />
     </div>
@@ -11,6 +12,7 @@
 <script setup lang="ts">
 import AppHeader from "@/components/AppHeader.vue";
 import AppFooter from "@/components/AppFooter.vue";
+import NotificationsContainer from "@/components/Notifications/NotificationsContainer.vue";
 </script>
 
 <style>

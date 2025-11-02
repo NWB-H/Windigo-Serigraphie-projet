@@ -113,18 +113,7 @@
 
             <!-- Contact -->
             <div class="mb-5 p-3 bg-light rounded shadow-sm">
-                <h2 class="mb-4">Contact</h2>
-                <form>
-                    <div class="mb-3">
-                        <label for="email" class="form-label">Adresse email</label>
-                        <input type="email" class="form-control" id="email" placeholder="name@example.com">
-                    </div>
-                    <div class="mb-3">
-                        <label for="message" class="form-label">Demande</label>
-                        <textarea class="form-control" id="message" rows="3"></textarea>
-                    </div>
-                    <button type="submit" class="btn btn-outline-secondary">Envoyer</button>
-                </form>
+                <ContactForm />
             </div>
         </div>
     </AppLayout>
@@ -137,6 +126,7 @@ import { ref } from "vue";
 import type { Product } from "@/models/Product";
 import type { Workshop } from "@/models/Workshop";
 import AppImage from "@/components/AppImage.vue";
+import ContactForm from "@/components/Form/ContactForm.vue";
 
 defineProps<{
     products: Product[],
