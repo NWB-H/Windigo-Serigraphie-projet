@@ -23,9 +23,18 @@ export const useNotificationStore = defineStore('notifications', () => {
         items.value.splice(index, 1)
     }
 
+    function needImplementationNotification() { // todo: delete it when all feature are done
+        items.value.push({
+            id: uuidv4(),
+            type: 'warning',
+            message: 'Cette feature doit être implémenté.'
+        })
+    }
+
     return {
         items,
         addItem,
-        removeItem
+        removeItem,
+        needImplementationNotification
     }
 })

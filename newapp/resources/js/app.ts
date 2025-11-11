@@ -13,7 +13,7 @@ const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 const pinia = createPinia()
 
 createInertiaApp({
-    title: (title) => (title ? `${title} - ${appName}` : appName),
+    title: (title) => `${title} | Windigo`,
     resolve: (name) =>
         resolvePageComponent(
             `./pages/${name}.vue`,

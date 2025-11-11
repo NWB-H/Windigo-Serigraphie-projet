@@ -18,4 +18,14 @@ class ShopController extends Controller
             ]
         );
     }
+
+    public function item(Product $product)
+    {
+        return Inertia::render(
+            'ProductItem',
+            [
+                'product' => $product,
+            ]
+        );
+    }
 }

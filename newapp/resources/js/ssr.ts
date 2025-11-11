@@ -11,7 +11,7 @@ createServer(
         createInertiaApp({
             page,
             render: renderToString,
-            title: (title) => (title ? `${title} - ${appName}` : appName),
+            title: (title) => `${title} | Windigo`,
             resolve: (name) =>
                 resolvePageComponent(
                     `./pages/${name}.vue`,

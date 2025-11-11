@@ -1,6 +1,10 @@
 import type { Category } from "./Category"
 import type { Option } from "./Option"
 
+interface Images {
+    url?: string
+}
+
 export interface Product {
   id: number
   name: string
@@ -9,6 +13,7 @@ export interface Product {
   description: string
   archived: boolean
   picture: string | File | null   // <-- accepte string (backend) ou File (upload)
+    images?: Images[]
 
   // Relations
   category?: Category
