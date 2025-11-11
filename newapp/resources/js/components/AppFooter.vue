@@ -62,7 +62,7 @@
                     <Link to="/login">Mon compte</Link>
                 </div>
                 <div class="footer-links">
-                    <link to="/politique-confidentialite">Politique de confidentialité</link> |
+                    <Link :href="route('confidentialite')">Politique de confidentialité</Link> |
                     <Link to="/mentions-legales">Mentions légales</Link>
                 </div>
             </div>

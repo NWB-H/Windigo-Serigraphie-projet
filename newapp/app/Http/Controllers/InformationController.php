@@ -17,4 +17,9 @@ class InformationController extends Controller
     {
         return Inertia::render('Portfolio');
     }
+
+    public function confidentialite()
+    {
+        return Inertia::render('Confidentialite');
+    }
 }

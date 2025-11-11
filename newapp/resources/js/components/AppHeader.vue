@@ -16,12 +16,13 @@
                 <div v-if="isLogged" class="logged-in">
                     <span>Bienvenue {{ user.email }}</span>
                     <Link v-if="user && user.role === 'ROLE_ADMIN'" href="/admin" class="btn btn-warning">Panel Admin</Link>
-                    <Link href="/panier">
-                        <span class="badge bg-secondary">Panier: {{ cartStore.totalQuantity }}</span>
-                    </Link>
+
                     <button type="button" class="btn btn-outline-secondary" @click="logout">Déconnexion</button>
                 </div>
-                <Link v-else href="/login" class="btn btn-outline-secondary">
+                <Link href="/panier" v-if="totalCartItem > 0">
+                    <p class="cart bg-secondary">Panier <span class="badge-cart">{{ totalCartItem }}</span></p>
+                </Link>
+                <Link v-if="!isLogged" href="/login" class="btn btn-outline-secondary">
                     <img src="/images/account.svg" alt="Login" />
                 </Link>
             </div>
@@ -32,8 +33,12 @@
 <script setup lang="ts">
 import { Link } from '@inertiajs/vue3'
 import { ref } from 'vue'
+import { useCartStore } from "@/stores/Cart";
+import { storeToRefs } from "pinia";
 
 const isLogged = ref(false)
+
+const { items, totalCartItem } = storeToRefs(useCartStore())
 </script>
 
 <style scoped>
@@ -89,10 +94,34 @@ nav a:hover::after {
     width: 100%;
 }
 
+a {
+    text-decoration: none;
+}
+
+.cart {
+    position: relative;
+    padding: 4px 8px;
+    margin: 0;
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+}
+
+.badge-cart {
+    position: absolute;
+    font-size: 12px;
+    top: -8px;
+    right: -8px;
+    padding: 4px;
+    background-color: red;
+    border-radius: 25px;
+}
+
 /* User actions */
 .user-actions {
     display: flex;
     align-items: center;
+    gap: 8px;
 }
 
 .user-actions .logged-in span {

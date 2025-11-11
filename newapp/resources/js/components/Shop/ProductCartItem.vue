@@ -22,7 +22,7 @@
             />
             <button
                 class="btn btn-primary w-100"
-                @click.prevent="needImplementationNotification()"
+                @click.prevent="addItem(product)"
             >
                 Ajouter au panier
             </button>
@@ -35,11 +35,13 @@ import AppImage from "@/components/AppImage.vue";
 import { Link } from "@inertiajs/vue3";
 import type { Product } from "@/models/Product";
 import {useNotificationStore} from "@/stores/Notifications";
-import {ref} from "vue";
+import { ref } from "vue";
+import {useCartStore} from "@/stores/Cart";
 
 defineProps<{ product: Product }>()
 
 const { needImplementationNotification } = useNotificationStore()
+const { addItem } = useCartStore()
 
 const quantity = ref(0)
 </script>
