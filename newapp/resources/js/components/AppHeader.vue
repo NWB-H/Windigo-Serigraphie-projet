@@ -22,7 +22,7 @@
                 <Link href="/panier" v-if="totalCartItem > 0">
                     <p class="cart bg-secondary">Panier <span class="badge-cart">{{ totalCartItem }}</span></p>
                 </Link>
-                <Link v-if="!isLogged" href="/login" class="btn btn-outline-secondary">
+                <Link v-if="!isLogged" :href="route('login')" class="btn btn-outline-secondary">
                     <img src="/images/account.svg" alt="Login" />
                 </Link>
             </div>

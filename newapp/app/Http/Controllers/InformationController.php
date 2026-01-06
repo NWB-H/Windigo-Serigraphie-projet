@@ -6,7 +6,7 @@ namespace App\Http\Controllers;
 
 use Inertia\Inertia;
 
-class InformationController extends Controller
+class InformationController
 {
     public function about()
     {

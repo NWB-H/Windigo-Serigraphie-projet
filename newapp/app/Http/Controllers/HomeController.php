@@ -8,7 +8,7 @@ use App\Models\Product;
 use App\Models\Workshop;
 use Inertia\Inertia;
 
-class HomeController extends Controller
+class HomeController
 {
     public function index()
     {

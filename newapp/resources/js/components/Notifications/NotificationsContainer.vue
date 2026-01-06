@@ -2,9 +2,10 @@
     <div class="notifications__container">
         <ul>
             <AppNotification
-                v-for="item in items"
-                :key="item.id"
-                :notification="item"
+                v-for="toast in page.flash.toasts"
+                :key="toast.message + toast.type"
+                :message="toast.message"
+                :type="toast.type"
             />
         </ul>
     </div>
@@ -12,10 +13,10 @@
 
 <script setup lang="ts">
 import AppNotification from "@/components/AppNotification.vue";
-import { storeToRefs } from "pinia";
-import { useNotificationStore } from "@/stores/Notifications";
+import { usePage } from "@inertiajs/vue3";
 
-const { items } = storeToRefs(useNotificationStore())
+const page = usePage()
+console.log(page)
 </script>
 
 <style scoped>

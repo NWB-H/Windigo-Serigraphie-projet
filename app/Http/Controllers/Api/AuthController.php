@@ -28,4 +28,5 @@ class AuthController extends Controller
       $request->session()->regenerateToken();
       return response()->json(['success' => 'Utilisateur deconnecté !']);
     }
+
 }

@@ -1,28 +1,11 @@
 <template>
-    <span :class="notification.type">
-        {{ notification.message }}
+    <span :class="type">
+        {{ message }}
     </span>
 </template>
 
 <script setup lang="ts">
-import {Item, useNotificationStore} from '@/stores/Notifications'
-import {onMounted, onUnmounted} from "vue";
-
-const props = defineProps<{ notification: Item }>()
-
-const { removeItem } = useNotificationStore()
-
-let interval = null
-
-onMounted(() => {
-    interval = setInterval(() => {
-        removeItem(props.notification)
-    }, 5000)
-})
-
-onUnmounted(() => {
-    clearInterval(interval)
-})
+defineProps<{ message: string, type: string }>()
 </script>
 
 <style scoped>

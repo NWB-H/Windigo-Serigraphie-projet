@@ -7,7 +7,7 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use Inertia\Inertia;
 
-class ShopController extends Controller
+class ShopController
 {
     public function index()
     {

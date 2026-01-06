@@ -13,9 +13,6 @@
 import AppHeader from "@/components/AppHeader.vue";
 import AppFooter from "@/components/AppFooter.vue";
 import NotificationsContainer from "@/components/Notifications/NotificationsContainer.vue";
-import {useCartStore} from "@/stores/Cart";
-import {storeToRefs} from "pinia";
-
 </script>
 
 <style>

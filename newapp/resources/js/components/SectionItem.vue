@@ -1,6 +1,6 @@
 <template>
     <div>
-        <section>
+        <section class="mb-5 p-4 bg-light rounded shadow-sm">
             <slot name="header">
                 <h2 class="mb-4">{{ header }}</h2>
             </slot>
