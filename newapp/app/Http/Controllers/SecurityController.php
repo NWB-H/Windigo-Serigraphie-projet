@@ -28,13 +28,12 @@ class SecurityController
             'password' => ['required'],
         ]);
 
-        dd('ok');
-
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
 
-            return redirect()->intended('dashboard');
+            Inertia::flash('toasts', [Toast::success('Bienvenue sur votre espace personnel.')]);
 
+            return to_route('home');
         }
 
         return back()->withErrors([

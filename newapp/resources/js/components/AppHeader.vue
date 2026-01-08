@@ -13,16 +13,34 @@
             </nav>
 
             <div class="user-actions">
-                <div v-if="isLogged" class="logged-in">
+                <div v-if="user" class="logged-in">
                     <span>Bienvenue {{ user.email }}</span>
-                    <Link v-if="user && user.role === 'ROLE_ADMIN'" href="/admin" class="btn btn-warning">Panel Admin</Link>
+                    <Link
+                        v-if="user && user.role === 'ROLE_ADMIN'"
+                        href="/admin"
+                        class="btn btn-warning"
+                        >Panel Admin</Link
+                    >
 
-                    <button type="button" class="btn btn-outline-secondary" @click="logout">Déconnexion</button>
+                    <button
+                        type="button"
+                        class="btn btn-outline-secondary"
+                        @click="logout"
+                    >
+                        Déconnexion
+                    </button>
                 </div>
                 <Link href="/panier" v-if="totalCartItem > 0">
-                    <p class="cart bg-secondary">Panier <span class="badge-cart">{{ totalCartItem }}</span></p>
+                    <p class="cart bg-secondary">
+                        Panier
+                        <span class="badge-cart">{{ totalCartItem }}</span>
+                    </p>
                 </Link>
-                <Link v-if="!isLogged" :href="route('login')" class="btn btn-outline-secondary">
+                <Link
+                    v-if="!user"
+                    :href="route('login')"
+                    class="btn btn-outline-secondary"
+                >
                     <img src="/images/account.svg" alt="Login" />
                 </Link>
             </div>
@@ -31,12 +49,15 @@
 </template>
 
 <script setup lang="ts">
-import { Link } from '@inertiajs/vue3'
+import { Link, usePage } from '@inertiajs/vue3'
 import { ref } from 'vue'
 import { useCartStore } from "@/stores/Cart";
 import { storeToRefs } from "pinia";
+import { User } from '@/types';
 
-const isLogged = ref(false)
+const page = usePage()
+
+const user = ref<User>(page.props.auth.user)
 
 const { items, totalCartItem } = storeToRefs(useCartStore())
 </script>
@@ -47,11 +68,11 @@ header {
     top: 0;
     left: 0;
     width: 100%;
-    background: #A88871;
+    background: #a88871;
     z-index: 1000;
     display: flex;
     justify-content: center;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     font-family: 'Oswald', sans-serif;
     font-weight: 200; /* Extralight */
 }
@@ -80,7 +101,7 @@ nav a {
 }
 
 nav a::after {
-    content: "";
+    content: '';
     position: absolute;
     bottom: -4px;
     left: 0;
@@ -127,5 +148,4 @@ a {
 .user-actions .logged-in span {
     margin-right: 10px;
 }
-
 </style>

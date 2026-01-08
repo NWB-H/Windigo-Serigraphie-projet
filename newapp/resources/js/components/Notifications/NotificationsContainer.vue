@@ -16,7 +16,6 @@ import AppNotification from "@/components/AppNotification.vue";
 import { usePage } from "@inertiajs/vue3";
 
 const page = usePage()
-console.log(page)
 </script>
 
 <style scoped>
