@@ -20,8 +20,10 @@ Route::get('/ateliers', [WorkshopController::class, 'workshops'])->name('worksho
 Route::get('/ateliers/{workshop}', [WorkshopController::class, 'workshop'])->name('workshop');
 Route::get('/login', [SecurityController::class, 'login'])->name('login');
 Route::post('/login', [SecurityController::class, 'loginStore'])->name('login.store');
+Route::get('/logout', [SecurityController::class, 'logout'])->middleware('auth')->name('logout');
 Route::get('/register', [SecurityController::class, 'register'])->name('register');
 Route::post('/register', [SecurityController::class, 'registerStore'])->name('register.store');
+Route::get('/panier', [ShopController::class, 'cart'])->name('cart');
 
 Route::get('dashboard', function () {
     return Inertia::render('Dashboard');

@@ -22,13 +22,13 @@
                         >Panel Admin</Link
                     >
 
-                    <button
+                    <Link
                         type="button"
                         class="btn btn-outline-secondary"
-                        @click="logout"
+                        :href="route('logout')"
                     >
                         Déconnexion
-                    </button>
+                    </Link>
                 </div>
                 <Link href="/panier" v-if="totalCartItem > 0">
                     <p class="cart bg-secondary">

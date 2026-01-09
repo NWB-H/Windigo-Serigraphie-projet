@@ -43,6 +43,13 @@ class SecurityController
         ])->onlyInput('email');
     }
 
+    public function logout(Request $request)
+    {
+        Auth::logout();
+
+        return redirect()->back();
+    }
+
     public function register()
     {
         return Inertia::render(

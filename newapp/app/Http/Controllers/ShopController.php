@@ -28,4 +28,9 @@ class ShopController
             ]
         );
     }
+
+    public function cart()
+    {
+        return Inertia::render('Cart');
+    }
 }
