@@ -13,13 +13,6 @@
             <h5 class="card-title text-truncate">{{ product.name }}</h5>
             <p class="fw-bold">{{ product.price }} €</p>
             <p v-if="product.stock !== undefined">Stock : {{ product.stock }}</p>
-            <input
-                type="number"
-                min="1"
-                v-model="quantity"
-                :max="product.stock"
-                class="form-control mb-2"
-            />
             <button
                 class="btn btn-primary w-100"
                 @click.prevent="addItem(product)"
@@ -34,16 +27,14 @@
 import AppImage from "@/components/AppImage.vue";
 import { Link } from "@inertiajs/vue3";
 import type { Product } from "@/models/Product";
-import {useNotificationStore} from "@/stores/Notifications";
 import { ref } from "vue";
 import {useCartStore} from "@/stores/Cart";
 
 defineProps<{ product: Product }>()
 
-const { needImplementationNotification } = useNotificationStore()
 const { addItem } = useCartStore()
 
-const quantity = ref(0)
+const quantity = ref(1)
 </script>
 
 <style scoped>

@@ -21,6 +21,7 @@ export const useCartStore = defineStore(
         const items = ref<CartItem[]>([])
 
         const totalCartItem = computed(() => items.value.length)
+        const totalPrice = computed(() => items.value.reduce((total, i: CartItem) => total + i.quantity * i.product.price, 0))
 
         function addItem(product: Product) {
             const currentItem = items.value.findIndex((item: CartItem) => item.product.id === product.id)
@@ -32,23 +33,37 @@ export const useCartStore = defineStore(
             }
         }
 
-        function removeItem(item: CartItem) {
-            const currentItem = items.value.find((item: CartItem) => item.product.id === product.id)
+        function decrement(item: CartItem) {
+            const currentItem = items.value.findIndex((i: CartItem) => i.product.id === item.product.id)
 
-            if (currentItem) {
+            if (items.value[currentItem]) {
                 items.value[currentItem].quantity--
 
-                if ((items.value[currentItem].quantity - 1) <= 0) {
+                if (items.value[currentItem].quantity <= 0) {
                     items.value.splice(currentItem, 1)
                 }
             }
         }
 
+        function removeItem(item: CartItem) {
+            items.value.splice(
+                items.value.findIndex((i: CartItem) => i.product.id === item.product.id),
+                1
+            )
+        }
+
+        function clear() {
+            items.value = []
+        }
+
         return {
             items,
             totalCartItem,
+            totalPrice,
             addItem,
             removeItem,
+            clear,
+            decrement,
         }
     }
 )
