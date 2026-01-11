@@ -22,6 +22,7 @@ export const useCartStore = defineStore(
 
         const totalCartItem = computed(() => items.value.length)
         const totalPrice = computed(() => items.value.reduce((total, i: CartItem) => total + i.quantity * i.product.price, 0))
+        const totalProducts = computed(() => items.value.reduce((total, i: CartItem) => total + i.quantity, 0))
 
         function addItem(product: Product) {
             const currentItem = items.value.findIndex((item: CartItem) => item.product.id === product.id)
@@ -45,6 +46,15 @@ export const useCartStore = defineStore(
             }
         }
 
+        function increment(item: CartItem) {
+            const currentItem = items.value.findIndex((i: CartItem) => i.product.id === item.product.id)
+
+            if (items.value[currentItem])  {
+                items.value[currentItem].quantity++
+                // todo: voir pour vérifier la quantité dispo via un appelle API
+            }
+        }
+
         function removeItem(item: CartItem) {
             items.value.splice(
                 items.value.findIndex((i: CartItem) => i.product.id === item.product.id),
@@ -60,10 +70,12 @@ export const useCartStore = defineStore(
             items,
             totalCartItem,
             totalPrice,
+            totalProducts,
             addItem,
             removeItem,
             clear,
             decrement,
+            increment
         }
     }
 )

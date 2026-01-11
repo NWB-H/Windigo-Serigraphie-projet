@@ -16,7 +16,7 @@
                       <div class="d-flex align-items-center">
                           <button class="btn btn-outline-secondary btn-sm me-1" @click="decrement(item)">-</button>
                           <span class="mx-2">{{ item.quantity }}</span>
-<!--                          <button class="btn btn-outline-secondary btn-sm me-3" @click="increment(item.product_id)">+</button>-->
+                          <button class="btn btn-outline-secondary btn-sm me-3" @click="increment(item)">+</button>
                           <button class="btn btn-danger btn-sm" @click="removeItem(item)">Supprimer</button>
                       </div>
                       <span>{{ item.product.price * item.quantity }} €</span>
@@ -25,7 +25,7 @@
 
               <div class="d-flex justify-content-between align-items-center">
                   <h4>Total : {{ totalPrice }} €</h4>
-                  <h4>Total : 1</h4>
+                  <h4>Total : {{ totalProducts }}</h4>
                   <button class="btn btn-warning" @click="clear">Vider le panier</button>
               </div>
           </div>
@@ -39,9 +39,8 @@ import AppLayout from "@/layouts/AppLayout.vue";
 import { useCartStore } from "@/stores/Cart";
 import {storeToRefs} from "pinia";
 
-const { items, totalPrice } = storeToRefs(useCartStore())
-const { clear, removeItem, decrement } = useCartStore()
-
+const { items, totalPrice, totalProducts } = storeToRefs(useCartStore())
+const { clear, removeItem, decrement, increment } = useCartStore()
 </script>
 
 <style scoped>
