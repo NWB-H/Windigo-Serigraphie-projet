@@ -1,5 +1,5 @@
 <template>
-    <header class="sticky-header">
+    <header>
         <div class="header-container">
             <Link :href="route('home')" class="logo">
                 <img src="/images/logo.png" alt="Logo Windigo" />
@@ -7,7 +7,7 @@
 
             <nav class="nav-links">
                 <Link :href="route('shop')">BOUTIQUE</Link>
-                <Link href="/ateliers">ATELIERS</Link>
+                <Link :href="route('workshops')">ATELIERS</Link>
                 <Link :href="route('portfolio')">PORTFOLIO</Link>
                 <Link :href="route('about')">A PROPOS</Link>
             </nav>
@@ -16,8 +16,8 @@
                 <div v-if="user" class="logged-in">
                     <span>Bienvenue {{ user.email }}</span>
                     <Link
-                        v-if="user && user.role === 'ROLE_ADMIN'"
-                        href="/admin"
+                        v-if="user.role === 'ROLE_ADMIN'"
+                        :href="route('admin.index')"
                         class="btn btn-warning"
                         >Panel Admin</Link
                     >
@@ -30,7 +30,7 @@
                         Déconnexion
                     </Link>
                 </div>
-                <Link href="/panier" v-if="totalCartItem > 0">
+                <Link :href="route('cart')" v-if="totalCartItem > 0">
                     <p class="cart bg-secondary">
                         Panier
                         <span class="badge-cart">{{ totalCartItem }}</span>
@@ -64,7 +64,7 @@ const { items, totalCartItem } = storeToRefs(useCartStore())
 
 <style scoped>
 header {
-    position: fixed;
+    position: sticky;
     top: 0;
     left: 0;
     width: 100%;
@@ -147,5 +147,11 @@ a {
 
 .user-actions .logged-in span {
     margin-right: 10px;
+}
+
+.logged-in {
+  display: flex;
+  gap: 8px;
+  align-items: center;
 }
 </style>

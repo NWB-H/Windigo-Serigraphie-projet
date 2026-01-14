@@ -17,7 +17,6 @@ import NotificationsContainer from "@/components/Notifications/NotificationsCont
 
 <style>
 main {
-    padding-top: 100px; /* hauteur du header */
     min-height: 80vh;
     font-family: 'Oswald', sans-serif;
     font-weight: 200; /* Extralight */

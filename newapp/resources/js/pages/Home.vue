@@ -37,7 +37,7 @@
                                              class="text-decoration-none text-dark">
                                     <div class="card h-100 shadow-sm border-0 rounded-3 product-card bg-white">
                                         <div class="product-img-wrapper">
-                                            <AppImage :alt="product.name" :url="product.picture_url" class="card-img-top product-img" />
+                                            <AppImage :alt="product.name" :src="product.picture_url" class="card-img-top product-img" />
                                         </div>
                                         <div class="card-body text-center">
                                             <h5 class="card-title text-truncate">{{ product.name }}</h5>
@@ -74,7 +74,7 @@
                                 <Link :to="{ name: 'atelier-detail', params: { id: workshop.id } }"
                                              class="text-decoration-none text-dark d-flex flex-column h-100">
                                     <div class="workshop-img-wrapper">
-                                        <AppImage :alt="workshop.name" :url="workshop.first_image_url" class="card-img-top workshop-img" />
+                                        <AppImage :alt="workshop.name" :src="workshop.first_image_url" class="card-img-top workshop-img" />
                                     </div>
                                     <div class="card-body d-flex flex-column justify-content-between">
                                         <div>

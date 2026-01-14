@@ -48,7 +48,7 @@ const links = [
   { name: 'Portfolio', component: GestionPortfolio, icon: '' },
 ]
 
-const currentTab = ref(links[0].component)
+
 </script>
 
 <style scoped>
