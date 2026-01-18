@@ -4,7 +4,6 @@ use App\Http\Controllers\InformationController;
 use App\Http\Controllers\ShopController;
 use App\Http\Controllers\WorkshopController;
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
 use App\Http\Controllers\HomeController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -17,10 +16,5 @@ Route::get('/ateliers', [WorkshopController::class, 'workshops'])->name('worksho
 Route::get('/ateliers/{workshop}', [WorkshopController::class, 'workshop'])->name('workshop');
 Route::get('/panier', [ShopController::class, 'cart'])->name('cart');
 
-
-Route::get('dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
-require __DIR__.'/settings.php';
+require __DIR__.'/api.php';
 require __DIR__.'/auth.php';

@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SecurityController;
-use App\Http\Controllers\Auth\AdminController;
+use App\Http\Controllers\Auth\ProductController;
 
 Route::middleware('guest')->group(function () {
     Route::get('/login', [SecurityController::class, 'login'])->name('login');
@@ -13,5 +13,6 @@ Route::middleware('guest')->group(function () {
 
 Route::middleware('auth')->group(function () {
     Route::get('/logout', [SecurityController::class, 'logout'])->name('logout');
-    Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
+    Route::get('/admin/products', [ProductController::class, 'index'])->name('admin.index');
+    Route::post('/admin/products', [ProductController::class, 'store'])->name('admin.store');
 });
