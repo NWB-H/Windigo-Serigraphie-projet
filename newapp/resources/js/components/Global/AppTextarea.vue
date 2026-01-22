@@ -1,9 +1,9 @@
 <template>
-    <div class="my-3">
-        <input
-            v-model="model"
-            v-bind="$attrs"
-        />
+    <div>
+      <textarea
+        v-model="model"
+        v-bind="$attrs"
+      ></textarea>
       <div
           v-if="error"
           class="error"
@@ -12,13 +12,13 @@
 </template>
 
 <script setup lang="ts">
-const model = defineModel()
+defineProps<{ error?: string }>()
 
 defineOptions({
   inheritAttrs: false
 })
 
-defineProps<{ error?: string }>()
+const model = defineModel()
 </script>
 
 <style scoped>

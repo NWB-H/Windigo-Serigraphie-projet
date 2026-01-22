@@ -8,40 +8,13 @@ use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
-    public function store(Request $request)
+    public function delete(Request $request, Product $product)
     {
-        $validated = $request->validate([
-            'name' => 'required|string',
-            'price' => 'required|integer|between:1,50',
-            'stock' => 'required|integer',
-            'description' => 'required|string',
-            'archived' => 'boolean',
-            'option_id' => 'required|exists:options,id',
-            'category_id' => 'required|exists:categories,id',
-            'picture' => 'nullable|image|mimes:jpg,jpeg,png,webp,JPG,JPEG,PNG,WEBP,GIF,gif|max:2048'
-        ]);
-
-        // Gestion de l'image
-        if ($request->hasFile('picture')) {
-            $validated['picture'] = $request->file('picture')->store('products', 'public');
+        try {
+            $product->delete();
+            return response()->json(null, 204);
+        } catch (\Throwable $e) {
+            return response()->json($e->getMessage(), 400);
         }
-
-        $product = Product::create($validated);
-
-        // Ajouter l'URL complète de l'image
-        $product->picture_url = $product->picture
-            ? asset('storage/' . $product->picture)
-            : null;
-
-        return response()->json($product, 201);
-    }
-
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Product $product)
-    {
-        //
     }
 }

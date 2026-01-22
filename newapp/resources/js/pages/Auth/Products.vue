@@ -48,8 +48,8 @@
           </td>
 
           <td>
-            <button class="btn btn-sm btn-warning me-2" type="submit" @click="edit(product)">Modifier</button>
-            <button class="btn btn-sm btn-danger" type="button">Supprimer</button>
+            <button class="btn btn-sm btn-warning me-2" type="button" @click="edit(product)">Modifier</button>
+            <button class="btn btn-sm btn-danger" type="button" @click="deleteProduct(product)">Supprimer</button>
           </td>
         </tr>
         </tbody>
@@ -62,11 +62,11 @@
 import AppLayoutAdmin from "@/layouts/AppLayoutAdmin.vue";
 import { Product, Category, Option } from "@/models";
 import { ref } from "vue";
-import {useForm} from "@inertiajs/vue3";
-import AppInput from "@/components/Global/AppInput.vue";
 import ProductForm from "@/components/Form/ProductForm.vue";
+import ProductRepository from "@/services/ProductRepository";
+import { router } from '@inertiajs/vue3'
 
-defineProps<{
+const props = defineProps<{
   products: Product[],
   categories: Category[],
   options: Option[],
@@ -86,6 +86,17 @@ function edit(product: Product) {
   currentProduct.value = product
 
   showForm.value = true
+}
+
+function deleteProduct(product: Product) {
+  const index = props.products.findIndex((i: Product) => i.id === product.id)
+
+  if (index !== -1) {
+    ProductRepository.deleteProduct(product).then(() => {
+      props.products.splice(index, 1)
+      router.flash('toast', { message: 'Produit supprimé', type: 'success' })
+    })
+  }
 }
 </script>
 

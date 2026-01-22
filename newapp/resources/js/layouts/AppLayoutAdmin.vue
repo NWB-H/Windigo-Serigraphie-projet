@@ -9,14 +9,16 @@
             <h1 class="h5 mb-0">Back Office</h1>
           </div>
           <nav class="flex-grow-1 p-2">
-            <button
+            <Link
                 v-for="link in links"
                 :key="link.name"
-                class="btn btn-dark w-100 text-start d-flex align-items-center mb-2"
+                :href="link.url"
+                :class="url === link.url ? 'btn-secondary' : 'btn-dark'"
+                class="btn w-100 text-start d-flex align-items-center mb-2"
             >
               <i :class="link.icon + ' me-2'"></i>
               {{ link.name }}
-            </button>
+            </Link>
           </nav>
         </aside>
 
@@ -34,15 +36,19 @@
 import AppFooter from "@/components/AppFooter.vue";
 import AppHeader from "@/components/AppHeader.vue";
 import NotificationsContainer from "@/components/Notifications/NotificationsContainer.vue";
+import ProductController from "@/actions/App/Http/Controllers/Auth/ProductController";
+import {Link, usePage} from "@inertiajs/vue3";
+import CategoryController from "@/actions/App/Http/Controllers/Auth/CategoryController";
+
+const { url } = usePage()
 
 const links = [
-  { name: 'Produits', icon: 'bi bi-box-seam' },
-  { name: 'Ateliers', icon: 'bi bi-brush' },
-  { name: 'Catégories', icon: 'bi bi-tags' },
-  { name: 'Options', icon: 'bi bi-sliders' },
-  { name: 'Portfolio', icon: '' },
+  { name: 'Produits', icon: 'bi bi-box-seam', url: ProductController.index().url },
+  { name: 'Ateliers', icon: 'bi bi-brush', url: 'todo' },
+  { name: 'Catégories', icon: 'bi bi-tags', url: CategoryController.index().url },
+  { name: 'Options', icon: 'bi bi-sliders', url: 'todo3' },
+  { name: 'Portfolio', icon: '', url: 'todo4' },
 ]
-
 </script>
 
 <style>

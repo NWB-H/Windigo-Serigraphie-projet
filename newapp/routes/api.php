@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\ProductController;
 
-Route::middleware('auth:sanctum')->group(function () {
-    Route::post('', [ProductController::class, 'store'])->name('products.store');
-})->prefix('api/products');
+Route::middleware('auth:sanctum')
+    ->prefix('api/products')
+    ->group(function () {
+        Route::delete('/{product}', [ProductController::class, 'delete'])->name('api.products.delete');
+    });

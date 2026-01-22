@@ -7,6 +7,7 @@ namespace App\Http\Controllers\Auth;
 use App\Models\Category;
 use App\Models\Option;
 use App\Models\Product;
+use App\Services\Toast;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -27,6 +28,7 @@ final class ProductController
     public function store(Request $request)
     {
         $validated = $request->validate([
+            'id' => 'int',
             'name' => 'required|string',
             'price' => 'required|integer|between:1,50',
             'stock' => 'required|integer',
@@ -42,13 +44,17 @@ final class ProductController
             $validated['picture'] = $request->file('picture')->store('products', 'public');
         }
 
-        $product = Product::create($validated);
+        try {
+            Product::updateOrCreate(
+                ['id' => $validated['id'] ?? null],
+                $validated
+            );
 
-        // Ajouter l'URL complète de l'image
-        $product->picture_url = $product->picture
-            ? asset('storage/' . $product->picture)
-            : null;
+            Inertia::flash('toasts', [Toast::success('Produit enregistré avec succès')]);
+        } catch (\Throwable $e) {
+            Inertia::flash('toasts', [Toast::error('Une erreur est survenue.')]);
+        }
 
-        return back();
+        return to_route('admin.index');
     }
 }

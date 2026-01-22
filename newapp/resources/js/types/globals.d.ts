@@ -1,5 +1,10 @@
 import { AppPageProps } from '@/types/index';
 
+export interface Toast {
+    type: 'success' | 'error'
+    message: string
+}
+
 // Extend ImportMeta interface for Vite...
 declare module 'vite/client' {
     interface ImportMetaEnv {
@@ -17,10 +22,8 @@ declare module '@inertiajs/core' {
     interface PageProps extends InertiaPageProps, AppPageProps {}
     export interface InertiaConfig {
         flashDataType: {
-            toasts?: {
-                type: 'success' | 'error'
-                message: string
-            }[]
+            toasts?: Toast[],
+            toast?: Toast
         }
     }
 }

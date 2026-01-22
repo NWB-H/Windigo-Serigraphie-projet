@@ -20,3 +20,19 @@ export interface Product {
   option?: Option
   picture_url?: string;
 }
+
+export interface ProductForm {
+    id: number
+    name: string
+    price: number
+    stock: number
+    description: string
+    archived: boolean
+    picture: string | File | null   // <-- accepte string (backend) ou File (upload)
+    images?: Images[]
+
+    // Relations
+    category_id?: number
+    option_id?: number
+    picture_url?: string;
+}

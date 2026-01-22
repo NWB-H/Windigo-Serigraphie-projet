@@ -1,5 +1,5 @@
 <template>
-  <form @submit.prevent="form.post(route('admin.store'))">
+  <form @submit.prevent="submit">
     <AppInput
         v-model="form.name"
         :error="form.errors.name"
@@ -24,22 +24,36 @@
       placeholder="Stock"
       id="stock"
     />
-    <textarea v-model="form.description" class="form-control mb-2" placeholder="Description"></textarea>
+
+    <AppTextarea
+      v-model="form.description"
+      :error="form.errors.description"
+      class="form-control mb-2"
+      placeholder="Description"
+    />
 
     <div class="form-check mb-2">
       <input type="checkbox" v-model="form.archived" class="form-check-input" id="archived" />
       <label class="form-check-label" for="archived">Archivé</label>
     </div>
 
-    <select v-model="form.category" class="form-select mb-2">
-      <option disabled value="">-- Choisir une catégorie --</option>
-      <option v-for="c in categories" :key="c.id" :value="c">{{ c.name }}</option>
-    </select>
+    <AppSelect
+      v-model="form.category_id"
+      placeholder="Choisir une catégorie"
+      :items="categories"
+      value="id"
+      label="name"
+      :error="form.errors.category_id"
+    />
 
-    <select v-model="form.option" class="form-select mb-2">
-      <option disabled value="">-- Choisir une option --</option>
-      <option v-for="o in options" :key="o.id" :value="o">{{ o.name }}</option>
-    </select>
+    <AppSelect
+        v-model="form.option_id"
+        placeholder="Choisir une option"
+        :items="options"
+        value="id"
+        label="name"
+        :error="form.errors.option_id"
+    />
 
     <!-- Picture -->
     <input
@@ -66,19 +80,22 @@
 </template>
 
 <script setup lang="ts">
-import {Category, Option, Product} from "@/models";
+import {Category, Option, Product, ProductForm} from "@/models";
 import AppInput from "@/components/Global/AppInput.vue";
 import {useForm} from "@inertiajs/vue3";
+import { store } from '@/actions/App/Http/Controllers/Auth/ProductController'
+import AppTextarea from "@/components/Global/AppTextarea.vue";
+import AppSelect from "@/components/Global/AppSelect.vue";
 
 const props = defineProps<{ options: Option[], categories: Category[], form?: Product}>()
 
-defineEmits<{
+const emits = defineEmits<{
   (e: 'close')
 }>()
 
-const form = useForm<Product>(
-    'post',
-    '/admin/products',
+const form = useForm<ProductForm>(
+    store().method,
+    store().url,
     props.form ?? {
     id: 0,
     name: '',
@@ -87,10 +104,18 @@ const form = useForm<Product>(
     description: '',
     archived: false,
     picture: '',
-    category: undefined,
-    option: undefined,
+    category_id: 0,
+    option_id: 0,
     picture_url: undefined,
     images: undefined
   }
 )
+
+function submit()
+{
+  form.submit({
+    onSuccess: () => { emits('close') }
+  });
+
+}
 </script>
