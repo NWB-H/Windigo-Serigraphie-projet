@@ -27,6 +27,10 @@ router.on('flash', (event) => {
   if (event.detail.flash.toast) {
     toasts.value.push(event.detail.flash.toast)
   }
+
+  if (event.detail.flash.toasts) {
+    toasts.value.push(...event.detail.flash.toasts)
+  }
 })
 </script>
 

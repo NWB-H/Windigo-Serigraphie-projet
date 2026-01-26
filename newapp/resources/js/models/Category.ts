@@ -1,7 +1,7 @@
 import type { Product } from "./Product"
 
 export interface Category {
-  id: number
+  id?: number
   name: string
 
   // Relation inverse

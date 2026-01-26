@@ -1,8 +1,10 @@
 <template>
   <AppLayoutAdmin>
     <div class="container my-5">
-      <h2>Gestion Produits</h2>
-      <button class="btn btn-success mb-3" @click="newProduct()">Ajouter un produit</button>
+      <p class="flex gap-2">
+        <h2>Gestion Produits</h2>
+        <button class="btn btn-success mb-3" @click="newProduct()">Ajouter un produit</button>
+      </p>
 
       <!-- Formulaire -->
       <div v-if="showForm" class="card p-3 mb-4">
@@ -18,17 +20,17 @@
       <!-- Table produits -->
       <table class="table table-striped">
         <thead>
-        <tr>
-          <th>Nom</th>
-          <th>Prix</th>
-          <th>Stock</th>
-          <th>Description</th>
-          <th>Catégorie</th>
-          <th>Option</th>
-          <th>Archivé</th>
-          <th>Image</th>
-          <th>Actions</th>
-        </tr>
+          <tr>
+            <th>Nom</th>
+            <th>Prix</th>
+            <th>Stock</th>
+            <th>Description</th>
+            <th>Catégorie</th>
+            <th>Option</th>
+            <th>Archivé</th>
+            <th>Image</th>
+            <th>Actions</th>
+          </tr>
         </thead>
         <tbody>
         <tr v-for="product in products" :key="product.id">

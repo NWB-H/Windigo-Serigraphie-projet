@@ -8,48 +8,36 @@
                     <div class="container-champ">
                         <AppInput
                             v-model="form.name"
+                            :error="form.errors.name"
                             type="text"
                             class="input"
                             placeholder="Nom"
                             id="name"
                         />
-                        <div
-                            v-if="form.errors.name"
-                            class="error"
-                        >{{ form.errors.name }}</div>
 
                         <AppInput
                             v-model="form.email"
+                            :error="form.errors.email"
                             type="text"
                             class="input"
                             placeholder="Email"
                         />
-                        <div
-                            v-if="form.errors.email"
-                            class="error"
-                        >{{ form.errors.email }}</div>
 
                         <AppInput
+                            v-model="form.password"
+                            :error="form.errors.password"
                             type="password"
                             class="input"
-                            v-model="form.password"
                             placeholder="Mot de passe"
                         />
-                        <div
-                            v-if="form.errors.password"
-                            class="error"
-                        >{{ form.errors.password }}</div>
 
                         <AppInput
+                            v-model="form.password_confirmation"
+                            :error="form.errors.password_confirmation"
                             type="password"
                             class="input"
-                            v-model="form.password_confirmation"
                             placeholder="Confirmer le mot de passe"
                         />
-                        <div
-                            v-if="form.password_confirmation"
-                            class="error"
-                        >{{ form.errors.password_confirmation }}</div>
 
                         <div class="form-group">
                             <button type="submit" class="button" :disabled="loading">

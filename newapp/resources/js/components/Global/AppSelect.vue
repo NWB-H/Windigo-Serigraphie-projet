@@ -4,6 +4,7 @@
       <option disabled :value="0">-- {{ placeholder }} --</option>
       <option v-for="item in items" :key="item[value]" :value="item[value]">{{ item[label] }}</option>
     </select>
+    <p v-if="error" class="error">{{ error }}</p>
   </div>
 </template>
 
@@ -20,5 +21,9 @@ defineProps<{
 </script>
 
 <style scoped>
-
+.error {
+  color: #b00020;
+  font-size: 0.9em;
+  margin-top: 0.25em;
+}
 </style>
