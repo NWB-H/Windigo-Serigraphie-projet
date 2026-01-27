@@ -37,16 +37,18 @@ import AppFooter from "@/components/AppFooter.vue";
 import AppHeader from "@/components/AppHeader.vue";
 import NotificationsContainer from "@/components/Notifications/NotificationsContainer.vue";
 import ProductController from "@/actions/App/Http/Controllers/Auth/ProductController";
-import {Link, usePage} from "@inertiajs/vue3";
 import CategoryController from "@/actions/App/Http/Controllers/Auth/CategoryController";
+import OptionController from "@/actions/App/Http/Controllers/Auth/OptionController";
+import {Link, usePage} from "@inertiajs/vue3";
+import WorkshopController from "@/actions/App/Http/Controllers/Auth/WorkshopController";
 
 const { url } = usePage()
 
 const links = [
   { name: 'Produits', icon: 'bi bi-box-seam', url: ProductController.index().url },
-  { name: 'Ateliers', icon: 'bi bi-brush', url: 'todo' },
+  { name: 'Ateliers', icon: 'bi bi-brush', url: WorkshopController.index().url },
   { name: 'Catégories', icon: 'bi bi-tags', url: CategoryController.index().url },
-  { name: 'Options', icon: 'bi bi-sliders', url: 'todo3' },
+  { name: 'Options', icon: 'bi bi-sliders', url: OptionController.index().url },
   { name: 'Portfolio', icon: '', url: 'todo4' },
 ]
 </script>

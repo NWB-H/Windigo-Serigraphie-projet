@@ -55,6 +55,6 @@ final class ProductController
             Inertia::flash('toasts', [Toast::error('Une erreur est survenue.')]);
         }
 
-        return to_route('admin.index');
+        return to_route('admin.product.index');
     }
 }

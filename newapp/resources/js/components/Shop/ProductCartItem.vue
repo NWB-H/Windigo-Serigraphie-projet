@@ -3,7 +3,7 @@
         <div class="mb-3">
             <Link :href="route('productItem', { id: product.id })">
                 <AppImage
-                    :src="product.picture_url"
+                    :url="product.picture_url ?? null"
                     :alt="product.name"
                     class="img-fluid rounded-3 shadow-sm"
                 />

@@ -17,7 +17,7 @@
                     <span>Bienvenue {{ user.email }}</span>
                     <Link
                         v-if="user.role === 'ROLE_ADMIN'"
-                        :href="route('admin.index')"
+                        :href="route('admin.product.index')"
                         class="btn btn-warning"
                         >Panel Admin</Link
                     >

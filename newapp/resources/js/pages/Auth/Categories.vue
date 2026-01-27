@@ -8,8 +8,8 @@
 
       <div v-if="showForm" class="card p-3 mb-4">
         <CategoryForm
-          :form="currentProduct"
-          :key="currentProduct ? currentProduct.id : 'new-category'"
+          :form="currentCategory"
+          :key="currentCategory ? currentCategory.id : 'new-category'"
           @reset="showForm = false"
         />
       </div>
@@ -49,16 +49,16 @@ const props = defineProps<{ categories: Category[] }>()
 
 const showForm = ref(false)
 
-const currentProduct = ref<Category | undefined>()
+const currentCategory = ref<Category | undefined>()
 
 function newCategory()
 {
-  currentProduct.value = undefined
+  currentCategory.value = undefined
   showForm.value = true
 }
 
 function edit(category: Category) {
-  currentProduct.value = category
+  currentCategory.value = category
   showForm.value = true
 }
 
