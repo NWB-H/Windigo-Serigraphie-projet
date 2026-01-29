@@ -18,8 +18,20 @@ return new class extends Migration
             $table->integer('stock');
             $table->text('description');
             $table->boolean('archived');
-            $table->foreignId('option_id')->references('id')->on('options');
-            $table->foreignId('category_id')->references('id')->on('categories');
+            $table
+                ->foreignId('option_id')
+                ->nullable()
+                ->constrained()
+                ->nullOnDelete()
+                ->references('id')
+                ->on('options');
+            $table
+                ->foreignId('category_id')
+                ->nullable()
+                ->constrained()
+                ->nullOnDelete()
+                ->references('id')
+                ->on('categories');
             $table->string('picture')->nullable();
             $table->timestamps();
         });
