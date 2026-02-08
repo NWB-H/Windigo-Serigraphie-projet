@@ -2,9 +2,12 @@
 
 namespace App\Models;
 
+use Database\Factories\WorkshopFactory;
+use Illuminate\Database\Eloquent\Attributes\UseFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+#[UseFactory(WorkshopFactory::class)]
 class Workshop extends Model
 {
     use HasFactory;

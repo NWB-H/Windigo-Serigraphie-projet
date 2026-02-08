@@ -11,7 +11,7 @@
     <p>Merci de vous être inscrit sur notre site.</p>
     <p>Veuillez confirmer votre adresse e-mail en cliquant sur le lien ci-dessous :</p>
 
-    <a href="https://front.windigoprint.com/verification?email={{ $user->email }}&token={{ $user->token }}">
+    <a>
         Vérifier mon compte
     </a>
 

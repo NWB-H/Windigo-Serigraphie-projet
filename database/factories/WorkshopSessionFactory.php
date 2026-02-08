@@ -13,15 +13,6 @@ use Ramsey\Uuid\Type\Integer;
 class WorkshopSessionFactory extends Factory
 {
 
-    // public function __construct() {
-    //     parent::__construct();
-    //     $this->date = new DateTime();
-    // }
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
     public function definition(): array
     {
         return [
@@ -30,5 +21,5 @@ class WorkshopSessionFactory extends Factory
             'workshop_id' => Workshop::inRandomOrder()->value('id'),
         ];
     }
-    
+
 }

@@ -4,7 +4,7 @@ namespace App\Enums;
 
 use App\Traits\EnumTrait;
 
-enum OrderStatus: string
+enum OrderEnum: string
 {
      use EnumTrait;
     case PENDING = 'en attente';

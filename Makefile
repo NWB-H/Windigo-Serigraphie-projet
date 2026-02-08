@@ -31,3 +31,9 @@ vendor: composer
 
 migrate:
 	$(LARAVEL) migrate
+
+fixtures:
+	$(LARAVEL) db:seed
+
+generate-js-routes:
+	$(LARAVEL) z:g
