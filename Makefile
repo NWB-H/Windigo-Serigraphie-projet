@@ -37,3 +37,4 @@ fixtures:
 
 generate-js-routes:
 	$(LARAVEL) z:g
+	$(LARAVEL) w:g

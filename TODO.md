@@ -1,3 +1,25 @@
 # Liste des taches à faire
 
 - [ ] Lors de l'incrementation d'un produit depuis notre panier, il faut vérifier via une API si le stock est disponible
+- [ ] Les messages d'erreur dans les formulaires doivent etre en francais
+- [ ] sur le formulaire d'inscription ajouter les informations pour que le mot de passe soit valide (longueur, caracteres spéciaux, etc...)
+- [ ] systeme de notification à revoir car ils sont en doublons par moment
+- [ ] ajouter/modifier une image 
+- [ ] taille des images dans la partie admin pour atelier
+- [ ] Admin
+  - [ ] pagination
+    - [ ] produits
+    - [ ] ateliers
+    - [ ] catégories
+    - [ ] options
+- [ ] Inscription
+  - [ ] Pas d'email envoyé
+- [ ] Mot de passe perdu
+- [ ] Mentions légales
+- [ ] Portfolio
+- [ ] Accueil
+  - [ ] Boutique
+    - [ ] Au clique on ne va pas sur le produit
+  - [ ] Ateliers
+    - [ ] Au clique on ne va pas sur l'atelier
+  - [ ] Contact ne fonctionne pas
