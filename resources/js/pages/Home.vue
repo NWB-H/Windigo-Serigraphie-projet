@@ -32,7 +32,7 @@
                         <h2 class="mb-4">Boutique</h2>
                         <div class="row g-3">
                             <div v-for="product in products" :key="product.id" class="col-md-4">
-                                <Link :to="{ name: 'produit-detail', params: { id: product.id } }"
+                                <Link :href="route('productItem', { product: product.id })"
                                              class="text-decoration-none text-dark">
                                     <div class="card h-100 shadow-sm border-0 rounded-3 product-card bg-white">
                                         <div class="product-img-wrapper">
@@ -70,7 +70,7 @@
                     <div class="row g-3">
                         <div v-for="workshop in workshops" :key="workshop.id" class="col-md-6">
                             <div class="card h-100 shadow-sm border-0 rounded-3 workshop-card">
-                                <Link :to="{ name: 'atelier-detail', params: { id: workshop.id } }"
+                                <Link :href="route('workshop', { workshop: workshop.id })"
                                              class="text-decoration-none text-dark d-flex flex-column h-100">
                                     <div class="workshop-img-wrapper">
                                         <AppImage :alt="workshop.name" :src="workshop.first_image_url" class="card-img-top workshop-img" />
