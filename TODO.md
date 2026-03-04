@@ -1,43 +1,25 @@
-# TODO
-// Accueil
-[ ] Créer lien avec API meta vers page instagram
-[ ] Finaliser le formulaire
-[ ] Ajout bouton sur card produit
-[ ] CSS
+# Liste des taches à faire
 
-//Boutique
-[ ] CSS
-[ ] Modifier le router link sur les cards
-[ ] proposer plusieurs options aux produits
-[ ] ajouter plusieurs photos aux produits
-
-
-//Ateliers
-[ ] Changer le bouton retour "boutique" par "atelier"
-[ ] CSS
-[ ] Donner la possibiliter de reserver en renseignant ses coordonnées
-
-//PortFolio
-[ ] Supprimer le blanc sous les photos et indiquer le titre par dessus au passage de la souris
-
-//A Propos
-[ ] Ajouter les photos sur les descriptions
-[ ] Ajouter carroussel de photos
-[ ] CSS
-
-//Login/Register
-[ ] CSS
-[ ] Faire fonctionner le register avec envoi de mail
-
-//Page mon compte
-[ ] Créer la page
-[ ] ajouter le suivi/gestion des ateliers
-[ ] ajouter le suivi des commandes
-
-//Panier
-[ ] Donner la possibilité d'avoir un panier sans être connecté.
-[ ] Donner de la persistance au panier
-
-//Site complet
-[ ] Rendre le site responsive
-[ ] Menu burger sur le header
+- [ ] Lors de l'incrementation d'un produit depuis notre panier, il faut vérifier via une API si le stock est disponible
+- [ ] Les messages d'erreur dans les formulaires doivent etre en francais
+- [ ] sur le formulaire d'inscription ajouter les informations pour que le mot de passe soit valide (longueur, caracteres spéciaux, etc...)
+- [ ] systeme de notification à revoir car ils sont en doublons par moment
+- [ ] ajouter/modifier une image 
+- [ ] taille des images dans la partie admin pour atelier
+- [ ] Admin
+  - [ ] pagination
+    - [ ] produits
+    - [ ] ateliers
+    - [ ] catégories
+    - [ ] options
+- [ ] Inscription
+  - [ ] Pas d'email envoyé
+- [ ] Mot de passe perdu
+- [ ] Mentions légales
+- [ ] Portfolio
+- [ ] Accueil
+  - [ ] Boutique
+    - [ ] Au clique on ne va pas sur le produit
+  - [ ] Ateliers
+    - [ ] Au clique on ne va pas sur l'atelier
+  - [ ] Contact ne fonctionne pas
