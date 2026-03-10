@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\InformationController;
+use App\Http\Controllers\SecurityController;
 use App\Http\Controllers\ShopController;
 use App\Http\Controllers\WorkshopController;
 use Illuminate\Support\Facades\Route;
@@ -15,6 +16,7 @@ Route::get('/portfolio', [InformationController::class, 'portfolio'])->name('por
 Route::get('/ateliers', [WorkshopController::class, 'workshops'])->name('workshops');
 Route::get('/ateliers/{workshop}', [WorkshopController::class, 'workshop'])->name('workshop');
 Route::get('/panier', [ShopController::class, 'cart'])->name('cart');
+Route::get('/verify-account', [SecurityController::class, 'verifyAccount'])->name('verify-account');
 
 require __DIR__.'/api.php';
 require __DIR__.'/auth.php';
