@@ -29,7 +29,14 @@ class SecurityController
             'password' => ['required'],
         ]);
 
-        if (Auth::attempt($credentials)) {
+        if (
+            Auth::attemptWhen(
+                $credentials,
+                function (User $user) {
+                    return null !== $user->email_verified_at;
+                }
+            )
+        ) {
             $request->session()->regenerate();
 
             Inertia::flash('toasts', [Toast::success('Bienvenue sur votre espace personnel.')]);
@@ -92,6 +99,12 @@ class SecurityController
         $user = User::where('id', $userId);
 
         $isVerifyAccount = $user && $request->hasValidSignature();
+
+        if ($isVerifyAccount) {
+            $user->update([
+                'email_verified_at' => now()
+            ]);
+        }
 
         return Inertia::render(
             'VerifyAccount', ['isVerifyAccount' => $isVerifyAccount]
