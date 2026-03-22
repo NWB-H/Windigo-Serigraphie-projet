@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Auth;
 
 use App\Models\Option;
-use App\Services\Toast;
+use App\Services\Notifications\NotificationType;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -31,9 +31,9 @@ final class OptionController
         try {
             Option::updateOrCreate(['id' => $validated['id'] ?? null], $validated);
 
-            Inertia::flash('toasts', [Toast::success('Option enregistré avec succès')]);
+            Inertia::notification('Option enregistré avec succès', NotificationType::SUCCESS);
         } catch (\Throwable $e) {
-            Inertia::flash('toasts', [Toast::error('Une erreur est survenue.')]);
+            Inertia::notification('Une erreur est survenue.', NotificationType::ERROR);
         }
 
         return to_route('admin.options.index');

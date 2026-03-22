@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Auth;
 
 use App\Models\Category;
-use App\Services\Toast;
+use App\Services\Notifications\NotificationType;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -34,9 +34,9 @@ final class CategoryController
                 $validated
             );
 
-            Inertia::flash('toasts', [Toast::success('Catégorie enregistré avec succès')]);
+            Inertia::notification('Catégorie enregistré avec succès', NotificationType::SUCCESS);
         } catch (\Throwable $e) {
-            Inertia::flash('toasts', [Toast::error('Une erreur est survenue.')]);
+            Inertia::notification('Une erreur est survenue.', NotificationType::ERROR);
         }
 
         return to_route('admin.categories.index');

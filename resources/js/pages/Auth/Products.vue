@@ -44,9 +44,11 @@
           <td>{{ product.option?.name || '-' }}</td>
           <td>{{ product.archived ? 'Oui' : 'Non' }}</td>
           <td>
-            <img v-if="product.picture" :src="product.picture_url" alt="Image produit"
-                 style="width: 50px; height: 50px; object-fit: cover;" />
-            <span v-else>-</span>
+              <AppImage
+                  :url="product.picture_url"
+                  alt="Image produit"
+                  img-css-class="img-cover-50"
+              />
           </td>
 
           <td>
@@ -67,6 +69,7 @@ import { ref } from "vue";
 import ProductForm from "@/components/Form/ProductForm.vue";
 import ProductRepository from "@/services/ProductRepository";
 import { router } from '@inertiajs/vue3'
+import AppImage from "@/components/AppImage.vue";
 
 const props = defineProps<{
   products: Product[],
@@ -96,7 +99,7 @@ function deleteProduct(product: Product) {
   if (index !== -1) {
     ProductRepository.deleteProduct(product).then(() => {
       props.products.splice(index, 1)
-      router.flash('toast', { message: 'Produit supprimé', type: 'success' })
+      router.flash('notification', { message: 'Produit supprimé', type: 'success' })
     })
   }
 }

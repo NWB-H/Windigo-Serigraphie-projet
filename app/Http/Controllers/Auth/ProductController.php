@@ -7,7 +7,7 @@ namespace App\Http\Controllers\Auth;
 use App\Models\Category;
 use App\Models\Option;
 use App\Models\Product;
-use App\Services\Toast;
+use App\Services\Notifications\NotificationType;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -50,9 +50,9 @@ final class ProductController
                 $validated
             );
 
-            Inertia::flash('toasts', [Toast::success('Produit enregistré avec succès')]);
+            Inertia::notification('Produit enregistré avec succès', NotificationType::SUCCESS);
         } catch (\Throwable $e) {
-            Inertia::flash('toasts', [Toast::error('Une erreur est survenue.')]);
+            Inertia::notification('Une erreur est survenure.', NotificationType::ERROR);
         }
 
         return to_route('admin.product.index');

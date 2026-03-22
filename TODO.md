@@ -3,9 +3,9 @@
 - [ ] Lors de l'incrementation d'un produit depuis notre panier, il faut vérifier via une API si le stock est disponible
 - [ ] Les messages d'erreur dans les formulaires doivent etre en francais
 - [ ] sur le formulaire d'inscription ajouter les informations pour que le mot de passe soit valide (longueur, caracteres spéciaux, etc...)
-- [ ] systeme de notification à revoir car ils sont en doublons par moment
+- [x] systeme de notification à revoir car ils sont en doublons par moment
 - [ ] ajouter/modifier une image 
-- [ ] taille des images dans la partie admin pour atelier
+- [x] taille des images dans la partie admin pour atelier
 - [ ] Admin
   - [ ] pagination
     - [ ] produits

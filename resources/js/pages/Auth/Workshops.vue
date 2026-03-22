@@ -29,7 +29,11 @@
 
           <!-- Image principale -->
           <td class="border px-2 py-1">
-            <AppImage :url="workshop.first_image_url" :alt="workshop.name" imgCssClass="table-image"  />
+            <AppImage
+                :url="workshop.first_image_url"
+                :alt="workshop.name" imgCssClass="table-image"
+                img-css-class="img-cover-50"
+            />
           </td>
 
           <!-- Description tronquée -->
