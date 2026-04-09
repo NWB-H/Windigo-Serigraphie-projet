@@ -6,11 +6,13 @@ use Database\Factories\ProductFactory;
 use Illuminate\Database\Eloquent\Attributes\UseFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
 #[UseFactory(ProductFactory::class)]
-class Product extends Model
+class Product extends Model implements HasMedia
 {
-    use HasFactory;
+    use HasFactory, InteractsWithMedia;
 
     public $timestamps = false;
 
@@ -30,7 +32,7 @@ class Product extends Model
 
     public function getPictureUrlAttribute(): ?string
     {
-        return $this->picture ? asset('storage/' . $this->picture) : null;
+        return $this->getFirstMedia('products')?->getUrl();
     }
 
     // --- Recherche filtrée ---

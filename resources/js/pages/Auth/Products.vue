@@ -11,7 +11,7 @@
         <ProductForm
           :options="options"
           :categories="categories"
-          :form="currentProduct"
+          :product="currentProduct"
           :key="currentProduct ? currentProduct.id : 'new-product'"
           @close="showForm = false"
         />

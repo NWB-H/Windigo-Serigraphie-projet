@@ -1,78 +1,77 @@
 <template>
   <form @submit.prevent="submit">
     <AppInput
-        v-model="form.name"
-        :error="form.errors.name"
+        v-model="formData.name"
+        :error="formData.errors.name"
         type="text"
         class="form-control"
         placeholder="Nom"
         id="name"
     />
-    <AppInput
-        v-model.number="form.price"
-        :error="form.errors.price"
-        type="number"
-        class="form-control"
-        placeholder="Prix (1-50)"
-        id="price"
-    />
-    <AppInput
-      v-model.number="form.stock"
-      :error="form.errors.stock"
-      type="number"
-      class="form-control"
-      placeholder="Stock"
-      id="stock"
-    />
+    <div class="flex gap-4">
+      <AppInput
+          v-model.number="formData.price"
+          :error="formData.errors.price"
+          type="number"
+          containerClass="flex-1"
+          class="form-control"
+          placeholder="Prix (1-50)"
+          id="price"
+      />
+      <AppInput
+          v-model.number="formData.stock"
+          :error="formData.errors.stock"
+          type="number"
+          containerClass="flex-1"
+          class="form-control"
+          placeholder="Stock"
+          id="stock"
+      />
+    </div>
 
     <AppTextarea
-      v-model="form.description"
-      :error="form.errors.description"
-      class="form-control mb-2"
+      v-model="formData.description"
+      :error="formData.errors.description"
+      class="form-control my-3"
       placeholder="Description"
     />
 
-    <div class="form-check mb-2">
-      <input type="checkbox" v-model="form.archived" class="form-check-input" id="archived" />
+    <div class="flex gap-4 my-3">
+      <AppSelect
+          v-model="formData.category_id"
+          placeholder="Choisir une catégorie"
+          :items="categories"
+          value="id"
+          label="name"
+          class="flex-1"
+          :error="formData.errors.category_id"
+      />
+
+      <AppSelect
+          v-model="formData.option_id"
+          placeholder="Choisir une option"
+          :items="options"
+          value="id"
+          label="name"
+          class="flex-1"
+          :error="formData.errors.option_id"
+      />
+    </div>
+
+    <div class="flex justify-end mb-2">
+      <input type="checkbox" v-model="formData.archived" class="form-check-input mx-2" id="archived" />
       <label class="form-check-label" for="archived">Archivé</label>
     </div>
 
-    <AppSelect
-      v-model="form.category_id"
-      placeholder="Choisir une catégorie"
-      :items="categories"
-      value="id"
-      label="name"
-      :error="form.errors.category_id"
-    />
-
-    <AppSelect
-        v-model="form.option_id"
-        placeholder="Choisir une option"
-        :items="options"
-        value="id"
-        label="name"
-        :error="form.errors.option_id"
-    />
-
     <!-- Picture -->
-    <input
-        type="file"
-        class="form-control mb-2"
-        @change="e => form.picture = (e.target as HTMLInputElement).files?.[0] || null"
-    />
-    <div
-        v-if="form?.picture"
-        class="mb-2 d-flex align-items-center"
-    >
-      <img
-          :src="typeof editingProduct.picture === 'string' ? editingProduct.picture : ''"
-          alt="Aperçu"
-          style="width: 100px; height: 100px; object-fit: cover; margin-right: 10px;" />
-      <button type="button" class="btn btn-sm btn-danger">
-        Supprimer l'image
-      </button>
-    </div>
+    <ul class="flex gap-1 items-center justify-center">
+      <li>
+        <AppPreviewImage class="w-[150px] h-[150px]" @image:loaded="(image) => loadPreviewImage(image)" />
+      </li>
+      <li v-for="image in images">
+        <AppImage :url="image" class="w-[150px] h-[150px] object-fill" />
+      </li>
+    </ul>
 
     <button class="btn btn-primary me-2" type="submit">Enregistrer</button>
     <button class="btn btn-secondary" @click="$emit('close')">Annuler</button>
@@ -86,34 +85,42 @@ import {useForm} from "@inertiajs/vue3";
 import { store } from '@/actions/App/Http/Controllers/Auth/ProductController'
 import AppTextarea from "@/components/Global/AppTextarea.vue";
 import AppSelect from "@/components/Global/AppSelect.vue";
+import AppImage from "@/components/AppImage.vue";
+import AppPreviewImage from "@/components/AppPreviewImage.vue";
+import {ref} from "vue";
 
-const props = defineProps<{ options: Option[], categories: Category[], form?: Product}>()
+const props = defineProps<{ options: Option[], categories: Category[], product?: Product}>()
 
 const emits = defineEmits<{
   (e: 'close')
 }>()
 
-const form = useForm<ProductForm>(
+const formData = useForm<ProductForm>(
     store().method,
     store().url,
-    props.form ?? {
-    id: 0,
-    name: '',
-    price: 0,
-    stock: 0,
-    description: '',
-    archived: false,
-    picture: '',
-    category_id: 0,
-    option_id: 0,
-    picture_url: undefined,
-    images: undefined
+    {
+    id: props.product?.id ?? 0,
+    name: props.product?.name ?? '',
+    price: props.product?.price ?? 0,
+    stock: props.product?.stock ?? 0,
+    description: props.product?.description ?? '',
+    archived: props.product?.archived ?? false,
+    pictures: [],
+    category_id: props.product?.category?.id ?? 0,
+    option_id: props.product?.option?.id ?? 0,
   }
 )
 
+const images = ref(props.product.media.map(image => image.original_url))
+
+function loadPreviewImage(image: File) {
+  images.value.push(URL.createObjectURL(image))
+  formData.pictures.push(image)
+}
+
 function submit()
 {
-  form.submit({
+  formData.submit({
     onSuccess: () => { emits('close') }
   });
 

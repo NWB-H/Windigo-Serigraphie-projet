@@ -28,11 +28,9 @@ export interface ProductForm {
     stock: number
     description: string
     archived: boolean
-    picture: string | File | null   // <-- accepte string (backend) ou File (upload)
-    images?: Images[]
+    pictures: File[]
 
     // Relations
     category_id?: number
     option_id?: number
-    picture_url?: string;
 }

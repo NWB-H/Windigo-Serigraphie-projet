@@ -31,7 +31,7 @@ RUN apt-get update && apt-get upgrade -y && apt-get install -y \
     ca-certificates \
  && pecl install amqp \
  && docker-php-ext-configure intl \
- && docker-php-ext-install sockets intl opcache zip pdo pdo_mysql pdo_pgsql pgsql \
+ && docker-php-ext-install sockets intl opcache zip pdo pdo_mysql pdo_pgsql pgsql exif \
  && docker-php-ext-enable amqp \
  && rm -rf /tmp/* /var/lib/apt/lists/* \
  && apt-get clean

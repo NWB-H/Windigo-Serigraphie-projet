@@ -18,7 +18,7 @@ final class ProductController
         return Inertia::render(
             'Auth/Products',
             [
-                'products' => Product::with(['category', 'option'])->get(),
+                'products' => [Product::with(['category', 'option'])->latest('id')->first()],
                 'options' => Option::all(),
                 'categories' => Category::all(),
             ],
@@ -27,28 +27,31 @@ final class ProductController
 
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'id' => 'int',
-            'name' => 'required|string',
-            'price' => 'required|integer|between:1,50',
-            'stock' => 'required|integer',
-            'description' => 'required|string',
-            'archived' => 'boolean',
-            'option_id' => 'required|exists:options,id',
-            'category_id' => 'required|exists:categories,id',
-            'picture' => 'nullable|image|mimes:jpg,jpeg,png,webp,JPG,JPEG,PNG,WEBP,GIF,gif|max:2048'
-        ]);
+            $validated = $request->validate([
+                'id' => 'int',
+                'name' => 'required|string',
+                'price' => 'required|integer|between:1,50',
+                'stock' => 'required|integer',
+                'description' => 'required|string',
+                'archived' => 'boolean',
+                'option_id' => 'required|exists:options,id',
+                'category_id' => 'required|exists:categories,id',
+                'pictures' => 'nullable|array',
+                'pictures.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            ]);
 
-        // Gestion de l'image
-        if ($request->hasFile('picture')) {
-            $validated['picture'] = $request->file('picture')->store('products', 'public');
-        }
 
         try {
-            Product::updateOrCreate(
+            $product = Product::updateOrCreate(
                 ['id' => $validated['id'] ?? null],
                 $validated
             );
+
+            if ($request->hasFile('pictures')) {
+                foreach ($request->file('pictures') as $picture) {
+                    $product->addMedia($picture)->toMediaCollection('products');
+                }
+            }
 
             Inertia::notification('Produit enregistré avec succès', NotificationType::SUCCESS);
         } catch (\Throwable $e) {

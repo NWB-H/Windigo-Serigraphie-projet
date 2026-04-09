@@ -5,7 +5,7 @@
                 <AppImage
                     :url="product.picture_url ?? null"
                     :alt="product.name"
-                    class="img-fluid rounded-3 shadow-sm"
+                    img-css-class="img-fluid rounded-3 shadow-sm h-[385px] w-[385px] max-w-[385px] max-h-[385px]"
                 />
             </Link>
         </div>

@@ -1,5 +1,5 @@
 <template>
-    <div class="my-3">
+    <div class="my-3" :class="[containerClass ? containerClass : null]">
         <input
             v-model="model"
             v-bind="$attrs"
@@ -19,7 +19,7 @@ defineOptions({
   inheritAttrs: false
 })
 
-defineProps<{ error?: string }>()
+defineProps<{ error?: string, containerClass?: string }>()
 </script>
 
 <style scoped>
