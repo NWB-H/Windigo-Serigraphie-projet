@@ -70,6 +70,14 @@
       </li>
       <li v-for="image in images">
         <AppImage :url="image" class="w-[150px] h-[150px] object-fill" />
+        <p class="flex">
+          <button class="flex flex-1 justify-center bg-blue-500 hover:bg-blue-700 text-white p-2">
+            <StarIcon class="size-4" />
+          </button>
+          <button class="flex flex-1 justify-center bg-red-500 hover:bg-red-700 text-white p-2">
+            <XMarkIcon class="size-4" />
+          </button>
+        </p>
       </li>
     </ul>
 
@@ -88,6 +96,8 @@ import AppSelect from "@/components/Global/AppSelect.vue";
 import AppImage from "@/components/AppImage.vue";
 import AppPreviewImage from "@/components/AppPreviewImage.vue";
 import {ref} from "vue";
+import StarIcon from "@/components/Icon/StarIcon.vue";
+import XMarkIcon from "@/components/Icon/XMarkIcon.vue";
 
 const props = defineProps<{ options: Option[], categories: Category[], product?: Product}>()
 
@@ -126,3 +136,16 @@ function submit()
 
 }
 </script>
+
+<style>
+.overlayContent {
+  position: absolute;
+  display: none;
+}
+
+.overlayContainer:hover .overlayContent {
+  display: flex;
+  width: inherit;
+  justify-content: space-between;
+}
+</style>
