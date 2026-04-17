@@ -1,5 +1,5 @@
 <template>
-  <AppLayoutAdmin>
+  <AppLayoutAdmin title="Administration produits">
     <div class="container my-5">
       <p class="flex gap-2">
         <h2>Gestion Produits</h2>
@@ -79,7 +79,7 @@ const props = defineProps<{
 
 const showForm = ref(false)
 
-const currentProduct = ref<Product | undefined>(undefined)
+const currentProduct = ref<Product>()
 
 function newProduct() {
   currentProduct.value = undefined

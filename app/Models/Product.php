@@ -2,12 +2,15 @@
 
 namespace App\Models;
 
+use App\Models\Dto\Image;
 use Database\Factories\ProductFactory;
 use Illuminate\Database\Eloquent\Attributes\UseFactory;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 #[UseFactory(ProductFactory::class)]
 class Product extends Model implements HasMedia
@@ -28,11 +31,28 @@ class Product extends Model implements HasMedia
     ];
 
     // --- pour récupérer l'URL complète de l'image ---
-    protected $appends = ['picture_url'];
+    protected $appends = [
+        'picture_url',
+        'images',
+    ];
 
     public function getPictureUrlAttribute(): ?string
     {
         return $this->getFirstMedia('products')?->getUrl();
+    }
+
+    public function images(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => array_map(
+                fn (Media $image) => new Image(
+                    id: $image->id,
+                    url: $image->getUrl(),
+                    isHighlighted: true,
+                ),
+                $this->getMedia('products')->all()
+            )
+        );
     }
 
     // --- Recherche filtrée ---

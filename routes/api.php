@@ -9,6 +9,7 @@ Route::middleware('auth:sanctum')
     ->prefix('api/products')
     ->group(function () {
         Route::delete('/{product}', [ProductController::class, 'delete'])->name('api.products.delete');
+        Route::delete('/{product}/media/{media}', [ProductController::class, 'deleteMedia'])->name('api.products.deleteMedia');
     });
 
 Route::middleware('auth:sanctum')
