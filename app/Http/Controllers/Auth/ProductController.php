@@ -36,8 +36,9 @@ final class ProductController
                 'archived' => 'boolean',
                 'option_id' => 'required|exists:options,id',
                 'category_id' => 'required|exists:categories,id',
-                'pictures' => 'nullable|array',
-                'pictures.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+                'images' => 'nullable|array',
+                'images.*.file' => 'image|mimes:jpeg,png,jpg,gif,svg',
+                'images.*.isHighlighted' => 'boolean',
             ]);
 
 
@@ -47,14 +48,18 @@ final class ProductController
                 $validated
             );
 
-            if ($request->hasFile('pictures')) {
-                foreach ($request->file('pictures') as $picture) {
-                    $product->addMedia($picture)->toMediaCollection('products');
+            foreach ($validated['images'] as $key => $image) {
+                if ($request->hasFile("images.$key.file")) {
+                    $product
+                        ->addMedia($request->file("images.$key.file"))
+                        ->withCustomProperties(['isHighlighted' => (bool) $image['isHighlighted']])
+                        ->toMediaCollection('products');
                 }
             }
 
             Inertia::notification('Produit enregistré avec succès', NotificationType::SUCCESS);
         } catch (\Throwable $e) {
+            dd($e->getMessage());
             Inertia::notification('Une erreur est survenure.', NotificationType::ERROR);
         }
 

@@ -29,7 +29,10 @@ export interface ProductForm {
     stock: number
     description: string
     archived: boolean
-    pictures: File[]
+    images: {
+        file: File,
+        isHighlighted: boolean
+    }[]
 
     // Relations
     category_id?: number

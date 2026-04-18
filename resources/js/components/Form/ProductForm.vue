@@ -1,5 +1,6 @@
 <template>
     <form @submit.prevent="submit">
+        {{ formData }}
         <AppInput
             v-model="formData.name"
             :error="formData.errors.name"
@@ -77,8 +78,9 @@
                 />
             </li>
             <ProductFormCarousel
-                :images="images"
+                :images="product.images"
                 @delete="(index) => deleteImage(index)"
+                @star="(index) => toggleStar(index)"
             />
         </ul>
 
@@ -111,23 +113,26 @@ const emits = defineEmits<{
     (e: 'close'): void;
 }>();
 
+const product = ref(props.product);
+
 const formData = useForm<ProductForm>(store().method, store().url, {
-    id: props.product?.id ?? 0,
-    name: props.product?.name ?? '',
-    price: props.product?.price ?? 0,
-    stock: props.product?.stock ?? 0,
-    description: props.product?.description ?? '',
-    archived: props.product?.archived ?? false,
-    pictures: [],
-    category_id: props.product?.category?.id ?? 0,
-    option_id: props.product?.option?.id ?? 0,
+    id: product.value?.id ?? 0,
+    name: product.value?.name ?? '',
+    price: product.value?.price ?? 0,
+    stock: product.value?.stock ?? 0,
+    description: product.value?.description ?? '',
+    archived: product.value?.archived ?? false,
+    images: [],
+    category_id: product.value?.category?.id ?? 0,
+    option_id: product.value?.option?.id ?? 0,
 });
 
-const images = ref<Image[]>(props.product.images);
-
 function loadPreviewImage(image: File) {
-    images.value.push({ url: URL.createObjectURL(image), isHighlighted: false } as Image);
-    formData.pictures.push(image);
+    product.value.images.push({
+        url: URL.createObjectURL(image),
+        isHighlighted: false,
+    } as Image);
+    formData.images.push({ file: image, isHighlighted: false });
 }
 
 function submit() {
@@ -138,12 +143,24 @@ function submit() {
     });
 }
 
-function deleteImage(index: number) {
-    ProductRepository
-        .deleteMedia(props.product, images.value[index])
-        .then(() => {
-            images.value.splice(index, 1);
-        })
+async function deleteImage(index: number) {
+    if (product.value.images[index].id) {
+        await ProductRepository.deleteMedia(props.product, product.value.images[index]);
+    }
+
+    product.value.images.splice(index, 1);
+}
+
+function toggleStar(index: number) {
+    product.value.images.map((image, i) => {
+        image.isHighlighted = i === index;
+    });
+
+    formData.images.map((image, i) => {
+        image.isHighlighted = i === index;
+    });
+
+    console.log(formData.images)
 }
 </script>
 
