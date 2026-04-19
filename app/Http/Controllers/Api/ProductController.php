@@ -28,4 +28,14 @@ class ProductController extends Controller
             return response()->json($e->getMessage(), 400);
         }
     }
+
+    public function highlightImage(Request $request, Product $product, Media $media)
+    {
+        try {
+            $product->resetHighlightedImages();
+            $media->setCustomProperty('isHighlighted', true)->save();
+        } catch (\Throwable $e) {
+            return response()->json($e->getMessage(), 400);
+        }
+    }
 }

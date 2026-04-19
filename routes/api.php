@@ -9,8 +9,10 @@ Route::middleware('auth:sanctum')
     ->prefix('api/products')
     ->group(function () {
         Route::delete('/{product}', [ProductController::class, 'delete'])->name('api.products.delete');
-        Route::delete('/{product}/media/{media}', [ProductController::class, 'deleteMedia'])->name('api.products.deleteMedia');
-    });
+        Route::delete('/{product}/medias/{media}', [ProductController::class, 'deleteMedia'])->name('api.products.deleteMedia');
+        Route::patch('/{product}/medias/{media}/highlighted', [ProductController::class, 'highlightImage'])->name('api.products.highlightImage');
+});
+
 
 Route::middleware('auth:sanctum')
     ->prefix('api/categories')

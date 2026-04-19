@@ -43,6 +43,7 @@ final class ProductController
 
 
         try {
+            /** @var Product $product */
             $product = Product::updateOrCreate(
                 ['id' => $validated['id'] ?? null],
                 $validated
@@ -50,9 +51,15 @@ final class ProductController
 
             foreach ($validated['images'] as $key => $image) {
                 if ($request->hasFile("images.$key.file")) {
+                    $isHighlighted = (bool) $image['isHighlighted'];
+
+                    if ($isHighlighted) {
+                        $product->resetHighlightedImages();
+                    }
+
                     $product
                         ->addMedia($request->file("images.$key.file"))
-                        ->withCustomProperties(['isHighlighted' => (bool) $image['isHighlighted']])
+                        ->withCustomProperties(['isHighlighted' => $isHighlighted])
                         ->toMediaCollection('products');
                 }
             }

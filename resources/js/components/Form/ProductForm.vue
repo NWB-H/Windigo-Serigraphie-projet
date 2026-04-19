@@ -1,6 +1,6 @@
 <template>
     <form @submit.prevent="submit">
-        {{ formData }}
+        {{ formData.images }}
         <AppInput
             v-model="formData.name"
             :error="formData.errors.name"
@@ -102,6 +102,7 @@ import AppPreviewImage from '@/components/AppPreviewImage.vue';
 import { ref } from 'vue';
 import ProductFormCarousel from '@/components/ProductFormCarousel.vue';
 import ProductRepository from '@/services/ProductRepository';
+import MediaRepository from "@/services/MediaRepository";
 
 const props = defineProps<{
     options: Option[];
@@ -145,22 +146,26 @@ function submit() {
 
 async function deleteImage(index: number) {
     if (product.value.images[index].id) {
-        await ProductRepository.deleteMedia(props.product, product.value.images[index]);
+        await ProductRepository.deleteMedia(product.value, product.value.images[index]);
     }
 
     product.value.images.splice(index, 1);
 }
 
-function toggleStar(index: number) {
+async function toggleStar(index: number) {
+    if (product.value.images[index].id) {
+        await ProductRepository.setHighlighted(product.value, product.value.images[index])
+    }
+
     product.value.images.map((image, i) => {
         image.isHighlighted = i === index;
     });
 
     formData.images.map((image, i) => {
-        image.isHighlighted = i === index;
-    });
+        const searchIndex = (index - (product.value.images.length - formData.images.length))
 
-    console.log(formData.images)
+        image.isHighlighted = searchIndex === i
+    });
 }
 </script>
 

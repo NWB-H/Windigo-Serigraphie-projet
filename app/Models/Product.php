@@ -48,11 +48,18 @@ class Product extends Model implements HasMedia
                 fn (Media $image) => new Image(
                     id: $image->id,
                     url: $image->getUrl(),
-                    isHighlighted: true,
+                    isHighlighted: $image->getCustomProperty('isHighlighted', false),
                 ),
                 $this->getMedia('products')->all()
             )
         );
+    }
+
+    public function resetHighlightedImages(): void
+    {
+        $this->getMedia('products')->each(function (Media $media) {
+            $media->setCustomProperty('isHighlighted', false)->save(); // Non optimisé, il faudrait update la collection d'un coup
+        });
     }
 
     // --- Recherche filtrée ---
