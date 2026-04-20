@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Services\Toast;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
@@ -28,7 +29,14 @@ class SecurityController
             'password' => ['required'],
         ]);
 
-        if (Auth::attempt($credentials)) {
+        if (
+            Auth::attemptWhen(
+                $credentials,
+                function (User $user) {
+                    return null !== $user->email_verified_at;
+                }
+            )
+        ) {
             $request->session()->regenerate();
 
             Inertia::flash('toasts', [Toast::success('Bienvenue sur votre espace personnel.')]);
@@ -82,5 +90,24 @@ class SecurityController
 
 
         return to_route('login');
+    }
+
+    public function verifyAccount(Request $request)
+    {
+        $userId = Crypt::decryptString($request->query('token'));
+
+        $user = User::where('id', $userId);
+
+        $isVerifyAccount = $user && $request->hasValidSignature();
+
+        if ($isVerifyAccount) {
+            $user->update([
+                'email_verified_at' => now()
+            ]);
+        }
+
+        return Inertia::render(
+            'VerifyAccount', ['isVerifyAccount' => $isVerifyAccount]
+        );
     }
 }

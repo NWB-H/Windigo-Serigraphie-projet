@@ -5,11 +5,11 @@ namespace App\Mail;
 use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
+use Illuminate\Mail\Mailables\Content;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\URL;
 
-/**
- * @todo: changer la façon de générer le token, pas sécure, pas de time limit
- */
 class RegisterEmail extends Mailable
 {
     use Queueable, SerializesModels;
@@ -18,16 +18,23 @@ class RegisterEmail extends Mailable
     {
     }
 
-    public function build()
+    public function content(): Content
     {
-        $verificationUrl = url("/api/verification?email={$this->user->email}&token={$this->user->token}");
+        $url = URL::temporarySignedRoute(
+            'verify-account',
+            now()->plus(minutes: 30),
+            ['token' => Crypt::encryptString($this->user->id)]
+        );
 
-        return $this->subject('Confirmez votre inscription')
-                    ->view('email-register', [
-                        'user' => $this->user,
-                        'verificationUrl' => $verificationUrl,
-                    ]);
+        return new Content(
+            view: 'email-register',
+            with: [
+                'user' => $this->user,
+                'verificationUrl' => $url
+            ]
+        );
     }
+
 
     public function attachments(): array
     {
