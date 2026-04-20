@@ -17,6 +17,7 @@ Route::get('/ateliers', [WorkshopController::class, 'workshops'])->name('worksho
 Route::get('/ateliers/{workshop}', [WorkshopController::class, 'workshop'])->name('workshop');
 Route::get('/panier', [ShopController::class, 'cart'])->name('cart');
 Route::get('/verify-account', [SecurityController::class, 'verifyAccount'])->name('verify-account');
+Route::get('/mentions-legales', [InformationController::class, 'mentions'])->name('mentions');
 
 require __DIR__.'/api.php';
 require __DIR__.'/auth.php';

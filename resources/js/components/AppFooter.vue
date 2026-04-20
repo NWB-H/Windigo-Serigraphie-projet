@@ -63,7 +63,7 @@
                 </div>
                 <div class="footer-links">
                     <Link :href="route('confidentialite')">Politique de confidentialité</Link> |
-                    <Link to="/mentions-legales">Mentions légales</Link>
+                    <Link :href="route('mentions')">Mentions légales</Link>
                 </div>
             </div>
         </div>
