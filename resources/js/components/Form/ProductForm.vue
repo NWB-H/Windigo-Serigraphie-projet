@@ -1,121 +1,170 @@
 <template>
-  <form @submit.prevent="submit">
-    <AppInput
-        v-model="form.name"
-        :error="form.errors.name"
-        type="text"
-        class="form-control"
-        placeholder="Nom"
-        id="name"
-    />
-    <AppInput
-        v-model.number="form.price"
-        :error="form.errors.price"
-        type="number"
-        class="form-control"
-        placeholder="Prix (1-50)"
-        id="price"
-    />
-    <AppInput
-      v-model.number="form.stock"
-      :error="form.errors.stock"
-      type="number"
-      class="form-control"
-      placeholder="Stock"
-      id="stock"
-    />
+    <form @submit.prevent="submit">
+        <AppInput
+            v-model="formData.name"
+            :error="formData.errors.name"
+            type="text"
+            class="form-control"
+            placeholder="Nom"
+            id="name"
+        />
+        <div class="flex gap-4">
+            <AppInput
+                v-model.number="formData.price"
+                :error="formData.errors.price"
+                type="number"
+                containerClass="flex-1"
+                class="form-control"
+                placeholder="Prix (1-50)"
+                id="price"
+            />
+            <AppInput
+                v-model.number="formData.stock"
+                :error="formData.errors.stock"
+                type="number"
+                containerClass="flex-1"
+                class="form-control"
+                placeholder="Stock"
+                id="stock"
+            />
+        </div>
 
-    <AppTextarea
-      v-model="form.description"
-      :error="form.errors.description"
-      class="form-control mb-2"
-      placeholder="Description"
-    />
+        <AppTextarea
+            v-model="formData.description"
+            :error="formData.errors.description"
+            class="form-control my-3"
+            placeholder="Description"
+        />
 
-    <div class="form-check mb-2">
-      <input type="checkbox" v-model="form.archived" class="form-check-input" id="archived" />
-      <label class="form-check-label" for="archived">Archivé</label>
-    </div>
+        <div class="my-3 flex gap-4">
+            <AppSelect
+                v-model="formData.category_id"
+                placeholder="Choisir une catégorie"
+                :items="categories"
+                value="id"
+                label="name"
+                class="flex-1"
+                :error="formData.errors.category_id"
+            />
 
-    <AppSelect
-      v-model="form.category_id"
-      placeholder="Choisir une catégorie"
-      :items="categories"
-      value="id"
-      label="name"
-      :error="form.errors.category_id"
-    />
+            <AppSelect
+                v-model="formData.option_id"
+                placeholder="Choisir une option"
+                :items="options"
+                value="id"
+                label="name"
+                class="flex-1"
+                :error="formData.errors.option_id"
+            />
+        </div>
 
-    <AppSelect
-        v-model="form.option_id"
-        placeholder="Choisir une option"
-        :items="options"
-        value="id"
-        label="name"
-        :error="form.errors.option_id"
-    />
+        <div class="mb-2 flex justify-end">
+            <input
+                type="checkbox"
+                v-model="formData.archived"
+                class="form-check-input mx-2"
+                id="archived"
+            />
+            <label class="form-check-label" for="archived">Archivé</label>
+        </div>
 
-    <!-- Picture -->
-    <input
-        type="file"
-        class="form-control mb-2"
-        @change="e => form.picture = (e.target as HTMLInputElement).files?.[0] || null"
-    />
-    <div
-        v-if="form?.picture"
-        class="mb-2 d-flex align-items-center"
-    >
-      <img
-          :src="typeof editingProduct.picture === 'string' ? editingProduct.picture : ''"
-          alt="Aperçu"
-          style="width: 100px; height: 100px; object-fit: cover; margin-right: 10px;" />
-      <button type="button" class="btn btn-sm btn-danger">
-        Supprimer l'image
-      </button>
-    </div>
+        <!-- Picture -->
+        <ul class="flex items-center justify-center gap-1">
+            <li>
+                <AppPreviewImage
+                    class="h-[150px] w-[150px]"
+                    @image:loaded="(image) => loadPreviewImage(image)"
+                />
+            </li>
+            <ProductFormCarousel
+                :images="product.images"
+                @delete="(index) => deleteImage(index)"
+                @star="(index) => toggleStar(index)"
+            />
+        </ul>
 
-    <button class="btn btn-primary me-2" type="submit">Enregistrer</button>
-    <button class="btn btn-secondary" @click="$emit('close')">Annuler</button>
-  </form>
+        <button class="btn btn-primary me-2" type="submit">Enregistrer</button>
+        <button class="btn btn-secondary" @click="$emit('close')">
+            Annuler
+        </button>
+    </form>
 </template>
 
 <script setup lang="ts">
-import {Category, Option, Product, ProductForm} from "@/models";
-import AppInput from "@/components/Global/AppInput.vue";
-import {useForm} from "@inertiajs/vue3";
-import { store } from '@/actions/App/Http/Controllers/Auth/ProductController'
-import AppTextarea from "@/components/Global/AppTextarea.vue";
-import AppSelect from "@/components/Global/AppSelect.vue";
+import { Category, Image, Option, Product, ProductForm } from '@/models';
+import AppInput from '@/components/Global/AppInput.vue';
+import { useForm } from '@inertiajs/vue3';
+import { store } from '@/actions/App/Http/Controllers/Auth/ProductController';
+import AppTextarea from '@/components/Global/AppTextarea.vue';
+import AppSelect from '@/components/Global/AppSelect.vue';
+import AppPreviewImage from '@/components/AppPreviewImage.vue';
+import { ref } from 'vue';
+import ProductFormCarousel from '@/components/ProductFormCarousel.vue';
+import ProductRepository from '@/services/ProductRepository';
 
-const props = defineProps<{ options: Option[], categories: Category[], form?: Product}>()
+const props = defineProps<{
+    options: Option[];
+    categories: Category[];
+    product: Product;
+}>();
 
 const emits = defineEmits<{
-  (e: 'close')
-}>()
+    (e: 'close'): void;
+}>();
 
-const form = useForm<ProductForm>(
-    store().method,
-    store().url,
-    props.form ?? {
-    id: 0,
-    name: '',
-    price: 0,
-    stock: 0,
-    description: '',
-    archived: false,
-    picture: '',
-    category_id: 0,
-    option_id: 0,
-    picture_url: undefined,
-    images: undefined
-  }
-)
+const product = ref(props.product);
 
-function submit()
-{
-  form.submit({
-    onSuccess: () => { emits('close') }
-  });
+const formData = useForm<ProductForm>(store().method, store().url, {
+    id: product.value?.id ?? 0,
+    name: product.value?.name ?? '',
+    price: product.value?.price ?? 0,
+    stock: product.value?.stock ?? 0,
+    description: product.value?.description ?? '',
+    archived: product.value?.archived ?? false,
+    images: [],
+    category_id: product.value?.category?.id ?? 0,
+    option_id: product.value?.option?.id ?? 0,
+});
 
+function loadPreviewImage(image: File) {
+    product.value.images.push({
+        url: URL.createObjectURL(image),
+        isHighlighted: false,
+    } as Image);
+    formData.images.push({ file: image, isHighlighted: false });
+}
+
+function submit() {
+    formData.submit({
+        onSuccess: () => {
+            emits('close');
+        },
+    });
+}
+
+async function deleteImage(index: number) {
+    if (product.value.images[index].id) {
+        await ProductRepository.deleteMedia(product.value, product.value.images[index]);
+    }
+
+    product.value.images.splice(index, 1);
+}
+
+async function toggleStar(index: number) {
+    if (product.value.images[index].id) {
+        await ProductRepository.setHighlighted(product.value, product.value.images[index])
+    }
+
+    product.value.images.map((image, i) => {
+        image.isHighlighted = i === index;
+    });
+
+    formData.images.map((image, i) => {
+        const searchIndex = (index - (product.value.images.length - formData.images.length))
+
+        image.isHighlighted = searchIndex === i
+    });
 }
 </script>
+
+<style></style>

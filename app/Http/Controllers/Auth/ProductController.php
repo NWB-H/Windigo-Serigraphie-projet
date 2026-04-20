@@ -27,28 +27,42 @@ final class ProductController
 
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'id' => 'int',
-            'name' => 'required|string',
-            'price' => 'required|integer|between:1,50',
-            'stock' => 'required|integer',
-            'description' => 'required|string',
-            'archived' => 'boolean',
-            'option_id' => 'required|exists:options,id',
-            'category_id' => 'required|exists:categories,id',
-            'picture' => 'nullable|image|mimes:jpg,jpeg,png,webp,JPG,JPEG,PNG,WEBP,GIF,gif|max:2048'
-        ]);
+            $validated = $request->validate([
+                'id' => 'int',
+                'name' => 'required|string',
+                'price' => 'required|integer|between:1,50',
+                'stock' => 'required|integer',
+                'description' => 'required|string',
+                'archived' => 'boolean',
+                'option_id' => 'required|exists:options,id',
+                'category_id' => 'required|exists:categories,id',
+                'images' => 'nullable|array',
+                'images.*.file' => 'image|mimes:jpeg,png,jpg,gif,svg',
+                'images.*.isHighlighted' => 'boolean',
+            ]);
 
-        // Gestion de l'image
-        if ($request->hasFile('picture')) {
-            $validated['picture'] = $request->file('picture')->store('products', 'public');
-        }
 
         try {
-            Product::updateOrCreate(
+            /** @var Product $product */
+            $product = Product::updateOrCreate(
                 ['id' => $validated['id'] ?? null],
                 $validated
             );
+
+            foreach ($validated['images'] as $key => $image) {
+                if ($request->hasFile("images.$key.file")) {
+                    $isHighlighted = (bool) $image['isHighlighted'];
+
+                    if ($isHighlighted) {
+                        $product->resetHighlightedImages();
+                    }
+
+                    $product
+                        ->addMedia($request->file("images.$key.file"))
+                        ->withCustomProperties(['isHighlighted' => $isHighlighted])
+                        ->toMediaCollection('products');
+                }
+            }
 
             Inertia::notification('Produit enregistré avec succès', NotificationType::SUCCESS);
         } catch (\Throwable $e) {

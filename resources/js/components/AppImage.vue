@@ -7,7 +7,16 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 
-const { url = '/images/placeholder.png', imgFit = 'cover' } = defineProps<{ url?: string | null, alt?: string, imgFit?: string, imgCssClass?: string }>()
+const {
+  url = '/images/placeholder.png',
+  imgFit = 'cover'
+} = defineProps<{
+  url?: string | null,
+  alt?: string,
+  imgFit?: string,
+  imgCssClass?: string,
+
+}>()
 
 const resolvedSrc = computed(() => url ?? '/images/placeholder.png')
 </script>
@@ -17,5 +26,10 @@ const resolvedSrc = computed(() => url ?? '/images/placeholder.png')
     width: 100%;
     height: 100%;
     object-fit: v-bind(imgFit);
+}
+
+div:hover > .overlayImg {
+  opacity: 0.2;
+  transition: opacity 0.3s ease;
 }
 </style>

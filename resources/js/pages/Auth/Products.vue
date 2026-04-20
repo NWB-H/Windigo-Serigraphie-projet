@@ -1,5 +1,5 @@
 <template>
-  <AppLayoutAdmin>
+  <AppLayoutAdmin title="Administration produits">
     <div class="container my-5">
       <p class="flex gap-2">
         <h2>Gestion Produits</h2>
@@ -11,7 +11,7 @@
         <ProductForm
           :options="options"
           :categories="categories"
-          :form="currentProduct"
+          :product="currentProduct"
           :key="currentProduct ? currentProduct.id : 'new-product'"
           @close="showForm = false"
         />
@@ -44,11 +44,7 @@
           <td>{{ product.option?.name || '-' }}</td>
           <td>{{ product.archived ? 'Oui' : 'Non' }}</td>
           <td>
-              <AppImage
-                  :url="product.picture_url"
-                  alt="Image produit"
-                  img-css-class="img-cover-50"
-              />
+            <AppImage :url="product.images?.filter(i => i.isHighlighted).at(0)?.url" alt="Image produit" imgCssClass="img-cover-50" />
           </td>
 
           <td>
@@ -78,8 +74,9 @@ const props = defineProps<{
 }>()
 
 const showForm = ref(false)
+const products = ref(props.products)
 
-const currentProduct = ref<Product | undefined>(undefined)
+const currentProduct = ref<Product>()
 
 function newProduct() {
   currentProduct.value = undefined
@@ -94,11 +91,11 @@ function edit(product: Product) {
 }
 
 function deleteProduct(product: Product) {
-  const index = props.products.findIndex((i: Product) => i.id === product.id)
+  const index = products.value.findIndex((i: Product) => i.id === product.id)
 
   if (index !== -1) {
     ProductRepository.deleteProduct(product).then(() => {
-      props.products.splice(index, 1)
+      products.value.splice(index, 1)
       router.flash('notification', { message: 'Produit supprimé', type: 'success' })
     })
   }
