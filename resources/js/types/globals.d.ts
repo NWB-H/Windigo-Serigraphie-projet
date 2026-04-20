@@ -1,6 +1,6 @@
 import { AppPageProps } from '@/types/index';
 
-export interface Toast {
+export interface Notification {
     type: 'success' | 'error'
     message: string
 }
@@ -22,8 +22,7 @@ declare module '@inertiajs/core' {
     interface PageProps extends InertiaPageProps, AppPageProps {}
     export interface InertiaConfig {
         flashDataType: {
-            toasts?: Toast[],
-            toast?: Toast
+            notification?: Notification
         }
     }
 }

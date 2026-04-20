@@ -1,6 +1,6 @@
 <template>
     <div v-bind="$attrs">
-        <img :src="resolvedSrc" :alt="alt" :class="{ imgCssClass: (imgCssClass !== undefined), 'img': (imgCssClass === undefined) }" />
+        <img :src="resolvedSrc" :alt="alt" :class="[imgCssClass ? imgCssClass : 'img']" />
     </div>
 </template>
 

@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\Notifications;
 
-class Toast
+class Notification
 {
-    private function __construct(
+    public function __construct(
         public string $message,
-        public string $type,
+        public NotificationType $type
     ) {
     }
 
@@ -14,7 +14,7 @@ class Toast
     {
         return new static(
             $message,
-            'success'
+            NotificationType::SUCCESS
         );
     }
 
@@ -22,7 +22,7 @@ class Toast
     {
         return new static(
             $message,
-            'error'
+            NotificationType::ERROR
         );
     }
 }

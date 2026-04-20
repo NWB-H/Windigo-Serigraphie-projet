@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Mail\RegisterEmail;
 use App\Models\User;
-use App\Services\Toast;
+use App\Services\Notifications\NotificationType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
@@ -39,7 +39,7 @@ class SecurityController
         ) {
             $request->session()->regenerate();
 
-            Inertia::flash('toasts', [Toast::success('Bienvenue sur votre espace personnel.')]);
+            Inertia::notification('Bienvenue sur votre espace personnels.', NotificationType::SUCCESS);
 
             return to_route('home');
         }
@@ -83,9 +83,9 @@ class SecurityController
         try {
             Mail::to($user->email)->send(new RegisterEmail($user));
 
-            Inertia::flash('toasts', [Toast::success('Un email vous à été envoyé.')]);
+            Inertia::notification('Un email vous à été envoyé.', NotificationType::SUCCESS);
         } catch (\Throwable $e) {
-            Inertia::flash('toasts', [Toast::error('Une erreur est survenue.')]);
+            Inertia::notification('Une erreur est survenue.', NotificationType::ERROR);
         }
 
 

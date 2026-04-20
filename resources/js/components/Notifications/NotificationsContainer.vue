@@ -15,21 +15,17 @@
 import AppNotification from "@/components/AppNotification.vue";
 import { usePage, router } from "@inertiajs/vue3";
 import {ref} from "vue";
-import {Toast} from "@/types/globals";
+import { Notification } from "@/types/globals";
 
-const page = usePage()
+const page = usePage<{ notifications: Notification[] }>()
 
-const toasts = ref<Toast[]>(page.flash.toasts ?? [])
+const toasts = ref<Notification[]>(page.props.notifications ?? [])
 
 router.on('flash', (event) => {
   event.preventDefault()
 
-  if (event.detail.flash.toast) {
-    toasts.value.push(event.detail.flash.toast)
-  }
-
-  if (event.detail.flash.toasts) {
-    toasts.value.push(...event.detail.flash.toasts)
+  if (event.detail.flash.notification) {
+    toasts.value.push(event.detail.flash.notification)
   }
 })
 </script>
