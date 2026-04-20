@@ -44,7 +44,7 @@
           <td>{{ product.option?.name || '-' }}</td>
           <td>{{ product.archived ? 'Oui' : 'Non' }}</td>
           <td>
-            <AppImage :url="product.images?.filter(i => i.isHighlighted).at(0)?.url" alt="Image produit" imgCssClass="img-cover-50 img-thumbnail" />
+            <AppImage :url="product.images?.filter(i => i.isHighlighted).at(0)?.url" alt="Image produit" imgCssClass="img-cover-50" />
           </td>
 
           <td>
