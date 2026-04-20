@@ -1,6 +1,5 @@
 <template>
     <form @submit.prevent="submit">
-        {{ formData.images }}
         <AppInput
             v-model="formData.name"
             :error="formData.errors.name"
@@ -102,7 +101,6 @@ import AppPreviewImage from '@/components/AppPreviewImage.vue';
 import { ref } from 'vue';
 import ProductFormCarousel from '@/components/ProductFormCarousel.vue';
 import ProductRepository from '@/services/ProductRepository';
-import MediaRepository from "@/services/MediaRepository";
 
 const props = defineProps<{
     options: Option[];

@@ -18,7 +18,7 @@ final class ProductController
         return Inertia::render(
             'Auth/Products',
             [
-                'products' => [Product::with(['category', 'option'])->latest('id')->first()],
+                'products' => Product::with(['category', 'option'])->get(),
                 'options' => Option::all(),
                 'categories' => Category::all(),
             ],
@@ -66,7 +66,6 @@ final class ProductController
 
             Inertia::notification('Produit enregistré avec succès', NotificationType::SUCCESS);
         } catch (\Throwable $e) {
-            dd($e->getMessage());
             Inertia::notification('Une erreur est survenure.', NotificationType::ERROR);
         }
 
