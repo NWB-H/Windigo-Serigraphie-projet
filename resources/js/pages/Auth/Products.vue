@@ -33,7 +33,7 @@
           </tr>
         </thead>
         <tbody>
-        <tr v-for="product in products" :key="product.id">
+            <tr v-for="product in products" :key="product.id">
           <td>{{ product.name }}</td>
           <td>{{ product.price }} €</td>
           <td>{{ product.stock }}</td>
@@ -54,27 +54,33 @@
         </tr>
         </tbody>
       </table>
+        <AppPagination
+            :totalPage="productsPaginated.pagination.totalPage"
+            :currentPage="productsPaginated.pagination.currentPage"
+            :path="productsPaginated.pagination.path"
+        />
     </div>
   </AppLayoutAdmin>
 </template>
 
 <script setup lang="ts">
 import AppLayoutAdmin from "@/layouts/AppLayoutAdmin.vue";
-import { Product, Category, Option } from "@/models";
+import { Product, Category, Option, ResourcePaginated } from "@/models";
 import { ref } from "vue";
 import ProductForm from "@/components/Form/ProductForm.vue";
 import ProductRepository from "@/services/ProductRepository";
 import { router } from '@inertiajs/vue3'
 import AppImage from "@/components/AppImage.vue";
+import AppPagination from '@/components/AppPagination.vue';
 
 const props = defineProps<{
-  products: Product[],
+  productsPaginated: ResourcePaginated<Product>,
   categories: Category[],
   options: Option[],
 }>()
 
 const showForm = ref(false)
-const products = ref(props.products)
+const products = ref(props.productsPaginated.items)
 
 const currentProduct = ref<Product>()
 
