@@ -1,11 +1,11 @@
 <?php
 
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\InformationController;
 use App\Http\Controllers\SecurityController;
 use App\Http\Controllers\ShopController;
 use App\Http\Controllers\WorkshopController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\HomeController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/boutique', [ShopController::class, 'index'])->name('shop');

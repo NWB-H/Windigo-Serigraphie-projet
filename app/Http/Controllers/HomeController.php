@@ -18,7 +18,7 @@ class HomeController
             'Home',
             [
                 'products' => $products->count() <= 3 ? $products : $products->random(3),
-                'workshops' => Workshop::limit(2)->get()
+                'workshops' => Workshop::limit(2)->get(),
             ]
         );
     }

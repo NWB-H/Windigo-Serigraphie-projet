@@ -38,8 +38,9 @@ class Workshop extends Model
     {
         if (is_array($this->images) && count($this->images) > 0) {
             // Génère le lien complet vers le storage public
-            return asset('storage/' . $this->images[0]);
+            return asset('storage/'.$this->images[0]);
         }
+
         return null;
     }
 

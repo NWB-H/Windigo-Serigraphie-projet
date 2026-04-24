@@ -13,6 +13,7 @@ final class CategoryController
     {
         try {
             $category->delete();
+
             return response()->json(null, 204);
         } catch (\Throwable $e) {
             return response()->json($e->getMessage(), 400);

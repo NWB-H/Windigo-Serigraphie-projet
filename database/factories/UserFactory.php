@@ -4,13 +4,13 @@ namespace Database\Factories;
 
 use App\Enums\RoleEnum;
 use App\Models\City;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
-use PHPUnit\TextUI\XmlConfiguration\Logging\TeamCity;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User>
+ * @extends Factory<User>
  */
 class UserFactory extends Factory
 {

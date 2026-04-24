@@ -6,7 +6,7 @@
                 <div
                     v-for="workshop in workshops"
                     :key="workshop.id"
-                    class="col-12 col-md-6 col-lg-4"
+                    class="col-md-6 col-lg-4 col-12"
                 >
                     <Link :href="route('workshop', { id: workshop.id })">
                         <div class="card shadow-sm">
@@ -21,10 +21,21 @@
 
                             <div class="card-body d-flex flex-column">
                                 <h5 class="card-title">{{ workshop.name }}</h5>
-                                <h6 class="card-subtitle mb-2 text-muted">{{ workshop.type }}</h6>
-                                <p class="card-text mb-1"><strong>Prix :</strong> {{ workshop.price }} €</p>
-                                <p class="card-text mb-2"><strong>Durée :</strong> {{ workshop.duration }} min</p>
-                                <p class="card-text mb-2"><strong>Âge minimum :</strong> {{ workshop.age }} ans</p>
+                                <h6 class="card-subtitle mb-2 text-muted">
+                                    {{ workshop.type }}
+                                </h6>
+                                <p class="card-text mb-1">
+                                    <strong>Prix :</strong>
+                                    {{ workshop.price }} €
+                                </p>
+                                <p class="card-text mb-2">
+                                    <strong>Durée :</strong>
+                                    {{ workshop.duration }} min
+                                </p>
+                                <p class="card-text mb-2">
+                                    <strong>Âge minimum :</strong>
+                                    {{ workshop.age }} ans
+                                </p>
 
                                 <button class="btn btn-primary mt-3 w-100">
                                     Voir détails & Réserver
@@ -39,12 +50,12 @@
 </template>
 
 <script setup lang="ts">
-import {Head, Link} from "@inertiajs/vue3";
-import AppLayout from "@/layouts/AppLayout.vue";
-import AppImage from "@/components/AppImage.vue";
-import {Workshop} from "@/models/Workshop";
+import AppImage from '@/components/AppImage.vue';
+import AppLayout from '@/layouts/AppLayout.vue';
+import { Workshop } from '@/models/Workshop';
+import { Link } from '@inertiajs/vue3';
 
-defineProps<{ workshops: Workshop[] }>()
+defineProps<{ workshops: Workshop[] }>();
 </script>
 
 <style scoped>
@@ -53,7 +64,9 @@ a {
 }
 .card {
     border-radius: 12px;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease;
 }
 
 .card:hover {

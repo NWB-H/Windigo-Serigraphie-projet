@@ -91,16 +91,16 @@
 </template>
 
 <script setup lang="ts">
-import { Category, Image, Option, Product, ProductForm } from '@/models';
-import AppInput from '@/components/Global/AppInput.vue';
-import { useForm } from '@inertiajs/vue3';
 import { store } from '@/actions/App/Http/Controllers/Auth/ProductController';
-import AppTextarea from '@/components/Global/AppTextarea.vue';
-import AppSelect from '@/components/Global/AppSelect.vue';
 import AppPreviewImage from '@/components/AppPreviewImage.vue';
-import { ref } from 'vue';
+import AppInput from '@/components/Global/AppInput.vue';
+import AppSelect from '@/components/Global/AppSelect.vue';
+import AppTextarea from '@/components/Global/AppTextarea.vue';
 import ProductFormCarousel from '@/components/ProductFormCarousel.vue';
+import { Category, Image, Option, Product, ProductForm } from '@/models';
 import ProductRepository from '@/services/ProductRepository';
+import { useForm } from '@inertiajs/vue3';
+import { ref } from 'vue';
 
 const props = defineProps<{
     options: Option[];
@@ -144,7 +144,10 @@ function submit() {
 
 async function deleteImage(index: number) {
     if (product.value.images[index].id) {
-        await ProductRepository.deleteMedia(product.value, product.value.images[index]);
+        await ProductRepository.deleteMedia(
+            product.value,
+            product.value.images[index],
+        );
     }
 
     product.value.images.splice(index, 1);
@@ -152,7 +155,10 @@ async function deleteImage(index: number) {
 
 async function toggleStar(index: number) {
     if (product.value.images[index].id) {
-        await ProductRepository.setHighlighted(product.value, product.value.images[index])
+        await ProductRepository.setHighlighted(
+            product.value,
+            product.value.images[index],
+        );
     }
 
     product.value.images.map((image, i) => {
@@ -160,9 +166,10 @@ async function toggleStar(index: number) {
     });
 
     formData.images.map((image, i) => {
-        const searchIndex = (index - (product.value.images.length - formData.images.length))
+        const searchIndex =
+            index - (product.value.images.length - formData.images.length);
 
-        image.isHighlighted = searchIndex === i
+        image.isHighlighted = searchIndex === i;
     });
 }
 </script>

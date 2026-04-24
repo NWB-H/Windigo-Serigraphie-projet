@@ -4,10 +4,11 @@ namespace Database\Factories;
 
 use App\Models\Category;
 use App\Models\Option;
+use App\Models\Product;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Product>
+ * @extends Factory<Product>
  */
 class ProductFactory extends Factory
 {
@@ -20,10 +21,10 @@ class ProductFactory extends Factory
     {
         return [
             'name' => fake()->colorname(),
-            'price' => random_int(0,50),
-            'stock' => random_int(0,20),
+            'price' => random_int(0, 50),
+            'stock' => random_int(0, 20),
             'description' => $this->faker->paragraph(1),
-            'archived' => random_int(0,1),
+            'archived' => random_int(0, 1),
             'option_id' => Option::factory(),
             'category_id' => Category::factory(),
         ];

@@ -1,4 +1,3 @@
-
 <template>
     <AppLayout title="Inscription">
         <div class="top-container">
@@ -40,7 +39,11 @@
                         />
 
                         <div class="form-group">
-                            <button type="submit" class="button" :disabled="loading">
+                            <button
+                                type="submit"
+                                class="button"
+                                :disabled="loading"
+                            >
                                 {{ loading ? 'Envoi...' : 'Créer un compte' }}
                             </button>
                         </div>
@@ -57,19 +60,19 @@
 </template>
 
 <script setup lang="ts">
-import AppLayout from "@/layouts/AppLayout.vue";
-import { ref } from "vue";
-import { Link, useForm } from "@inertiajs/vue3";
-import AppInput from "@/components/Global/AppInput.vue";
+import AppInput from '@/components/Global/AppInput.vue';
+import AppLayout from '@/layouts/AppLayout.vue';
+import { Link, useForm } from '@inertiajs/vue3';
+import { ref } from 'vue';
 
 const form = useForm({
     name: null,
     email: null,
     password: null,
     password_confirmation: null,
-})
+});
 
-const loading = ref(false)
+const loading = ref(false);
 </script>
 
 <style scoped>
@@ -119,7 +122,7 @@ button:hover {
 }
 
 button:after {
-    content: "";
+    content: '';
     background: black;
     position: absolute;
     z-index: -1;
@@ -151,4 +154,3 @@ button:hover:after {
     margin-top: 0.25em;
 }
 </style>
-

@@ -2,12 +2,13 @@
 
 namespace Database\Factories;
 
+use App\Models\Reservation;
 use App\Models\User;
 use App\Models\WorkshopSession;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Reservation>
+ * @extends Factory<Reservation>
  */
 class ReservationFactory extends Factory
 {
@@ -19,8 +20,8 @@ class ReservationFactory extends Factory
     public function definition(): array
     {
         return [
-        'user_id' => User::inRandomOrder()->value('id'),
-        'workshop_session_id' => WorkshopSession::inRandomOrder()->value('id')
+            'user_id' => User::inRandomOrder()->value('id'),
+            'workshop_session_id' => WorkshopSession::inRandomOrder()->value('id'),
         ];
     }
 }

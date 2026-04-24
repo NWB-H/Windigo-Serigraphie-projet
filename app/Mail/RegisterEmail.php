@@ -14,9 +14,7 @@ class RegisterEmail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public function __construct(public User $user)
-    {
-    }
+    public function __construct(public User $user) {}
 
     public function content(): Content
     {
@@ -30,11 +28,10 @@ class RegisterEmail extends Mailable
             view: 'email-register',
             with: [
                 'user' => $this->user,
-                'verificationUrl' => $url
+                'verificationUrl' => $url,
             ]
         );
     }
-
 
     public function attachments(): array
     {

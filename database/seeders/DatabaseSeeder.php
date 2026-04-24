@@ -3,11 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Product;
-use App\Models\User;
 use App\Models\Workshop;
-use App\Models\WorkshopSession;
-use Database\Factories\WorkshopFactory;
-use Database\Factories\WorkshopSessionFactory;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder

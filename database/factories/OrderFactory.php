@@ -8,7 +8,7 @@ use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Order>
+ * @extends Factory<Order>
  */
 class OrderFactory extends Factory
 {
@@ -22,7 +22,7 @@ class OrderFactory extends Factory
         return [
             'user_id' => random_int(1, User::count()),
             'total' => random_int(1, 20),
-            'status' => 'en attente'
+            'status' => 'en attente',
         ];
     }
     //  public function configure()

@@ -15,12 +15,12 @@
 </template>
 
 <script setup lang="ts">
-import AppHeader from "@/components/AppHeader.vue";
-import AppFooter from "@/components/AppFooter.vue";
-import NotificationsContainer from "@/components/Notifications/NotificationsContainer.vue";
-import {Head} from "@inertiajs/vue3";
+import AppFooter from '@/components/AppFooter.vue';
+import AppHeader from '@/components/AppHeader.vue';
+import NotificationsContainer from '@/components/Notifications/NotificationsContainer.vue';
+import { Head } from '@inertiajs/vue3';
 
-defineProps<{ title?: string }>()
+defineProps<{ title?: string }>();
 </script>
 
 <style>

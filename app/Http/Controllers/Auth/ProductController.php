@@ -28,20 +28,19 @@ final class ProductController
 
     public function store(Request $request)
     {
-            $validated = $request->validate([
-                'id' => 'int',
-                'name' => 'required|string',
-                'price' => 'required|integer|between:1,50',
-                'stock' => 'required|integer',
-                'description' => 'required|string',
-                'archived' => 'boolean',
-                'option_id' => 'required|exists:options,id',
-                'category_id' => 'required|exists:categories,id',
-                'images' => 'nullable|array',
-                'images.*.file' => 'image|mimes:jpeg,png,jpg,gif,svg',
-                'images.*.isHighlighted' => 'boolean',
-            ]);
-
+        $validated = $request->validate([
+            'id' => 'int',
+            'name' => 'required|string',
+            'price' => 'required|integer|between:1,50',
+            'stock' => 'required|integer',
+            'description' => 'required|string',
+            'archived' => 'boolean',
+            'option_id' => 'required|exists:options,id',
+            'category_id' => 'required|exists:categories,id',
+            'images' => 'nullable|array',
+            'images.*.file' => 'image|mimes:jpeg,png,jpg,gif,svg',
+            'images.*.isHighlighted' => 'boolean',
+        ]);
 
         try {
             /** @var Product $product */

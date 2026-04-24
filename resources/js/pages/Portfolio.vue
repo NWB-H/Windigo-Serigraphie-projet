@@ -1,14 +1,9 @@
 <template>
-    <AppLayout title="Portfolio">
-
-    </AppLayout>
+    <AppLayout title="Portfolio"> </AppLayout>
 </template>
 
 <script setup lang="ts">
-
-import AppLayout from "@/layouts/AppLayout.vue";
+import AppLayout from '@/layouts/AppLayout.vue';
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

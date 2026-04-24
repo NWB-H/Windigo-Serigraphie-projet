@@ -3,10 +3,11 @@
 namespace Database\Factories;
 
 use App\Enums\WorkshopEnum;
+use App\Models\Workshop;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Workshop>
+ * @extends Factory<Workshop>
  */
 class WorkshopFactory extends Factory
 {
@@ -20,9 +21,9 @@ class WorkshopFactory extends Factory
         return [
             'name' => fake()->domainName(),
             'type' => WorkshopEnum::random(),
-            'price' => random_int(0,50),
-            'duration'=> $this->faker->time(),
-            'age'=> 15,
+            'price' => random_int(0, 50),
+            'duration' => $this->faker->time(),
+            'age' => 15,
         ];
     }
 }

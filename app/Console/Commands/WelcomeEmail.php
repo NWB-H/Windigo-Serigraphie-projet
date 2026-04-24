@@ -18,10 +18,9 @@ class WelcomeEmail extends Command
         try {
             $user = User::where('id', $this->argument('userId'))->first();
 
-            if (!$user) {
+            if (! $user) {
                 throw new \Exception('User not found');
             }
-
 
             $this->info(
                 sprintf('Sending welcome email to: %s', $user->name)

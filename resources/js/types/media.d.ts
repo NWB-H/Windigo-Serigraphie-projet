@@ -1,4 +1,4 @@
 export interface Media {
-    url: string
-    isHighlighted: boolean
+    url: string;
+    isHighlighted: boolean;
 }

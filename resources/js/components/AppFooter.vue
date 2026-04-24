@@ -2,20 +2,42 @@
     <footer :class="{ 'fade-in': footerVisible }">
         <div class="footer-container">
             <div class="footer-section socials">
-                <a href="https://www.facebook.com/windigo.serigraphie" target="_blank" rel="noopener noreferrer" class="icon facebook">
+                <a
+                    href="https://www.facebook.com/windigo.serigraphie"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="icon facebook"
+                >
                     <div class="tooltip">Facebook</div>
-                    <svg viewBox="0 0 320 512" height="1.2em" fill="currentColor">
-                        <path d="M279.14 288l14.22-92.66h-88.91v-60.13c0-25.35
+                    <svg
+                        viewBox="0 0 320 512"
+                        height="1.2em"
+                        fill="currentColor"
+                    >
+                        <path
+                            d="M279.14 288l14.22-92.66h-88.91v-60.13c0-25.35
                 12.42-50.06 52.24-50.06h40.42V6.26S260.43
                 0 225.36 0c-73.22 0-121.08 44.38-121.08
-                124.72v70.62H22.89V288h81.39v224h100.17V288z"/>
+                124.72v70.62H22.89V288h81.39v224h100.17V288z"
+                        />
                     </svg>
                 </a>
 
-                <a href="https://www.instagram.com/windigo.serigraphie/" target="_blank" rel="noopener noreferrer" class="icon instagram">
+                <a
+                    href="https://www.instagram.com/windigo.serigraphie/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="icon instagram"
+                >
                     <div class="tooltip">Instagram</div>
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" height="1.2em" fill="currentColor">
-                        <path d="M224.1 141c-63.6 0-114.9 51.3-114.9
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 448 512"
+                        height="1.2em"
+                        fill="currentColor"
+                    >
+                        <path
+                            d="M224.1 141c-63.6 0-114.9 51.3-114.9
                 114.9s51.3 114.9 114.9 114.9S339 319.5
                 339 255.9 287.7 141 224.1 141zm0
                 189.6c-41.2 0-74.7-33.5-74.7-74.7
@@ -44,7 +66,8 @@
                 132.2-9s102.7-2.6
                 132.2 9c19.6 7.8 34.7 22.9
                 42.6 42.6 11.7 29.5 9 99.5
-                9 132.2s2.7 102.7-9 132.2z"/>
+                9 132.2s2.7 102.7-9 132.2z"
+                        />
                     </svg>
                 </a>
             </div>
@@ -52,7 +75,7 @@
             <div class="footer-section contact">
                 <h5>Atelier de sérigraphie Windigo</h5>
                 <h5>Clément Fouquet</h5>
-                <p>39 rue Saint Pavin des champs<br/>72000 Le Mans</p>
+                <p>39 rue Saint Pavin des champs<br />72000 Le Mans</p>
                 <p>📞 07 83 28 72 87</p>
             </div>
 
@@ -62,39 +85,45 @@
                     <Link to="/login">Mon compte</Link>
                 </div>
                 <div class="footer-links">
-                    <Link :href="route('confidentialite')">Politique de confidentialité</Link> |
+                    <Link :href="route('confidentialite')"
+                        >Politique de confidentialité</Link
+                    >
+                    |
                     <Link :href="route('mentions')">Mentions légales</Link>
                 </div>
             </div>
         </div>
 
         <div class="footer-bottom">
-            <p>© 2025 Windigo – Les photos sont des propriétés intellectuelles, toute reproduction est interdite.</p>
+            <p>
+                © 2025 Windigo – Les photos sont des propriétés intellectuelles,
+                toute reproduction est interdite.
+            </p>
         </div>
     </footer>
 </template>
 
 <script setup lang="ts">
-import {onMounted, ref} from "vue";
-import { Link } from '@inertiajs/vue3'
+import { Link } from '@inertiajs/vue3';
+import { onMounted, ref } from 'vue';
 
-const footerVisible = ref(false)
+const footerVisible = ref(false);
 
 onMounted(() => {
     const observer = new IntersectionObserver(
         ([entry]) => {
-            footerVisible.value = entry.isIntersecting
+            footerVisible.value = entry.isIntersecting;
         },
-        { threshold: 0.1 }
-    )
-    const footer = document.querySelector('footer')
-    if (footer) observer.observe(footer)
-})
+        { threshold: 0.1 },
+    );
+    const footer = document.querySelector('footer');
+    if (footer) observer.observe(footer);
+});
 </script>
 
 <style scoped>
 footer {
-    background: #A88871;
+    background: #a88871;
     color: black;
     font-family: 'Oswald', sans-serif;
     font-weight: 200; /* Extralight */
@@ -128,7 +157,7 @@ footer {
 }
 
 .footer-links a::after {
-    content: "";
+    content: '';
     position: absolute;
     bottom: -3px;
     left: 0;
@@ -189,12 +218,12 @@ footer {
 }
 
 .icon.facebook:hover {
-    background: #1877F2;
+    background: #1877f2;
     color: white;
 }
 
 .icon.instagram:hover {
-    background: #E4405F;
+    background: #e4405f;
     color: white;
 }
 </style>
