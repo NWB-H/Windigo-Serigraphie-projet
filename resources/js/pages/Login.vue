@@ -24,7 +24,9 @@
                             />
                         </div>
                         <div class="form-group">
-                            <button type="submit" class="button">Connexion</button>
+                            <button type="submit" class="button">
+                                Connexion
+                            </button>
                         </div>
                         <p class="register">
                             Vous n'avez pas encore de compte ?
@@ -40,14 +42,14 @@
 </template>
 
 <script setup lang="ts">
-import AppLayout from "@/layouts/AppLayout.vue";
-import {Link, useForm} from "@inertiajs/vue3";
-import AppInput from "@/components/Global/AppInput.vue";
+import AppInput from '@/components/Global/AppInput.vue';
+import AppLayout from '@/layouts/AppLayout.vue';
+import { Link, useForm } from '@inertiajs/vue3';
 
 const form = useForm({
     email: null,
-    password: null
-})
+    password: null,
+});
 </script>
 
 <style scoped>
@@ -66,7 +68,7 @@ const form = useForm({
     align-items: center;
     flex-direction: column;
     border-radius: 5px;
-    background-color:#d2baaa;
+    background-color: #d2baaa;
     padding: 2vw 2vw;
 }
 
@@ -80,7 +82,7 @@ const form = useForm({
     height: 2.3em;
     margin: 0.5em;
     background: white;
-    color: #A78770;
+    color: #a78770;
     border: none;
     border-radius: 0.625em;
     font-size: 20px;
@@ -96,7 +98,7 @@ button:hover {
 }
 
 button:after {
-    content: "";
+    content: '';
     background: black;
     position: absolute;
     z-index: -1;
@@ -114,13 +116,12 @@ button:hover:after {
     transition: all 0.5s;
 }
 
-
 .container-champ {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     position: relative;
-    gap : 2vw;
+    gap: 2vw;
 }
 </style>

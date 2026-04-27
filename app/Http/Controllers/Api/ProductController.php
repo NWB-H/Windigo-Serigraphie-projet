@@ -13,16 +13,18 @@ class ProductController extends Controller
     {
         try {
             $product->delete();
+
             return response()->json(null, 204);
         } catch (\Throwable $e) {
             return response()->json($e->getMessage(), 400);
         }
     }
 
-    public function deleteMedia(request $request, Product $product, Media $media)
+    public function deleteMedia(Request $request, Product $product, Media $media)
     {
         try {
             $media->delete();
+
             return response()->json(null, 204);
         } catch (\Throwable $e) {
             return response()->json($e->getMessage(), 400);

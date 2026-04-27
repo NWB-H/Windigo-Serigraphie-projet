@@ -10,10 +10,11 @@ class Order extends Model
     public $timestamps = false;
 
     use HasFactory;
+
     protected $fillable = [
         'user_id',
         'total',
-        'status'
+        'status',
     ];
 
     public function products()
@@ -36,11 +37,12 @@ class Order extends Model
     {
         $allowedStatuses = ['pending', 'paid', 'shipped', 'cancelled'];
 
-        if (!in_array($newStatus, $allowedStatuses)) {
+        if (! in_array($newStatus, $allowedStatuses)) {
             throw new \InvalidArgumentException("Statut invalide : $newStatus");
         }
 
         $this->status = $newStatus;
+
         return $this->save();
     }
 }

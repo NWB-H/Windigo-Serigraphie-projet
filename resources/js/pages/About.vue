@@ -12,13 +12,22 @@
                     />
 
                     <!-- À propos de la sérigraphie -->
-                    <SectionItem
-                        header="À propos de la sérigraphie"
-                    >
+                    <SectionItem header="À propos de la sérigraphie">
                         <template #body>
-                            <p>J'anime depuis plusieurs années des ateliers d'initiation pour faire découvrir au public les bases techniques et le pouvoir créatif de la sérigraphie.</p>
-                            <AppImage alt="Sérigraphie" class="img-fluid rounded shadow-sm mt-3" />
-                            <button class="btn btn-primary btn-lg mt-3" @click="router.push('/ateliers')">
+                            <p>
+                                J'anime depuis plusieurs années des ateliers
+                                d'initiation pour faire découvrir au public les
+                                bases techniques et le pouvoir créatif de la
+                                sérigraphie.
+                            </p>
+                            <AppImage
+                                alt="Sérigraphie"
+                                class="img-fluid mt-3 rounded shadow-sm"
+                            />
+                            <button
+                                class="btn btn-primary btn-lg mt-3"
+                                @click="router.push('/ateliers')"
+                            >
                                 Découvrir la sérigraphie
                             </button>
                         </template>
@@ -28,18 +37,26 @@
                 <!-- Colonne droite -->
                 <div class="col-lg-6">
                     <!-- À propos de moi -->
-                    <SectionItem
-                        header="À propos de moi"
-                    >
+                    <SectionItem header="À propos de moi">
                         <template #body>
                             <div class="row align-items-center">
-                                <div class="col-12 col-md-6 order-2 order-md-1">
-                                    <p>Je suis Clément Fouquet, j’ai 33 ans et je suis illustrateur et sérigraphe. Après avoir
-                                        fait des études de graphisme, je me suis intéressé à la sérigraphie comme moyen d’éditer
-                                        moi-même mes propres illustrations.</p>
+                                <div class="col-md-6 order-md-1 order-2 col-12">
+                                    <p>
+                                        Je suis Clément Fouquet, j’ai 33 ans et
+                                        je suis illustrateur et sérigraphe.
+                                        Après avoir fait des études de
+                                        graphisme, je me suis intéressé à la
+                                        sérigraphie comme moyen d’éditer
+                                        moi-même mes propres illustrations.
+                                    </p>
                                 </div>
-                                <div class="col-12 col-md-6 order-1 order-md-2 mb-3 mb-md-0">
-                                    <AppImage alt="Moi" class="img-fluid rounded shadow-sm" />
+                                <div
+                                    class="col-md-6 order-md-2 mb-md-0 order-1 col-12 mb-3"
+                                >
+                                    <AppImage
+                                        alt="Moi"
+                                        class="img-fluid rounded shadow-sm"
+                                    />
                                 </div>
                             </div>
                         </template>
@@ -51,9 +68,9 @@
 </template>
 
 <script setup lang="ts">
-import AppLayout from "@/layouts/AppLayout.vue";
-import AppImage from "@/components/AppImage.vue";
-import SectionItem from "@/components/SectionItem.vue";
+import AppImage from '@/components/AppImage.vue';
+import SectionItem from '@/components/SectionItem.vue';
+import AppLayout from '@/layouts/AppLayout.vue';
 </script>
 
 <style scoped>

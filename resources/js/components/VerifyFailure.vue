@@ -16,10 +16,8 @@
 </template>
 
 <script setup lang="ts">
-import ErrorIcon from "@/components/Icon/ErrorIcon.vue";
-import VerifyAccount from "@/components/VerifyAccount.vue";
+import ErrorIcon from '@/components/Icon/ErrorIcon.vue';
+import VerifyAccount from '@/components/VerifyAccount.vue';
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

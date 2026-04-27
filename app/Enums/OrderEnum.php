@@ -6,7 +6,7 @@ use App\Traits\EnumTrait;
 
 enum OrderEnum: string
 {
-     use EnumTrait;
+    use EnumTrait;
     case PENDING = 'en attente';
     case PAID = 'payée';
     case SHIPPED = 'expédiée';

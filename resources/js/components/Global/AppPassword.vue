@@ -10,17 +10,15 @@
 </template>
 
 <script setup lang="ts">
-import AppInput from "@/components/Global/AppInput.vue";
+import AppInput from '@/components/Global/AppInput.vue';
 
-const model = defineModel()
+const model = defineModel();
 
-defineProps<{ error?: string }>()
+defineProps<{ error?: string }>();
 
 function validInput() {
-    console.log('valid input')
+    console.log('valid input');
 }
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

@@ -13,17 +13,16 @@
             </p>
 
             <p class="mt-2 text-sm text-slate-500">
-                Votre compte est maintenant actif. Vous pouvez vous connecter et commencer à utiliser l’application.
+                Votre compte est maintenant actif. Vous pouvez vous connecter et
+                commencer à utiliser l’application.
             </p>
         </template>
     </VerifyAccount>
 </template>
 
 <script setup lang="ts">
-import CheckBadgeIcon from "@/components/Icon/CheckBadgeIcon.vue";
-import VerifyAccount from "@/components/VerifyAccount.vue";
+import CheckBadgeIcon from '@/components/Icon/CheckBadgeIcon.vue';
+import VerifyAccount from '@/components/VerifyAccount.vue';
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

@@ -2,12 +2,13 @@
 
 namespace Database\Factories;
 
+use App\Models\CustomerReview;
 use App\Models\Product;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\CustomerReview>
+ * @extends Factory<CustomerReview>
  */
 class CustomerReviewFactory extends Factory
 {
@@ -20,9 +21,9 @@ class CustomerReviewFactory extends Factory
     {
         return [
             'commentaire' => fake()->paragraph(),
-            'note' => random_int(1,5),
+            'note' => random_int(1, 5),
             'product_id' => Product::Inrandomorder()->value('id'),
-            'user_id' => User::Inrandomorder()->value('id')
+            'user_id' => User::Inrandomorder()->value('id'),
         ];
     }
 }

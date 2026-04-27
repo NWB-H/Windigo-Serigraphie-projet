@@ -33,7 +33,7 @@ class SecurityController
             Auth::attemptWhen(
                 $credentials,
                 function (User $user) {
-                    return null !== $user->email_verified_at;
+                    return $user->email_verified_at !== null;
                 }
             )
         ) {
@@ -74,7 +74,7 @@ class SecurityController
         ]);
         $formFields['password'] = Hash::make($formFields['password']);
 
-        $user = new User();
+        $user = new User;
         $user->fill($formFields);
         $user->token = Str::random(40);
 
@@ -87,7 +87,6 @@ class SecurityController
         } catch (\Throwable $e) {
             Inertia::notification('Une erreur est survenue.', NotificationType::ERROR);
         }
-
 
         return to_route('login');
     }
@@ -102,7 +101,7 @@ class SecurityController
 
         if ($isVerifyAccount) {
             $user->update([
-                'email_verified_at' => now()
+                'email_verified_at' => now(),
             ]);
         }
 

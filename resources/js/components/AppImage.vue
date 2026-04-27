@@ -1,24 +1,24 @@
 <template>
     <div v-bind="$attrs">
-        <img :src="resolvedSrc" :alt="alt" :class="[imgCssClass ? imgCssClass : 'img']" />
+        <img
+            :src="resolvedSrc"
+            :alt="alt"
+            :class="[imgCssClass ? imgCssClass : 'img']"
+        />
     </div>
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed } from 'vue';
 
-const {
-  url = '/images/placeholder.png',
-  imgFit = 'cover'
-} = defineProps<{
-  url?: string | null,
-  alt?: string,
-  imgFit?: string,
-  imgCssClass?: string,
+const { url = '/images/placeholder.png', imgFit = 'cover' } = defineProps<{
+    url?: string | null;
+    alt?: string;
+    imgFit?: string;
+    imgCssClass?: string;
+}>();
 
-}>()
-
-const resolvedSrc = computed(() => url ?? '/images/placeholder.png')
+const resolvedSrc = computed(() => url ?? '/images/placeholder.png');
 </script>
 
 <style scoped>
@@ -29,7 +29,7 @@ const resolvedSrc = computed(() => url ?? '/images/placeholder.png')
 }
 
 div:hover > .overlayImg {
-  opacity: 0.2;
-  transition: opacity 0.3s ease;
+    opacity: 0.2;
+    transition: opacity 0.3s ease;
 }
 </style>

@@ -1,9 +1,9 @@
 <?php
 
-use App\Http\Controllers\Api\OptionController;
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\CategoryController;
+use App\Http\Controllers\Api\OptionController;
+use App\Http\Controllers\Api\ProductController;
+use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:sanctum')
     ->prefix('api/products')
@@ -11,8 +11,7 @@ Route::middleware('auth:sanctum')
         Route::delete('/{product}', [ProductController::class, 'delete'])->name('api.products.delete');
         Route::delete('/{product}/medias/{media}', [ProductController::class, 'deleteMedia'])->name('api.products.deleteMedia');
         Route::patch('/{product}/medias/{media}/highlighted', [ProductController::class, 'highlightImage'])->name('api.products.highlightImage');
-});
-
+    });
 
 Route::middleware('auth:sanctum')
     ->prefix('api/categories')

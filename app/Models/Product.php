@@ -64,13 +64,13 @@ class Product extends Model implements HasMedia
 
     // --- Recherche filtrée ---
     public static function search(
-        string $name = null,
-        string $minPrice = null,
-        string $maxPrice = null,
-        string $option = null,
-        string $category = null,
-        int $page = null,
-        int $limit = null
+        ?string $name = null,
+        ?string $minPrice = null,
+        ?string $maxPrice = null,
+        ?string $option = null,
+        ?string $category = null,
+        ?int $page = null,
+        ?int $limit = null
     ) {
         $query = self::query();
 

@@ -1,11 +1,11 @@
 <?php
 
-use App\Http\Controllers\Auth\OptionController;
-use App\Http\Controllers\Auth\WorkshopController;
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\SecurityController;
-use App\Http\Controllers\Auth\ProductController;
 use App\Http\Controllers\Auth\CategoryController;
+use App\Http\Controllers\Auth\OptionController;
+use App\Http\Controllers\Auth\ProductController;
+use App\Http\Controllers\Auth\WorkshopController;
+use App\Http\Controllers\SecurityController;
+use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest')->group(function () {
     Route::get('/login', [SecurityController::class, 'login'])->name('login');
@@ -16,7 +16,6 @@ Route::middleware('guest')->group(function () {
 
 Route::middleware('auth')->group(function () {
     Route::get('/logout', [SecurityController::class, 'logout'])->name('logout');
-
 
     Route::prefix('admin')->group(function () {
         Route::prefix('products')->group(function () {
@@ -30,8 +29,8 @@ Route::middleware('auth')->group(function () {
         });
 
         Route::prefix('options')->group(function () {
-           Route::get('', [OptionController::class, 'index'])->name('admin.options.index');
-           Route::post('', [OptionController::class, 'store'])->name('admin.options.store');
+            Route::get('', [OptionController::class, 'index'])->name('admin.options.index');
+            Route::post('', [OptionController::class, 'store'])->name('admin.options.store');
         });
 
         Route::prefix('workshops')->group(function () {

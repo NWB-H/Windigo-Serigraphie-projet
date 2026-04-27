@@ -16,11 +16,11 @@
 </template>
 
 <script setup lang="ts">
-import AppLayout from "@/layouts/AppLayout.vue";
-import { Product } from "@/models/Product";
-import ProductCartItem from "@/components/Shop/ProductCartItem.vue";
+import ProductCartItem from '@/components/Shop/ProductCartItem.vue';
+import AppLayout from '@/layouts/AppLayout.vue';
+import { Product } from '@/models/Product';
 
-defineProps<{ products: Product[] }>()
+defineProps<{ products: Product[] }>();
 </script>
 
 <style scoped>

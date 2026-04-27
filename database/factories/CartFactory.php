@@ -2,12 +2,13 @@
 
 namespace Database\Factories;
 
+use App\Models\Cart;
 use App\Models\Product;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Cart>
+ * @extends Factory<Cart>
  */
 class CartFactory extends Factory
 {
@@ -19,9 +20,9 @@ class CartFactory extends Factory
     public function definition(): array
     {
         return [
-            'product_id' => random_int(1,Product::count()),
-            'user_id' => random_int(1,User::count()),
-            'quantity' => random_int(1,50),
+            'product_id' => random_int(1, Product::count()),
+            'user_id' => random_int(1, User::count()),
+            'quantity' => random_int(1, 50),
         ];
     }
 }

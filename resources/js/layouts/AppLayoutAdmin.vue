@@ -43,14 +43,14 @@
 </template>
 
 <script setup lang="ts">
+import CategoryController from '@/actions/App/Http/Controllers/Auth/CategoryController';
+import OptionController from '@/actions/App/Http/Controllers/Auth/OptionController';
+import ProductController from '@/actions/App/Http/Controllers/Auth/ProductController';
+import WorkshopController from '@/actions/App/Http/Controllers/Auth/WorkshopController';
 import AppFooter from '@/components/AppFooter.vue';
 import AppHeader from '@/components/AppHeader.vue';
 import NotificationsContainer from '@/components/Notifications/NotificationsContainer.vue';
-import ProductController from '@/actions/App/Http/Controllers/Auth/ProductController';
-import CategoryController from '@/actions/App/Http/Controllers/Auth/CategoryController';
-import OptionController from '@/actions/App/Http/Controllers/Auth/OptionController';
 import { Head, Link, usePage } from '@inertiajs/vue3';
-import WorkshopController from '@/actions/App/Http/Controllers/Auth/WorkshopController';
 
 const { url } = usePage();
 defineProps<{ title?: string }>();

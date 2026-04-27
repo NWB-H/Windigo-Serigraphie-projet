@@ -17,7 +17,10 @@
                     type="button"
                     @click="$emit('star', key)"
                 >
-                    <StarIcon class="size-4" :color="image.isHighlighted ? 'yellow' : 'white'"/>
+                    <StarIcon
+                        class="size-4"
+                        :color="image.isHighlighted ? 'yellow' : 'white'"
+                    />
                 </button>
                 <button
                     class="flex flex-1 justify-center bg-red-500 p-2 text-white hover:bg-red-700"
@@ -32,18 +35,18 @@
 </template>
 
 <script setup lang="ts">
-import XMarkIcon from '@/components/Icon/XMarkIcon.vue';
-import StarIcon from '@/components/Icon/StarIcon.vue';
 import AppImage from '@/components/AppImage.vue';
-import { ref } from 'vue';
+import StarIcon from '@/components/Icon/StarIcon.vue';
+import XMarkIcon from '@/components/Icon/XMarkIcon.vue';
 import { Image } from '@/models';
+import { ref } from 'vue';
 
 defineProps<{ images: Image[] }>();
 
 defineEmits<{
-    (e: 'delete', index: number): void,
-    (e: 'star', index: number): void,
-}>()
+    (e: 'delete', index: number): void;
+    (e: 'star', index: number): void;
+}>();
 
 const showActions = ref(false);
 </script>

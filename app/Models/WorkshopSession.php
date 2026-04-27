@@ -17,7 +17,7 @@ class WorkshopSession extends Model
         'capacity',
         'workshop_id',
         'date',
-        'avalaible_capacity'
+        'avalaible_capacity',
     ];
 
     protected $casts = [

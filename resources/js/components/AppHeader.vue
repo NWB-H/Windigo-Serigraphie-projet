@@ -49,17 +49,17 @@
 </template>
 
 <script setup lang="ts">
-import { Link, usePage } from '@inertiajs/vue3'
-import { ref } from 'vue'
-import { useCartStore } from "@/stores/Cart";
-import { storeToRefs } from "pinia";
+import { useCartStore } from '@/stores/Cart';
 import { User } from '@/types';
+import { Link, usePage } from '@inertiajs/vue3';
+import { storeToRefs } from 'pinia';
+import { ref } from 'vue';
 
-const page = usePage()
+const page = usePage();
 
-const user = ref<User>(page.props.auth.user)
+const user = ref<User>(page.props.auth.user);
 
-const { items, totalCartItem } = storeToRefs(useCartStore())
+const { totalCartItem } = storeToRefs(useCartStore());
 </script>
 
 <style scoped>
@@ -150,8 +150,8 @@ a {
 }
 
 .logged-in {
-  display: flex;
-  gap: 8px;
-  align-items: center;
+    display: flex;
+    gap: 8px;
+    align-items: center;
 }
 </style>

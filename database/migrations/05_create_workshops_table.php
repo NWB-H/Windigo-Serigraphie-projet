@@ -16,8 +16,8 @@ return new class extends Migration
             $table->integer('price');
             $table->time('duration');
             $table->integer('age');
-            $table->text('description')->nullable(); 
-            $table->json('images')->nullable();    
+            $table->text('description')->nullable();
+            $table->json('images')->nullable();
             $table->timestamps();
         });
     }
@@ -27,4 +27,3 @@ return new class extends Migration
         Schema::dropIfExists('workshops');
     }
 };
-

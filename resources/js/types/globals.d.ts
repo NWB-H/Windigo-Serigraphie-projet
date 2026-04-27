@@ -1,8 +1,8 @@
 import { AppPageProps } from '@/types/index';
 
 export interface Notification {
-    type: 'success' | 'error'
-    message: string
+    type: 'success' | 'error';
+    message: string;
 }
 
 // Extend ImportMeta interface for Vite...
@@ -22,8 +22,8 @@ declare module '@inertiajs/core' {
     interface PageProps extends InertiaPageProps, AppPageProps {}
     export interface InertiaConfig {
         flashDataType: {
-            notification?: Notification
-        }
+            notification?: Notification;
+        };
     }
 }
 
