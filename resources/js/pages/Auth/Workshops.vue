@@ -77,20 +77,20 @@
                     </tr>
                 </tbody>
             </table>
-        <AppPagination
-            :totalPage="workshops.pagination.totalPage"
-            :currentPage="workshops.pagination.currentPage"
-            :path="workshops.pagination.path"
-        />
-    </div>
+            <AppPagination
+                :totalPage="workshops.pagination.totalPage"
+                :currentPage="workshops.pagination.currentPage"
+                :path="workshops.pagination.path"
+            />
+        </div>
     </AppLayoutAdmin>
 </template>
 
 <script setup lang="ts">
-import { ResourcePaginated, Workshop} from "@/models";
-import AppImage from "@/components/AppImage.vue";
-import AppLayoutAdmin from "@/layouts/AppLayoutAdmin.vue";
+import AppImage from '@/components/AppImage.vue';
 import AppPagination from '@/components/AppPagination.vue';
+import AppLayoutAdmin from '@/layouts/AppLayoutAdmin.vue';
+import { ResourcePaginated, Workshop } from '@/models';
 
 defineProps<{ workshops: ResourcePaginated<Workshop> }>();
 

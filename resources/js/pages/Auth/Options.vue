@@ -45,23 +45,23 @@
                     </tr>
                 </tbody>
             </table>
-        <AppPagination
-            :totalPage="options.pagination.totalPage"
-            :currentPage="options.pagination.currentPage"
-            :path="options.pagination.path"
-        />
+            <AppPagination
+                :totalPage="options.pagination.totalPage"
+                :currentPage="options.pagination.currentPage"
+                :path="options.pagination.path"
+            />
         </div>
     </AppLayoutAdmin>
 </template>
 
 <script setup lang="ts">
+import AppPagination from '@/components/AppPagination.vue';
 import OptionForm from '@/components/Form/OptionForm.vue';
 import AppLayoutAdmin from '@/layouts/AppLayoutAdmin.vue';
-import { Option , ResourcePaginated } from '@/models';
+import { Option, ResourcePaginated } from '@/models';
 import OptionRepository from '@/services/OptionRepository';
 import { router } from '@inertiajs/vue3';
 import { ref } from 'vue';
-import AppPagination from '@/components/AppPagination.vue';
 
 const props = defineProps<{ options: ResourcePaginated<Option> }>();
 

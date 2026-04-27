@@ -80,30 +80,30 @@
                     </tr>
                 </tbody>
             </table>
-        <AppPagination
-            :totalPage="productsPaginated.pagination.totalPage"
-            :currentPage="productsPaginated.pagination.currentPage"
-            :path="productsPaginated.pagination.path"
-        />
-    </div>
+            <AppPagination
+                :totalPage="productsPaginated.pagination.totalPage"
+                :currentPage="productsPaginated.pagination.currentPage"
+                :path="productsPaginated.pagination.path"
+            />
+        </div>
     </AppLayoutAdmin>
 </template>
 
 <script setup lang="ts">
-import AppLayoutAdmin from "@/layouts/AppLayoutAdmin.vue";
-import { Product, Category, Option, ResourcePaginated } from "@/models";
-import { ref } from "vue";
-import ProductForm from "@/components/Form/ProductForm.vue";
-import ProductRepository from "@/services/ProductRepository";
-import { router } from '@inertiajs/vue3'
-import AppImage from "@/components/AppImage.vue";
+import AppImage from '@/components/AppImage.vue';
 import AppPagination from '@/components/AppPagination.vue';
+import ProductForm from '@/components/Form/ProductForm.vue';
+import AppLayoutAdmin from '@/layouts/AppLayoutAdmin.vue';
+import { Category, Option, Product, ResourcePaginated } from '@/models';
+import ProductRepository from '@/services/ProductRepository';
+import { router } from '@inertiajs/vue3';
+import { ref } from 'vue';
 
 const props = defineProps<{
-  productsPaginated: ResourcePaginated<Product>,
-  categories: Category[],
-  options: Option[],
-}>()
+    productsPaginated: ResourcePaginated<Product>;
+    categories: Category[];
+    options: Option[];
+}>();
 
 const showForm = ref(false);
 const products = ref(props.productsPaginated.items);

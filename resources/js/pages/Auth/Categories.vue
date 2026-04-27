@@ -45,23 +45,23 @@
                     </tr>
                 </tbody>
             </table>
-        <AppPagination
-            :path="categories.pagination.path"
-            :totalPage="categories.pagination.totalPage"
-            :currentPage="categories.pagination.currentPage"
-        />
+            <AppPagination
+                :path="categories.pagination.path"
+                :totalPage="categories.pagination.totalPage"
+                :currentPage="categories.pagination.currentPage"
+            />
         </div>
     </AppLayoutAdmin>
 </template>
 
 <script setup lang="ts">
+import AppPagination from '@/components/AppPagination.vue';
 import CategoryForm from '@/components/Form/CategoryForm.vue';
 import AppLayoutAdmin from '@/layouts/AppLayoutAdmin.vue';
 import { Category, ResourcePaginated } from '@/models';
 import CategoryRepository from '@/services/CategoryRepository';
 import { router } from '@inertiajs/vue3';
 import { ref } from 'vue';
-import AppPagination from '@/components/AppPagination.vue';
 
 const props = defineProps<{ categories: ResourcePaginated<Category> }>();
 

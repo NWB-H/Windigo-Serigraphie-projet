@@ -25,5 +25,4 @@ class PaginatedResourceCollection extends ResourceCollection
             ],
         ];
     }
-
 }
