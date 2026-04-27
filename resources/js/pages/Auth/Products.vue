@@ -35,7 +35,10 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="product in products" :key="product.id">
+                    <tr
+                        v-for="product in productsPaginated.items"
+                        :key="product.id"
+                    >
                         <td>{{ product.name }}</td>
                         <td>{{ product.price }} €</td>
                         <td>{{ product.stock }}</td>
@@ -99,14 +102,13 @@ import ProductRepository from '@/services/ProductRepository';
 import { router } from '@inertiajs/vue3';
 import { ref } from 'vue';
 
-const props = defineProps<{
+const { productsPaginated } = defineProps<{
     productsPaginated: ResourcePaginated<Product>;
     categories: Category[];
     options: Option[];
 }>();
 
 const showForm = ref(false);
-const products = ref(props.productsPaginated.items);
 
 const currentProduct = ref<Product>();
 
@@ -122,18 +124,18 @@ function edit(product: Product) {
     showForm.value = true;
 }
 
-function deleteProduct(product: Product) {
-    const index = products.value.findIndex((i: Product) => i.id === product.id);
+async function deleteProduct(product: Product) {
+    await ProductRepository.deleteProduct(product);
 
-    if (index !== -1) {
-        ProductRepository.deleteProduct(product).then(() => {
-            products.value.splice(index, 1);
+    router.reload({
+        only: ['productsPaginated'],
+        onSuccess: () => {
             router.flash('notification', {
                 message: 'Produit supprimé',
                 type: 'success',
             });
-        });
-    }
+        },
+    });
 }
 </script>
 

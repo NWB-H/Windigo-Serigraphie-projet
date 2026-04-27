@@ -17,7 +17,7 @@ final class CategoryController
         return Inertia::render(
             'Auth/Categories',
             [
-                'categories' => new PaginatedResourceCollection(Category::paginate(20)),
+                'categories' => fn () => new PaginatedResourceCollection(Category::paginate(10)),
             ]
         );
     }
@@ -40,6 +40,6 @@ final class CategoryController
             Inertia::notification('Une erreur est survenue.', NotificationType::ERROR);
         }
 
-        return to_route('admin.categories.index');
+        return back();
     }
 }

@@ -35,7 +35,7 @@ import { useForm } from '@inertiajs/vue3';
 const props = defineProps<{ form?: Category }>();
 
 const emits = defineEmits<{
-    (e: 'reset');
+    (e: 'reset'): void;
 }>();
 
 const form = useForm<Category>(

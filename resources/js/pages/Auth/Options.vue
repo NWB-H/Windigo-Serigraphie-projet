@@ -63,9 +63,7 @@ import OptionRepository from '@/services/OptionRepository';
 import { router } from '@inertiajs/vue3';
 import { ref } from 'vue';
 
-const props = defineProps<{ options: ResourcePaginated<Option> }>();
-
-const options = ref(props.options);
+const { options } = defineProps<{ options: ResourcePaginated<Option> }>();
 
 const showForm = ref(false);
 const currentOption = ref<Option | undefined>();
@@ -80,18 +78,18 @@ function edit(option: Option) {
     showForm.value = true;
 }
 
-function deleteOptions(option: Option) {
-    const index = options.value.findIndex((_: Option) => _.id === option.id);
+async function deleteOptions(option: Option) {
+    await OptionRepository.deleteOption(option)
 
-    if (index !== -1) {
-        OptionRepository.deleteOption(option).then(() => {
-            options.value.splice(index, 1);
-            router.flash('toast', {
+    router.reload({
+        only: ['options'],
+        onSuccess: () => {
+            router.flash('notification', {
                 message: 'Option supprimée avec succès',
                 type: 'success',
-            });
-        });
-    }
+            })
+        }
+    })
 }
 </script>
 

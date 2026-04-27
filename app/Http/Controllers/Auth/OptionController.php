@@ -17,7 +17,7 @@ final class OptionController
         return Inertia::render(
             'Auth/Options',
             [
-                'options' => new PaginatedResourceCollection(Option::paginate(10)),
+                'options' => fn () => new PaginatedResourceCollection(Option::paginate(10)),
             ],
         );
     }
@@ -37,6 +37,6 @@ final class OptionController
             Inertia::notification('Une erreur est survenue.', NotificationType::ERROR);
         }
 
-        return to_route('admin.options.index');
+        return back();
     }
 }

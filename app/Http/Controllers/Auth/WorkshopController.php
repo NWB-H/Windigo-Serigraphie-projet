@@ -15,7 +15,7 @@ final class WorkshopController
         return Inertia::render(
             'Auth/Workshops',
             [
-                'workshops' => new PaginatedResourceCollection(Workshop::paginate(20)),
+                'workshops' => fn () => new PaginatedResourceCollection(Workshop::paginate(20)),
             ],
         );
     }
