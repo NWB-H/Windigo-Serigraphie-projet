@@ -64,7 +64,7 @@
                             >
                                 🗑️
                             </button>
-                            <RouterLink
+                            <Link
                                 :to="{
                                     name: 'admin.workshop.sessions',
                                     params: { id: workshop.id },
@@ -72,7 +72,7 @@
                                 class="rounded bg-blue-500 px-2 py-1 text-white"
                             >
                                 📅 Sessions
-                            </RouterLink>
+                            </Link>
                         </td>
                     </tr>
                 </tbody>
@@ -91,6 +91,7 @@ import AppImage from '@/components/AppImage.vue';
 import AppPagination from '@/components/AppPagination.vue';
 import AppLayoutAdmin from '@/layouts/AppLayoutAdmin.vue';
 import { ResourcePaginated, Workshop } from '@/models';
+import { Link } from '@inertiajs/vue3';
 
 defineProps<{ workshops: ResourcePaginated<Workshop> }>();
 

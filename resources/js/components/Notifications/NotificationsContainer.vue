@@ -2,10 +2,10 @@
     <div class="notifications__container">
         <ul>
             <AppNotification
-                v-for="toast in toasts"
-                :key="toast.message + toast.type"
-                :message="toast.message"
-                :type="toast.type"
+                v-for="notification in notifications"
+                :key="notification.message + notification.type"
+                :message="notification.message"
+                :type="notification.type"
             />
         </ul>
     </div>
@@ -15,17 +15,17 @@
 import AppNotification from '@/components/AppNotification.vue';
 import { Notification } from '@/types/globals';
 import { router, usePage } from '@inertiajs/vue3';
-import { ref } from 'vue';
+import { computed } from 'vue';
 
-const page = usePage<{ notifications: Notification[] }>();
+const page = usePage();
 
-const toasts = ref<Notification[]>(page.props.notifications ?? []);
+const notifications = computed<Notification[]>(() => page.props.notifications);
 
 router.on('flash', (event) => {
     event.preventDefault();
 
     if (event.detail.flash.notification) {
-        toasts.value.push(event.detail.flash.notification);
+        notifications.value.push(event.detail.flash.notification);
     }
 });
 </script>

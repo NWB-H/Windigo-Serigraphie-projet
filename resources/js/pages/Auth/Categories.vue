@@ -1,5 +1,5 @@
 <template>
-    <AppLayoutAdmin>
+    <AppLayoutAdmin title="Administration catégories">
         <div class="container my-5">
             <div class="flex gap-2">
                 <h2>Gestion des Catégories</h2>
@@ -63,9 +63,9 @@ import CategoryRepository from '@/services/CategoryRepository';
 import { router } from '@inertiajs/vue3';
 import { ref } from 'vue';
 
-const props = defineProps<{ categories: ResourcePaginated<Category> }>();
-
-const categories = ref(props.categories);
+const { categories } = defineProps<{
+    categories: ResourcePaginated<Category>;
+}>();
 
 const showForm = ref(false);
 
@@ -81,20 +81,18 @@ function edit(category: Category) {
     showForm.value = true;
 }
 
-function deleteCategory(category: Category) {
-    const index = categories.value.findIndex(
-        (i: Category) => i.id === category.id,
-    );
+async function deleteCategory(category: Category) {
+    await CategoryRepository.deleteCategory(category)
 
-    if (index !== -1) {
-        CategoryRepository.deleteCategory(category).then(() => {
-            categories.value.splice(index, 1);
-            router.flash('toast', {
+    router.reload({
+        only: ['categories'],
+        onSuccess: () => {
+            router.flash('notification', {
                 message: 'Categorie supprimé avec succès',
                 type: 'success',
             });
-        });
-    }
+        },
+    });
 }
 </script>
 

@@ -105,25 +105,35 @@ import { ref } from 'vue';
 const props = defineProps<{
     options: Option[];
     categories: Category[];
-    product: Product;
+    product?: Product;
 }>();
 
 const emits = defineEmits<{
     (e: 'close'): void;
 }>();
 
-const product = ref(props.product);
+const product = ref(props.product ?? {
+    id: 0,
+    name: '',
+    price: 0,
+    stock: 0,
+    description: '',
+    archived: false,
+    images: [],
+    category: { id: 0, name: '' },
+    option: { id: 0, name: '' },
+});
 
 const formData = useForm<ProductForm>(store().method, store().url, {
-    id: product.value?.id ?? 0,
-    name: product.value?.name ?? '',
-    price: product.value?.price ?? 0,
-    stock: product.value?.stock ?? 0,
-    description: product.value?.description ?? '',
-    archived: product.value?.archived ?? false,
+    id: product.value.id,
+    name: product.value.name,
+    price: product.value.price,
+    stock: product.value.stock,
+    description: product.value.description,
+    archived: product.value.archived,
     images: [],
-    category_id: product.value?.category?.id ?? 0,
-    option_id: product.value?.option?.id ?? 0,
+    category_id: product.value.category?.id ?? 0,
+    option_id: product.value.option?.id ?? 0,
 });
 
 function loadPreviewImage(image: File) {

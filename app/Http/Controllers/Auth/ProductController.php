@@ -19,7 +19,7 @@ final class ProductController
         return Inertia::render(
             'Auth/Products',
             [
-                'productsPaginated' => new PaginatedResourceCollection(Product::with(['category', 'option'])->paginate(10)),
+                'productsPaginated' => fn () => new PaginatedResourceCollection(Product::with(['category', 'option'])->paginate(10)),
                 'options' => Option::all(),
                 'categories' => Category::all(),
             ],
@@ -69,6 +69,6 @@ final class ProductController
             Inertia::notification('Une erreur est survenure.', NotificationType::ERROR);
         }
 
-        return to_route('admin.product.index');
+        return back();
     }
 }

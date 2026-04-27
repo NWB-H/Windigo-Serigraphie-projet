@@ -35,13 +35,14 @@ import { useForm } from '@inertiajs/vue3';
 const props = defineProps<{ form?: Option }>();
 
 const emits = defineEmits<{
-    (e: 'reset');
+    (e: 'reset'): void;
 }>();
 
 const form = useForm<Option>(
     store().method,
     store().url,
     props.form ?? {
+        id: 0,
         name: '',
     },
 );
