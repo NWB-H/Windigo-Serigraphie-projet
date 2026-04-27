@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Auth;
 
+use App\Http\Resources\PaginatedResourceCollection;
 use App\Models\Option;
 use App\Services\Notifications\NotificationType;
 use Illuminate\Http\Request;
@@ -16,7 +17,7 @@ final class OptionController
         return Inertia::render(
             'Auth/Options',
             [
-                'options' => Option::all(),
+                'options' => new PaginatedResourceCollection(Option::paginate(10)),
             ],
         );
     }

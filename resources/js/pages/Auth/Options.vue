@@ -23,7 +23,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr v-for="option in options" :key="option.id">
+        <tr v-for="option in options.items" :key="option.id">
           <td>{{ option.id }}</td>
           <td>{{ option.name }}</td>
           <td class="flex gap-2">
@@ -33,19 +33,25 @@
         </tr>
         </tbody>
       </table>
+        <AppPagination
+            :totalPage="options.pagination.totalPage"
+            :currentPage="options.pagination.currentPage"
+            :path="options.pagination.path"
+        />
     </div>
   </AppLayoutAdmin>
 </template>
 
 <script setup lang="ts">
 import AppLayoutAdmin from "@/layouts/AppLayoutAdmin.vue";
-import {Option} from "@/models";
+import {Option, ResourcePaginated } from "@/models";
 import {ref} from "vue";
 import {router} from "@inertiajs/vue3";
 import OptionForm from "@/components/Form/OptionForm.vue";
 import OptionRepository from "@/services/OptionRepository";
+import AppPagination from '@/components/AppPagination.vue';
 
-const props = defineProps<{ options: Option[] }>()
+const props = defineProps<{ options: ResourcePaginated<Option> }>()
 
 const showForm = ref(false)
 const currentOption = ref<Option | undefined>()

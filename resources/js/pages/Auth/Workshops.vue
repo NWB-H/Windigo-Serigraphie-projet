@@ -19,7 +19,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr v-for="workshop in workshops" :key="workshop.id">
+        <tr v-for="workshop in workshops.items" :key="workshop.id">
           <td class="border px-2 py-1">{{ workshop.id }}</td>
           <td class="border px-2 py-1">{{ workshop.name }}</td>
           <td class="border px-2 py-1">{{ workshop.type }}</td>
@@ -55,16 +55,22 @@
         </tr>
         </tbody>
       </table>
+        <AppPagination
+            :totalPage="workshops.pagination.totalPage"
+            :currentPage="workshops.pagination.currentPage"
+            :path="workshops.pagination.path"
+        />
     </div>
   </AppLayoutAdmin>
 </template>
 
 <script setup lang="ts">
-import {Workshop} from "@/models";
+import { ResourcePaginated, Workshop} from "@/models";
 import AppImage from "@/components/AppImage.vue";
 import AppLayoutAdmin from "@/layouts/AppLayoutAdmin.vue";
+import AppPagination from '@/components/AppPagination.vue';
 
-defineProps<{ workshops: Workshop[] }>()
+defineProps<{ workshops: ResourcePaginated<Workshop> }>()
 
 function editWorkshop(workshop: Workshop) {}
 function deleteWorkshop(workshop: Workshop) {}

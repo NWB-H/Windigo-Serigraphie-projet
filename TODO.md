@@ -1,10 +1,10 @@
 # Liste des taches à faire
 
 - [ ] Lors de l'incrementation d'un produit depuis notre panier, il faut vérifier via une API si le stock est disponible
-- [ ] Les messages d'erreur dans les formulaires doivent etre en francais
+- [x] Les messages d'erreur dans les formulaires doivent etre en francais
 - [ ] sur le formulaire d'inscription ajouter les informations pour que le mot de passe soit valide (longueur, caracteres spéciaux, etc...)
 - [x] systeme de notification à revoir car ils sont en doublons par moment
-- [ ] ajouter/modifier une image 
+- [x] ajouter/modifier une image 
 - [x] taille des images dans la partie admin pour atelier
 - [ ] Admin
   - [ ] pagination

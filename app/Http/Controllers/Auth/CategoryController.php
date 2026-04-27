@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Auth;
 
+use App\Http\Resources\PaginatedResourceCollection;
 use App\Models\Category;
 use App\Services\Notifications\NotificationType;
 use Illuminate\Http\Request;
@@ -16,7 +17,7 @@ final class CategoryController
         return Inertia::render(
             'Auth/Categories',
             [
-                'categories' => Category::all(),
+                'categories' => new PaginatedResourceCollection(Category::paginate(20)),
             ]
         );
     }

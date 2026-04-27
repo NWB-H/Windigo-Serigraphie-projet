@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Auth;
 
+use App\Http\Resources\PaginatedResourceCollection;
 use App\Models\Category;
 use App\Models\Option;
 use App\Models\Product;
@@ -18,7 +19,7 @@ final class ProductController
         return Inertia::render(
             'Auth/Products',
             [
-                'products' => Product::with(['category', 'option'])->get(),
+                'productsPaginated' => new PaginatedResourceCollection(Product::with(['category', 'option'])->paginate(10)),
                 'options' => Option::all(),
                 'categories' => Category::all(),
             ],

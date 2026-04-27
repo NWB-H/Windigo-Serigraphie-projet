@@ -23,7 +23,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="category in categories" :key="category.id">
+          <tr v-for="category in categories.items" :key="category.id">
             <td>{{ category.id }}</td>
             <td>{{ category.name }}</td>
             <td class="flex gap-2">
@@ -33,19 +33,25 @@
           </tr>
         </tbody>
       </table>
+        <AppPagination
+            :path="categories.pagination.path"
+            :totalPage="categories.pagination.totalPage"
+            :currentPage="categories.pagination.currentPage"
+        />
     </div>
   </AppLayoutAdmin>
 </template>
 
 <script setup lang="ts">
 import AppLayoutAdmin from "@/layouts/AppLayoutAdmin.vue";
-import { Category } from "@/models";
+import { Category, ResourcePaginated } from "@/models";
 import CategoryForm from "@/components/Form/CategoryForm.vue";
 import { ref } from "vue";
 import {router} from "@inertiajs/vue3";
 import CategoryRepository from "@/services/CategoryRepository";
+import AppPagination from '@/components/AppPagination.vue';
 
-const props = defineProps<{ categories: Category[] }>()
+const props = defineProps<{ categories: ResourcePaginated<Category> }>()
 
 const showForm = ref(false)
 

@@ -22,4 +22,9 @@ class InformationController
     {
         return Inertia::render('Confidentialite');
     }
+
+    public function mentions()
+    {
+        return Inertia::render('Mentions');
+    }
 }
