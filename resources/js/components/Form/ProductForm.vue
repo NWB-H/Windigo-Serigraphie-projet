@@ -112,17 +112,19 @@ const emits = defineEmits<{
     (e: 'close'): void;
 }>();
 
-const product = ref(props.product ?? {
-    id: 0,
-    name: '',
-    price: 0,
-    stock: 0,
-    description: '',
-    archived: false,
-    images: [],
-    category: { id: 0, name: '' },
-    option: { id: 0, name: '' },
-});
+const product = ref(
+    props.product ?? {
+        id: 0,
+        name: '',
+        price: 0,
+        stock: 0,
+        description: '',
+        archived: false,
+        images: [],
+        category: { id: 0, name: '' },
+        option: { id: 0, name: '' },
+    },
+);
 
 const formData = useForm<ProductForm>(store().method, store().url, {
     id: product.value.id,

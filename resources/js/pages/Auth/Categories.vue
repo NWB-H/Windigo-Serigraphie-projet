@@ -82,7 +82,7 @@ function edit(category: Category) {
 }
 
 async function deleteCategory(category: Category) {
-    await CategoryRepository.deleteCategory(category)
+    await CategoryRepository.deleteCategory(category);
 
     router.reload({
         only: ['categories'],

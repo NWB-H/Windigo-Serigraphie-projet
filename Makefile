@@ -38,3 +38,9 @@ fixtures:
 generate-js-routes:
 	$(LARAVEL) z:g
 	$(LARAVEL) w:g
+
+lint:
+	$(NODE) npm run lint
+
+format:
+	$(NODE) npm run format
