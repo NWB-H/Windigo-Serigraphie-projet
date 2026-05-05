@@ -79,7 +79,7 @@ function edit(option: Option) {
 }
 
 async function deleteOptions(option: Option) {
-    await OptionRepository.deleteOption(option)
+    await OptionRepository.deleteOption(option);
 
     router.reload({
         only: ['options'],
@@ -87,9 +87,9 @@ async function deleteOptions(option: Option) {
             router.flash('notification', {
                 message: 'Option supprimée avec succès',
                 type: 'success',
-            })
-        }
-    })
+            });
+        },
+    });
 }
 </script>
 

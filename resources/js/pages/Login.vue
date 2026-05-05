@@ -5,10 +5,9 @@
                 <form @submit.prevent="form.post(route('login.store'))">
                     <h2 class="form-title">Connexion</h2>
                     <div class="container-champ">
-                        <div class="form-group">
+                        <div>
                             <AppInput
                                 type="text"
-                                class="input"
                                 placeholder="Email"
                                 v-model="form.email"
                                 :error="form.errors.email"
@@ -17,7 +16,6 @@
                         <div class="form-group">
                             <AppInput
                                 type="password"
-                                class="input"
                                 placeholder="Mot de passe"
                                 v-model="form.password"
                                 :error="form.errors.password"
@@ -122,6 +120,5 @@ button:hover:after {
     justify-content: center;
     align-items: center;
     position: relative;
-    gap: 2vw;
 }
 </style>

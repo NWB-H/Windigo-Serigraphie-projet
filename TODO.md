@@ -2,16 +2,18 @@
 
 - [ ] Lors de l'incrementation d'un produit depuis notre panier, il faut vérifier via une API si le stock est disponible
 - [x] Les messages d'erreur dans les formulaires doivent etre en francais
-- [ ] sur le formulaire d'inscription ajouter les informations pour que le mot de passe soit valide (longueur, caracteres spéciaux, etc...)
+- [x] sur le formulaire d'inscription ajouter les informations pour que le mot de passe soit valide (longueur, caracteres spéciaux, etc...)
 - [x] systeme de notification à revoir car ils sont en doublons par moment
 - [x] ajouter/modifier une image 
 - [x] taille des images dans la partie admin pour atelier
 - [ ] Admin
   - [ ] pagination
-    - [ ] produits
-    - [ ] ateliers
-    - [ ] catégories
-    - [ ] options
+    - [x] produits
+    - [x] ateliers
+    - [x] catégories
+    - [x] options
+    - [ ] portfolio
+    - [ ] workshop
 - [ ] Inscription
   - [ ] Pas d'email envoyé
 - [ ] Mot de passe perdu

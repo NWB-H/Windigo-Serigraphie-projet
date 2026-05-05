@@ -1,5 +1,156 @@
-const Ziggy = {"url":"http:\/\/localhost:8000","port":8000,"defaults":{},"routes":{"login":{"uri":"login","methods":["GET","HEAD"]},"login.store":{"uri":"login","methods":["POST"]},"logout":{"uri":"logout","methods":["POST"]},"password.confirm":{"uri":"user\/confirm-password","methods":["GET","HEAD"]},"password.confirmation":{"uri":"user\/confirmed-password-status","methods":["GET","HEAD"]},"password.confirm.store":{"uri":"user\/confirm-password","methods":["POST"]},"two-factor.login":{"uri":"two-factor-challenge","methods":["GET","HEAD"]},"two-factor.login.store":{"uri":"two-factor-challenge","methods":["POST"]},"two-factor.enable":{"uri":"user\/two-factor-authentication","methods":["POST"]},"two-factor.confirm":{"uri":"user\/confirmed-two-factor-authentication","methods":["POST"]},"two-factor.disable":{"uri":"user\/two-factor-authentication","methods":["DELETE"]},"two-factor.qr-code":{"uri":"user\/two-factor-qr-code","methods":["GET","HEAD"]},"two-factor.secret-key":{"uri":"user\/two-factor-secret-key","methods":["GET","HEAD"]},"two-factor.recovery-codes":{"uri":"user\/two-factor-recovery-codes","methods":["GET","HEAD"]},"two-factor.regenerate-recovery-codes":{"uri":"user\/two-factor-recovery-codes","methods":["POST"]},"sanctum.csrf-cookie":{"uri":"sanctum\/csrf-cookie","methods":["GET","HEAD"]},"home":{"uri":"\/","methods":["GET","HEAD"]},"shop":{"uri":"boutique","methods":["GET","HEAD"]},"productItem":{"uri":"produits\/{product}","methods":["GET","HEAD"],"parameters":["product"],"bindings":{"product":"id"}},"confidentialite":{"uri":"politique-confidentialite","methods":["GET","HEAD"]},"about":{"uri":"apropos","methods":["GET","HEAD"]},"portfolio":{"uri":"portfolio","methods":["GET","HEAD"]},"workshops":{"uri":"ateliers","methods":["GET","HEAD"]},"workshop":{"uri":"ateliers\/{workshop}","methods":["GET","HEAD"],"parameters":["workshop"],"bindings":{"workshop":"id"}},"cart":{"uri":"panier","methods":["GET","HEAD"]},"verify-account":{"uri":"verify-account","methods":["GET","HEAD"]},"mentions":{"uri":"mentions-legales","methods":["GET","HEAD"]},"api.products.delete":{"uri":"api\/products\/{product}","methods":["DELETE"],"parameters":["product"],"bindings":{"product":"id"}},"api.products.deleteMedia":{"uri":"api\/products\/{product}\/medias\/{media}","methods":["DELETE"],"parameters":["product","media"],"bindings":{"product":"id","media":"id"}},"api.products.highlightImage":{"uri":"api\/products\/{product}\/medias\/{media}\/highlighted","methods":["PATCH"],"parameters":["product","media"],"bindings":{"product":"id","media":"id"}},"api.categories.delete":{"uri":"api\/categories\/{category}","methods":["DELETE"],"parameters":["category"],"bindings":{"category":"id"}},"api.options.delete":{"uri":"api\/options\/{option}","methods":["DELETE"],"parameters":["option"],"bindings":{"option":"id"}},"register":{"uri":"register","methods":["GET","HEAD"]},"register.store":{"uri":"register","methods":["POST"]},"admin.product.index":{"uri":"admin\/products","methods":["GET","HEAD"]},"admin.product.store":{"uri":"admin\/products","methods":["POST"]},"admin.categories.index":{"uri":"admin\/categories","methods":["GET","HEAD"]},"admin.categories.store":{"uri":"admin\/categories","methods":["POST"]},"admin.options.index":{"uri":"admin\/options","methods":["GET","HEAD"]},"admin.options.store":{"uri":"admin\/options","methods":["POST"]},"admin.workshops.index":{"uri":"admin\/workshops","methods":["GET","HEAD"]},"storage.local":{"uri":"storage\/{path}","methods":["GET","HEAD"],"wheres":{"path":".*"},"parameters":["path"]},"storage.local.upload":{"uri":"storage\/{path}","methods":["PUT"],"wheres":{"path":".*"},"parameters":["path"]}}};
+const Ziggy = {
+    url: 'http:\/\/localhost:8000',
+    port: 8000,
+    defaults: {},
+    routes: {
+        login: { uri: 'login', methods: ['GET', 'HEAD'] },
+        'login.store': { uri: 'login', methods: ['POST'] },
+        logout: { uri: 'logout', methods: ['POST'] },
+        'password.confirm': {
+            uri: 'user\/confirm-password',
+            methods: ['GET', 'HEAD'],
+        },
+        'password.confirmation': {
+            uri: 'user\/confirmed-password-status',
+            methods: ['GET', 'HEAD'],
+        },
+        'password.confirm.store': {
+            uri: 'user\/confirm-password',
+            methods: ['POST'],
+        },
+        'two-factor.login': {
+            uri: 'two-factor-challenge',
+            methods: ['GET', 'HEAD'],
+        },
+        'two-factor.login.store': {
+            uri: 'two-factor-challenge',
+            methods: ['POST'],
+        },
+        'two-factor.enable': {
+            uri: 'user\/two-factor-authentication',
+            methods: ['POST'],
+        },
+        'two-factor.confirm': {
+            uri: 'user\/confirmed-two-factor-authentication',
+            methods: ['POST'],
+        },
+        'two-factor.disable': {
+            uri: 'user\/two-factor-authentication',
+            methods: ['DELETE'],
+        },
+        'two-factor.qr-code': {
+            uri: 'user\/two-factor-qr-code',
+            methods: ['GET', 'HEAD'],
+        },
+        'two-factor.secret-key': {
+            uri: 'user\/two-factor-secret-key',
+            methods: ['GET', 'HEAD'],
+        },
+        'two-factor.recovery-codes': {
+            uri: 'user\/two-factor-recovery-codes',
+            methods: ['GET', 'HEAD'],
+        },
+        'two-factor.regenerate-recovery-codes': {
+            uri: 'user\/two-factor-recovery-codes',
+            methods: ['POST'],
+        },
+        'sanctum.csrf-cookie': {
+            uri: 'sanctum\/csrf-cookie',
+            methods: ['GET', 'HEAD'],
+        },
+        home: { uri: '\/', methods: ['GET', 'HEAD'] },
+        shop: { uri: 'boutique', methods: ['GET', 'HEAD'] },
+        productItem: {
+            uri: 'produits\/{product}',
+            methods: ['GET', 'HEAD'],
+            parameters: ['product'],
+            bindings: { product: 'id' },
+        },
+        confidentialite: {
+            uri: 'politique-confidentialite',
+            methods: ['GET', 'HEAD'],
+        },
+        about: { uri: 'apropos', methods: ['GET', 'HEAD'] },
+        portfolio: { uri: 'portfolio', methods: ['GET', 'HEAD'] },
+        workshops: { uri: 'ateliers', methods: ['GET', 'HEAD'] },
+        workshop: {
+            uri: 'ateliers\/{workshop}',
+            methods: ['GET', 'HEAD'],
+            parameters: ['workshop'],
+            bindings: { workshop: 'id' },
+        },
+        cart: { uri: 'panier', methods: ['GET', 'HEAD'] },
+        'verify-account': { uri: 'verify-account', methods: ['GET', 'HEAD'] },
+        mentions: { uri: 'mentions-legales', methods: ['GET', 'HEAD'] },
+        'api.products.delete': {
+            uri: 'api\/products\/{product}',
+            methods: ['DELETE'],
+            parameters: ['product'],
+            bindings: { product: 'id' },
+        },
+        'api.products.deleteMedia': {
+            uri: 'api\/products\/{product}\/medias\/{media}',
+            methods: ['DELETE'],
+            parameters: ['product', 'media'],
+            bindings: { product: 'id', media: 'id' },
+        },
+        'api.products.highlightImage': {
+            uri: 'api\/products\/{product}\/medias\/{media}\/highlighted',
+            methods: ['PATCH'],
+            parameters: ['product', 'media'],
+            bindings: { product: 'id', media: 'id' },
+        },
+        'api.categories.delete': {
+            uri: 'api\/categories\/{category}',
+            methods: ['DELETE'],
+            parameters: ['category'],
+            bindings: { category: 'id' },
+        },
+        'api.options.delete': {
+            uri: 'api\/options\/{option}',
+            methods: ['DELETE'],
+            parameters: ['option'],
+            bindings: { option: 'id' },
+        },
+        register: { uri: 'register', methods: ['GET', 'HEAD'] },
+        'register.store': { uri: 'register', methods: ['POST'] },
+        'admin.product.index': {
+            uri: 'admin\/products',
+            methods: ['GET', 'HEAD'],
+        },
+        'admin.product.store': { uri: 'admin\/products', methods: ['POST'] },
+        'admin.categories.index': {
+            uri: 'admin\/categories',
+            methods: ['GET', 'HEAD'],
+        },
+        'admin.categories.store': {
+            uri: 'admin\/categories',
+            methods: ['POST'],
+        },
+        'admin.options.index': {
+            uri: 'admin\/options',
+            methods: ['GET', 'HEAD'],
+        },
+        'admin.options.store': { uri: 'admin\/options', methods: ['POST'] },
+        'admin.workshops.index': {
+            uri: 'admin\/workshops',
+            methods: ['GET', 'HEAD'],
+        },
+        'storage.local': {
+            uri: 'storage\/{path}',
+            methods: ['GET', 'HEAD'],
+            wheres: { path: '.*' },
+            parameters: ['path'],
+        },
+        'storage.local.upload': {
+            uri: 'storage\/{path}',
+            methods: ['PUT'],
+            wheres: { path: '.*' },
+            parameters: ['path'],
+        },
+    },
+};
 if (typeof window !== 'undefined' && typeof window.Ziggy !== 'undefined') {
-  Object.assign(Ziggy.routes, window.Ziggy.routes);
+    Object.assign(Ziggy.routes, window.Ziggy.routes);
 }
 export { Ziggy };

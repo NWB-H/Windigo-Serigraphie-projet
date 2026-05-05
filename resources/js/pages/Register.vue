@@ -2,14 +2,13 @@
     <AppLayout title="Inscription">
         <div class="top-container">
             <form @submit.prevent="form.post(route('register.store'))">
-                <div class="register">
-                    <h2 class="form-title">Inscription</h2>
-                    <div class="container-champ">
+                <div class="register__container">
+                    <h2 class="register__title">Inscription</h2>
+                    <div class="register__content">
                         <AppInput
                             v-model="form.name"
                             :error="form.errors.name"
                             type="text"
-                            class="input"
                             placeholder="Nom"
                             id="name"
                         />
@@ -18,37 +17,34 @@
                             v-model="form.email"
                             :error="form.errors.email"
                             type="text"
-                            class="input"
                             placeholder="Email"
                         />
 
-                        <AppInput
+                        <AppPassword
                             v-model="form.password"
                             :error="form.errors.password"
-                            type="password"
-                            class="input"
-                            placeholder="Mot de passe"
+                            placeholdder="Mot de passe"
                         />
 
                         <AppInput
                             v-model="form.password_confirmation"
                             :error="form.errors.password_confirmation"
                             type="password"
-                            class="input"
                             placeholder="Confirmer le mot de passe"
                         />
 
-                        <div class="form-group">
-                            <button
-                                type="submit"
-                                class="button"
-                                :disabled="loading"
-                            >
-                                {{ loading ? 'Envoi...' : 'Créer un compte' }}
-                            </button>
+                        <div class="register__action">
+                            <AppButton
+                                :text="
+                                    loading
+                                        ? 'Inscription en cours...'
+                                        : 'S\'inscrire'
+                                "
+                                :loading="loading"
+                            />
                         </div>
 
-                        <p class="register">
+                        <p class="register__footer">
                             Déjà inscrit ?
                             <Link :href="route('login')">Connectez-vous</Link>
                         </p>
@@ -64,6 +60,8 @@ import AppInput from '@/components/Global/AppInput.vue';
 import AppLayout from '@/layouts/AppLayout.vue';
 import { Link, useForm } from '@inertiajs/vue3';
 import { ref } from 'vue';
+import AppButton from '@/components/Global/AppButton.vue';
+import AppPassword from '@/components/Global/AppPassword.vue';
 
 const form = useForm({
     name: null,
@@ -75,7 +73,7 @@ const form = useForm({
 const loading = ref(false);
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .top-container {
     width: 100%;
     display: flex;
@@ -87,56 +85,34 @@ const loading = ref(false);
 }
 
 .register {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    border-radius: 5px;
-    background-color: #d2baaa;
-    padding: 2vw 2vw;
-}
+    &__container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        border-radius: 5px;
+        background-color: #d2baaa;
+        padding: 1vw 2vw;
+    }
 
-.form-title {
-    text-align: center;
-}
+    &__title {
+        text-align: center;
+        font-size: 2.5em;
+        font-weight: bold;
+        color: #a78770;
+        margin-bottom: 1em;
+    }
 
-.button {
-    width: fit-content;
-    padding: 0 1vw;
-    height: 2.3em;
-    margin: 0.5em;
-    background: white;
-    color: #a78770;
-    border: none;
-    border-radius: 0.625em;
-    font-size: 20px;
-    font-weight: bold;
-    cursor: pointer;
-    position: relative;
-    z-index: 1;
-    overflow: hidden;
-}
+    &__action {
+    }
 
-button:hover {
-    color: white;
-}
-
-button:after {
-    content: '';
-    background: black;
-    position: absolute;
-    z-index: -1;
-    left: -20%;
-    right: -20%;
-    top: 0;
-    bottom: 0;
-    transform: skewX(-45deg) scale(0, 1);
-    transition: all 0.5s;
-}
-
-button:hover:after {
-    transform: skewX(-45deg) scale(1, 1);
-    transition: all 0.5s;
+    &__footer {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 16px;
+    }
 }
 
 .container-champ {
@@ -145,7 +121,6 @@ button:hover:after {
     justify-content: center;
     align-items: center;
     position: relative;
-    gap: 2vw;
 }
 
 .error {
