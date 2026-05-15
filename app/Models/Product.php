@@ -38,7 +38,13 @@ class Product extends Model implements HasMedia
 
     public function getPictureUrlAttribute(): ?string
     {
-        return $this->getFirstMedia('products', ['isHighlighted' => true])?->getUrl();
+        $picture = $this->getFirstMedia('products', ['isHighlighted' => true]);
+
+        if ($picture) {
+            return $picture->getUrl();
+        }
+
+        return $this->getFirstMedia('products')?->getUrl();
     }
 
     public function images(): Attribute

@@ -77,6 +77,14 @@ services:
     networks:
       - windigo
 
+  stripe:
+    image: stripe/stripe-cli:latest
+    container_name: stripe
+    env_file:
+      - .env.local
+    networks:
+      - windigo
+
 volumes:
   mysql-data:
 

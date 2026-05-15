@@ -1,18 +1,24 @@
 import { Product } from '@/models/Product';
-import { defineStore } from 'pinia';
+import { acceptHMRUpdate, defineStore } from 'pinia';
 import { computed, ref } from 'vue';
 
 export interface CartItem {
     quantity: number;
-    product: {
-        id: number;
-        name: string;
-        price: number;
-    };
+    product: Product;
+}
+
+function getDefaultItems(): CartItem[] {
+    const savedCart = localStorage.getItem('cart');
+
+    if (!savedCart) {
+        return [];
+    }
+
+    return JSON.parse(savedCart) as CartItem[];
 }
 
 export const useCartStore = defineStore('cart', () => {
-    const items = ref<CartItem[]>([]);
+    const items = ref<CartItem[]>(getDefaultItems());
 
     const totalCartItem = computed(() => items.value.length);
     const totalPrice = computed(() =>
@@ -25,28 +31,28 @@ export const useCartStore = defineStore('cart', () => {
         items.value.reduce((total, i: CartItem) => total + i.quantity, 0),
     );
 
-    function addItem(product: Product) {
+    function addItem(product: Product, quantity?: number) {
         const currentItem = items.value.findIndex(
             (item: CartItem) => item.product.id === product.id,
         );
 
         if (currentItem !== -1) {
-            items.value[currentItem].quantity++;
+            items.value[currentItem].quantity += quantity ?? 1;
         } else {
             items.value.push({
-                quantity: 1,
-                product: {
-                    id: product.id,
-                    name: product.name,
-                    price: product.price,
-                },
+                quantity: quantity ?? 1,
+                product: product,
             });
         }
     }
 
-    function decrement(item: CartItem) {
+    function getItem(product: Product): CartItem | undefined {
+        return items.value.find((i: CartItem) => i.product.id === product.id);
+    }
+
+    function decrement(product: Product) {
         const currentItem = items.value.findIndex(
-            (i: CartItem) => i.product.id === item.product.id,
+            (i: CartItem) => i.product.id === product.id,
         );
 
         if (items.value[currentItem]) {
@@ -58,9 +64,9 @@ export const useCartStore = defineStore('cart', () => {
         }
     }
 
-    function increment(item: CartItem) {
+    function increment(product: Product) {
         const currentItem = items.value.findIndex(
-            (i: CartItem) => i.product.id === item.product.id,
+            (i: CartItem) => i.product.id === product.id,
         );
 
         if (items.value[currentItem]) {
@@ -69,11 +75,9 @@ export const useCartStore = defineStore('cart', () => {
         }
     }
 
-    function removeItem(item: CartItem) {
+    function removeItem(product: Product) {
         items.value.splice(
-            items.value.findIndex(
-                (i: CartItem) => i.product.id === item.product.id,
-            ),
+            items.value.findIndex((i: CartItem) => i.product.id === product.id),
             1,
         );
     }
@@ -92,5 +96,10 @@ export const useCartStore = defineStore('cart', () => {
         clear,
         decrement,
         increment,
+        getItem,
     };
 });
+
+if (import.meta.hot) {
+    import.meta.hot.accept(acceptHMRUpdate(useCartStore, import.meta.hot));
+}

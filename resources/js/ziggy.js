@@ -114,6 +114,7 @@ const Ziggy = {
         },
         register: { uri: 'register', methods: ['GET', 'HEAD'] },
         'register.store': { uri: 'register', methods: ['POST'] },
+        checkout: { uri: 'checkout', methods: ['GET', 'HEAD'] },
         'admin.product.index': {
             uri: 'admin\/products',
             methods: ['GET', 'HEAD'],
