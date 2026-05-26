@@ -3,7 +3,11 @@
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\OptionController;
 use App\Http\Controllers\Api\ProductController;
+use App\Http\Controllers\Api\Webhook\StripeWebhookController;
 use Illuminate\Support\Facades\Route;
+
+Route::post('/api/webhook/stripe', [StripeWebhookController::class, 'handleInvoicePaymentSucceeded'])
+    ->name('api.webhook.stripe');
 
 Route::middleware('auth:sanctum')
     ->prefix('api/products')

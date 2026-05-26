@@ -73,13 +73,13 @@
             <li>
                 <AppPreviewImage
                     class="h-[150px] w-[150px]"
-                    @image:loaded="(image) => loadPreviewImage(image)"
+                    @image:loaded="loadPreviewImage"
                 />
             </li>
             <ProductFormCarousel
                 :images="product.images"
-                @delete="(index) => deleteImage(index)"
-                @star="(index) => toggleStar(index)"
+                @delete="deleteImage"
+                @star="toggleStar"
             />
         </ul>
 

@@ -1,5 +1,5 @@
 <template>
-    <div class="my-3" :class="[containerClass ? containerClass : null]">
+    <div :class="[containerClass ? containerClass : 'my-3']">
         <input
             v-model="model"
             v-bind="$attrs"
@@ -28,5 +28,9 @@ defineProps<{ error?: string; containerClass?: string }>();
     color: #b00020;
     font-size: 0.9em;
     margin-top: 0.25em;
+}
+
+input[type='number'] {
+    -moz-appearance: textfield; /* Firefox */
 }
 </style>

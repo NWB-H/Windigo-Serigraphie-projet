@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\CartController;
 use App\Http\Controllers\Auth\CategoryController;
 use App\Http\Controllers\Auth\OptionController;
 use App\Http\Controllers\Auth\ProductController;
@@ -16,6 +17,7 @@ Route::middleware('guest')->group(function () {
 
 Route::middleware('auth')->group(function () {
     Route::get('/logout', [SecurityController::class, 'logout'])->name('logout');
+    Route::post('/checkout', [CartController::class, 'checkout'])->name('checkout');
 
     Route::prefix('admin')->group(function () {
         Route::prefix('products')->group(function () {

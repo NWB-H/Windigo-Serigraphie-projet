@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Order extends Model
 {
-    public $timestamps = false;
+    public $timestamps = true;
 
     use HasFactory;
 
@@ -15,6 +15,8 @@ class Order extends Model
         'user_id',
         'total',
         'status',
+        'payment_provider_id',
+        'payment_provider_name',
     ];
 
     public function products()

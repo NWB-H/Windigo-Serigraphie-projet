@@ -13,26 +13,21 @@
                     <!-- Image principale -->
                     <div class="mb-3 text-center">
                         <AppImage
-                            :src="currentImage"
-                            class="main-image w-100 rounded"
-                            :alt="product.name"
+                            :url="product.images[selectedIndex]?.url"
+                            imgCssClass="main-image rounded h-[400px] w-full"
+                            alt="Produit selectionné"
                         />
                     </div>
 
                     <!-- Miniatures -->
-                    <div class="d-flex justify-content-center flex-wrap gap-2">
-                        <div
-                            v-for="(img, index) in product.images"
-                            :key="index"
-                            class="thumbnail-wrapper"
-                            @click="selectedIndex = index"
-                        >
-                            <AppImage
-                                :src="img"
-                                class="thumbnail"
-                                :class="{ active: index === selectedIndex }"
-                            />
-                        </div>
+                    <div
+                        class="justify-content-center flex-wrap gap-2"
+                        v-if="product.images.length > 1"
+                    >
+                        <AppCarousel
+                            :images="product.images"
+                            @click="handleClick"
+                        />
                     </div>
                 </div>
 
@@ -41,26 +36,16 @@
                     <p class="fw-bold fs-4">{{ product.price }} €</p>
                     <p v-if="product.stock !== undefined">
                         Stock : {{ product.stock }}
+                        <span
+                            v-if="currentQuantityInCart"
+                            class="inline-flex items-center rounded-full bg-[#3E7C59]/10 px-3 py-1 text-sm font-medium text-[#3E7C59]"
+                            >Dont {{ currentQuantityInCart }} en cours de
+                            commande</span
+                        >
                     </p>
                     <p class="mb-3">{{ product.description }}</p>
 
-                    <div class="mb-3">
-                        <label class="form-label">Quantité</label>
-                        <input
-                            type="number"
-                            min="1"
-                            :max="product.stock"
-                            v-model.number="quantity"
-                            class="form-control"
-                        />
-                    </div>
-
-                    <button
-                        class="btn btn-primary w-100"
-                        @click="needImplementationNotification()"
-                    >
-                        Ajouter au panier
-                    </button>
+                    <AddToCart :product="product" />
                 </div>
             </div>
         </div>
@@ -68,25 +53,34 @@
 </template>
 
 <script setup lang="ts">
+import { ref, computed } from 'vue';
+import { Link } from '@inertiajs/vue3';
 import AppImage from '@/components/AppImage.vue';
 import AppLayout from '@/layouts/AppLayout.vue';
-import { Product } from '@/models/Product';
-import { useNotificationStore } from '@/stores/Notifications';
-import { Link } from '@inertiajs/vue3';
-import { computed, ref } from 'vue';
+import { Image, Product } from '@/models/Product';
+import AppCarousel from '@/components/AppCarousel.vue';
+import AddToCart from '@/components/Shop/AddToCart.vue';
+import { useCartStore } from '@/stores/Cart';
 
-const props = defineProps<{ product: Product }>();
+const { product } = defineProps<{ product: Product }>();
 
-const { needImplementationNotification } = useNotificationStore();
+const { getItem } = useCartStore();
 
-const quantity = ref(0);
-const selectedIndex = ref(0);
+const currentQuantityInCart = computed(() => {
+    const currentCartItem = getItem(product);
 
-const currentImage = computed(() => {
-    if (props.product.images && props.product.images[selectedIndex]) {
-        return props.product.images[selectedIndex];
+    if (!currentCartItem) {
+        return null;
     }
 
-    return null;
+    return currentCartItem.quantity;
 });
+
+const selectedIndex = ref<number>(
+    product.images.findIndex((img: Image) => img.url === product.picture_url),
+);
+
+function handleClick(index: number) {
+    selectedIndex.value = index;
+}
 </script>

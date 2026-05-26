@@ -1,5 +1,6 @@
 import '../css/app.css';
 
+import { useCartStore } from '@/stores/Cart';
 import { createInertiaApp } from '@inertiajs/vue3';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { createPinia } from 'pinia';
@@ -9,6 +10,15 @@ import { route, ZiggyVue } from 'ziggy-js';
 import { Ziggy } from './ziggy';
 
 const pinia = createPinia();
+
+const cartStore = useCartStore(pinia);
+
+cartStore.$subscribe(
+    (mutation, state) => {
+        localStorage.setItem('cart', JSON.stringify(state.items));
+    },
+    { flush: 'sync' },
+);
 
 createInertiaApp({
     title: (title) => `${title} | Windigo`,

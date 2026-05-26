@@ -54,11 +54,7 @@
                         <td>{{ product.archived ? 'Oui' : 'Non' }}</td>
                         <td>
                             <AppImage
-                                :url="
-                                    product.images
-                                        ?.filter((i) => i.isHighlighted)
-                                        .at(0)?.url
-                                "
+                                :url="product.picture_url"
                                 alt="Image produit"
                                 imgCssClass="img-cover-50"
                             />

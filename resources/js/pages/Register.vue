@@ -34,14 +34,11 @@
                         />
 
                         <div class="register__action">
-                            <AppButton
-                                :text="
-                                    loading
-                                        ? 'Inscription en cours...'
-                                        : 'S\'inscrire'
-                                "
-                                :loading="loading"
-                            />
+                            <AppButton :loading="loading">{{
+                                loading
+                                    ? 'Inscription en cours...'
+                                    : "S'inscrire"
+                            }}</AppButton>
                         </div>
 
                         <p class="register__footer">

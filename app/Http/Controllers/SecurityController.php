@@ -41,13 +41,11 @@ class SecurityController
 
             Inertia::notification('Bienvenue sur votre espace personnels.', NotificationType::SUCCESS);
 
-            return to_route('home');
+            return redirect()->intended(route('home'));
         }
 
         return back()->withErrors([
-
             'email' => __('auth.failed'),
-
         ])->onlyInput('email');
     }
 
