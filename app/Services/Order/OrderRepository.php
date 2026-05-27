@@ -8,6 +8,7 @@ use App\Http\Requests\Dto\Checkout;
 use App\Http\Requests\Dto\CheckoutProduct;
 use App\Models\Dto\PaymentProvider;
 use App\Models\Order;
+use App\Services\Order\Exception\OrderByProviderIdNotFoundException;
 use Illuminate\Support\Facades\DB;
 
 final class OrderRepository
@@ -46,5 +47,25 @@ final class OrderRepository
         } catch (\Throwable $e) {
             dd($e->getMessage());
         }
+    }
+
+    public function getByProviderId(string $providerId): ?Order
+    {
+        return Order::where('payment_provider_id', $providerId)->first();
+    }
+
+    public function registerOrderSucceededPayment(string $providerId): void
+    {
+        $order = $this->getByProviderId($providerId);
+
+        if (null === $order) {
+            throw new OrderByProviderIdNotFoundException($providerId);
+        }
+
+        $order->update([
+            'status' => 'paid',
+        ]);
+
+        $order->save();
     }
 }
