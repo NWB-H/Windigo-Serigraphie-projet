@@ -6,7 +6,7 @@ use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\Webhook\StripeWebhookController;
 use Illuminate\Support\Facades\Route;
 
-Route::post('/api/webhook/stripe', [StripeWebhookController::class, 'handleInvoicePaymentSucceeded'])
+Route::post('/api/webhook/stripe', [StripeWebhookController::class, 'handlePaymentIntentSucceeded'])
     ->name('api.webhook.stripe');
 
 Route::middleware('auth:sanctum')
