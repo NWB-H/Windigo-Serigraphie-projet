@@ -1,7 +1,7 @@
 <template>
     <div>
         <AppInput
-            type="text"
+            type="password"
             placeholder="Mot de passe"
             v-model="model"
             :error="error"
