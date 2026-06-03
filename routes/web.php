@@ -18,6 +18,10 @@ Route::get('/ateliers/{workshop}', [WorkshopController::class, 'workshop'])->nam
 Route::get('/panier', [ShopController::class, 'cart'])->name('cart');
 Route::get('/verify-account', [SecurityController::class, 'verifyAccount'])->name('verify-account');
 Route::get('/mentions-legales', [InformationController::class, 'mentions'])->name('mentions');
+Route::get('/forgot-password', [SecurityController::class, 'forgotPassword'])->name('forgot-password');
+Route::post('/forgot-password', [SecurityController::class, 'forgotPasswordStore'])->name('forgot-password.store');
+Route::get('/reset-password', [SecurityController::class, 'resetPassword'])->name('password.reset');
+Route::post('/reset-password', [SecurityController::class, 'resetPasswordStore'])->name('password.reset.store');
 
 require __DIR__.'/api.php';
 require __DIR__.'/auth.php';

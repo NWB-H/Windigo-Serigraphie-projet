@@ -57,7 +57,7 @@ import { ref } from 'vue';
 
 const page = usePage();
 
-const user = ref<User>(page.props.auth.user);
+const user = ref<User|null>(page.props.auth?.user);
 
 const { totalCartItem } = storeToRefs(useCartStore());
 </script>

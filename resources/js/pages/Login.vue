@@ -32,6 +32,7 @@
                                 Inscrivez-vous
                             </Link>
                         </p>
+                        <Link :href="route('forgot-password')">Mot de passe oublié ?</Link>
                     </div>
                 </form>
             </div>

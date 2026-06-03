@@ -44,6 +44,9 @@
                         <p class="register__footer">
                             Déjà inscrit ?
                             <Link :href="route('login')">Connectez-vous</Link>
+                            <Link :href="route('forgot-password')"
+                                >Mot de passe oublié ?</Link
+                            >
                         </p>
                     </div>
                 </div>
