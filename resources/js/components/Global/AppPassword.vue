@@ -33,6 +33,8 @@ const model = defineModel<string>();
 
 defineProps<{ error?: string }>();
 
+const emits = defineEmits<{ (e: 'password:valid', isValid: boolean): void }>();
+
 const rules = [
     (value: string) => !!value || 'Le mot de passe est requis',
     (value: string) =>
@@ -74,6 +76,8 @@ function handleInput(event: Event) {
             rulesFailed.value.push(result);
         }
     });
+
+    emits('password:valid', rulesFailed.value.length === 0)
 }
 </script>
 

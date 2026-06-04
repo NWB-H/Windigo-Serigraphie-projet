@@ -25,6 +25,8 @@ class User extends Authenticatable
         'password',
         'billing_address',
         'delivery_address',
+        'reset_password_token',
+        'reset_password_token_expires_at',
     ];
 
     /**

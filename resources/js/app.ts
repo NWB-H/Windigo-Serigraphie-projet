@@ -1,4 +1,5 @@
 import '../css/app.css';
+import '../css/app.scss'
 
 import { useCartStore } from '@/stores/Cart';
 import { createInertiaApp } from '@inertiajs/vue3';

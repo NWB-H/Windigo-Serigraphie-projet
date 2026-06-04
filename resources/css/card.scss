@@ -1,0 +1,24 @@
+.card {
+    &__container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        border-radius: 5px;
+        padding: 1vw 2vw;
+    }
+
+    &__title {
+        text-align: center;
+        font-size: 2.5em;
+        font-weight: bold;
+    }
+
+    &__footer {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 16px;
+    }
+}

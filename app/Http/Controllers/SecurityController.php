@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\ForgotPasswordEmail;
 use App\Mail\RegisterEmail;
 use App\Models\User;
 use App\Services\Notifications\NotificationType;
@@ -106,5 +107,72 @@ class SecurityController
         return Inertia::render(
             'VerifyAccount', ['isVerifyAccount' => $isVerifyAccount]
         );
+    }
+
+    public function forgotPassword()
+    {
+        return Inertia::render(
+            'ForgotPassword'
+        );
+    }
+
+    public function forgotPasswordStore(Request $request)
+    {
+        $validated = $request->validate([
+            'email' => 'required|string|email',
+        ]);
+
+        try {
+            $user = User::where('email', $validated['email'])->firstOrFail();
+
+            Mail::to($user->email)->send(new ForgotPasswordEmail($user));
+
+            Inertia::notification('Un emails vous à été envoyé.', NotificationType::SUCCESS);
+        } catch (\Throwable $e) {
+            Inertia::notification('Une erreur est survenue.', NotificationType::ERROR);
+        }
+
+        return back();
+    }
+
+    public function resetPassword(Request $request)
+    {
+        if (!$request->hasValidSignature()) {
+            abort(401);
+        }
+
+        return Inertia::render(
+            'ResetPassword',
+            [
+                'formUrl' => $request->fullUrl(),
+            ]
+        );
+    }
+
+    public function resetPasswordStore(Request $request)
+    {
+        if (!$request->hasValidSignature()) {
+            abort(401);
+        }
+
+        $request->validate([
+            'password' => ['required', 'confirmed', 'min:8'],
+        ]);
+
+        try {
+            $user = User::where('reset_password_token', $request->query('token'))->whereDate('reset_password_token_expires_at', '>=', now())->firstOrFail();
+
+            $user->update([
+                'password' => Hash::make($request->password),
+                'reset_password_token' => null,
+                'reset_password_token_expires_at' => null,
+            ]);
+
+            Inertia::notification('Votre mot de passe a été mis à jour.', NotificationType::SUCCESS);
+        } catch (\Throwable $e) {
+            Inertia::notification('Une erreur est survenue.', NotificationType::ERROR);
+        }
+
+        return to_route('login');
     }
 }
