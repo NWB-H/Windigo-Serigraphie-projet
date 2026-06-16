@@ -8,6 +8,7 @@
                         <AppInput
                             v-model="form.email"
                             :error="form.errors.email"
+                            inputContainerClass="bg"
                             type="email"
                             placeholder="Votre adresse email"
                             id="email"

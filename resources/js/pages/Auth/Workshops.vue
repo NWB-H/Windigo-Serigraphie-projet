@@ -1,36 +1,54 @@
 <template>
-    <AppLayoutAdmin>
-        <div class="p-4">
-            <h2 class="mb-4 text-xl font-semibold">Gestion des Ateliers</h2>
+    <AppLayoutAdmin title="Gestion des Ateliers">
+        <div class="container my-5">
+            <div class="flex gap-2">
+                <h2>Gestion des Ateliers</h2>
+                <AppButton
+                    ignoreStyle
+                    class="btn btn-success mb-3"
+                    @click="newWorkshop"
+                >
+                    Ajouter un atelier
+                </AppButton>
+            </div>
+
+            <div v-if="showForm" class="card mb-4 p-3">
+                <WorkshopForm
+                    :types="types"
+                    :workshop="currentWorkshop"
+                    :key="currentWorkshop ? currentWorkshop.id : 'new-workshop'"
+                    @close="showForm = false"
+                />
+            </div>
 
             <!-- Table des ateliers -->
-            <table class="mb-6 w-full border border-gray-300">
-                <thead class="bg-gray-100">
+            <table class="table-striped table">
+                <thead>
                     <tr>
-                        <th class="border px-2 py-1">ID</th>
-                        <th class="border px-2 py-1">Nom</th>
-                        <th class="border px-2 py-1">Type</th>
-                        <th class="border px-2 py-1">Prix</th>
-                        <th class="border px-2 py-1">Durée</th>
-                        <th class="border px-2 py-1">Age</th>
-                        <th class="border px-2 py-1">Image</th>
-                        <th class="border px-2 py-1">Description</th>
-                        <th class="border px-2 py-1">Actions</th>
+                        <th>Nom</th>
+                        <th>Type</th>
+                        <th>Prix</th>
+                        <th>Durée</th>
+                        <th>Age</th>
+                        <th>Image</th>
+                        <th>Description</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="workshop in workshops.items" :key="workshop.id">
-                        <td class="border px-2 py-1">{{ workshop.id }}</td>
-                        <td class="border px-2 py-1">{{ workshop.name }}</td>
-                        <td class="border px-2 py-1">{{ workshop.type }}</td>
-                        <td class="border px-2 py-1">{{ workshop.price }} €</td>
-                        <td class="border px-2 py-1">
-                            {{ workshop.duration }} min
-                        </td>
-                        <td class="border px-2 py-1">{{ workshop.age }} ans</td>
+                    <tr
+                        v-for="workshop in workshops.items"
+                        :key="workshop.id"
+                        class="align-middle"
+                    >
+                        <td>{{ workshop.name }}</td>
+                        <td>{{ workshop.type }}</td>
+                        <td>{{ workshop.price }} €</td>
+                        <td>{{ workshop.duration }} min</td>
+                        <td>{{ workshop.age }} ans</td>
 
                         <!-- Image principale -->
-                        <td class="border px-2 py-1">
+                        <td>
                             <AppImage
                                 :url="workshop.first_image_url"
                                 :alt="workshop.name"
@@ -39,7 +57,7 @@
                         </td>
 
                         <!-- Description tronquée -->
-                        <td class="border px-2 py-1">
+                        <td>
                             {{
                                 workshop.description
                                     ? workshop.description.length > 100
@@ -51,28 +69,32 @@
                                     : 'Aucune description'
                             }}
                         </td>
-                        <td class="space-x-2 border px-2 py-1">
-                            <button
-                                @click="editWorkshop()"
-                                class="rounded bg-yellow-400 px-2 py-1"
-                            >
-                                ✏️
-                            </button>
-                            <button
-                                @click="deleteWorkshop()"
-                                class="rounded bg-red-500 px-2 py-1 text-white"
-                            >
-                                🗑️
-                            </button>
-                            <Link
-                                :to="{
-                                    name: 'admin.workshop.sessions',
-                                    params: { id: workshop.id },
-                                }"
-                                class="rounded bg-blue-500 px-2 py-1 text-white"
-                            >
-                                📅 Sessions
-                            </Link>
+                        <td>
+                            <div class="flex gap-2">
+                                <AppButton
+                                    ignoreStyle
+                                    @click="editWorkshop(workshop)"
+                                    class="rounded bg-yellow-400 px-2 py-1"
+                                >
+                                    ✏️
+                                </AppButton>
+                                <AppButton
+                                    ignoreStyle
+                                    @click="deleteWorkshop(workshop)"
+                                    class="rounded bg-red-500 px-2 py-1 text-white"
+                                >
+                                    🗑️
+                                </AppButton>
+                                <Link
+                                    :to="{
+                                        name: 'admin.workshop.sessions',
+                                        params: { id: workshop.id },
+                                    }"
+                                    class="rounded bg-blue-500 px-2 py-1 text-white !no-underline"
+                                >
+                                    📅
+                                </Link>
+                            </div>
                         </td>
                     </tr>
                 </tbody>
@@ -91,12 +113,41 @@ import AppImage from '@/components/AppImage.vue';
 import AppPagination from '@/components/AppPagination.vue';
 import AppLayoutAdmin from '@/layouts/AppLayoutAdmin.vue';
 import { ResourcePaginated, Workshop } from '@/models';
-import { Link } from '@inertiajs/vue3';
+import { Link, router } from '@inertiajs/vue3';
+import WorkshopForm from '@/components/Form/WorkshopForm.vue';
+import { ref } from 'vue';
+import AppButton from '@/components/Global/AppButton.vue';
+import WorkshopRepository from '@/services/WorkshopRepository';
 
-defineProps<{ workshops: ResourcePaginated<Workshop> }>();
+defineProps<{ workshops: ResourcePaginated<Workshop>; types: string[] }>();
 
-function editWorkshop() {}
-function deleteWorkshop() {}
+const showForm = ref(false);
+const currentWorkshop = ref<Workshop>();
+
+function newWorkshop() {
+    currentWorkshop.value = undefined;
+
+    showForm.value = true;
+}
+
+function editWorkshop(workshop: Workshop) {
+    currentWorkshop.value = workshop;
+
+    showForm.value = true;
+}
+async function deleteWorkshop(workshop: Workshop) {
+    await WorkshopRepository.delete(workshop);
+
+    router.reload({
+        only: ['workshops'],
+        onSuccess: () => {
+            router.flash('notification', {
+                message: 'Atelier supprimé',
+                type: 'success',
+            });
+        },
+    });
+}
 </script>
 
 <style scoped>

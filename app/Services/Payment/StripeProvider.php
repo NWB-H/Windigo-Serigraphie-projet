@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Services\Payment;
 
-use App\Http\Requests\CheckoutRequest;
+use App\Http\Requests\CheckoutFormRequest;
 use App\Http\Requests\Dto\Checkout;
 use App\Services\Payment\Exception\StripeProviderException;
 use Stripe\Exception\ApiErrorException;
@@ -49,7 +49,7 @@ final class StripeProvider
         }
     }
 
-    public function createOrRetriveFromSessionIntentId(CheckoutRequest $request)
+    public function createOrRetriveFromSessionIntentId(CheckoutFormRequest $request)
     {
         $checkout = $request->value();
 

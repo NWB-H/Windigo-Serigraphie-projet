@@ -25,7 +25,11 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="option in options.items" :key="option.id">
+                    <tr
+                        v-for="option in options.items"
+                        :key="option.id"
+                        class="align-middle"
+                    >
                         <td>{{ option.id }}</td>
                         <td>{{ option.name }}</td>
                         <td class="flex gap-2">

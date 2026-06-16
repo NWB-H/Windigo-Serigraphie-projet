@@ -38,6 +38,7 @@
                     <tr
                         v-for="product in productsPaginated.items"
                         :key="product.id"
+                        class="align-middle"
                     >
                         <td>{{ product.name }}</td>
                         <td>{{ product.price }} €</td>
@@ -61,20 +62,41 @@
                         </td>
 
                         <td>
-                            <button
-                                class="btn btn-sm btn-warning me-2"
-                                type="button"
-                                @click="edit(product)"
-                            >
-                                Modifier
-                            </button>
-                            <button
-                                class="btn btn-sm btn-danger"
-                                type="button"
-                                @click="deleteProduct(product)"
-                            >
-                                Supprimer
-                            </button>
+                            <div class="flex gap-2">
+                                <button
+                                    class="rounded bg-yellow-400 px-2 py-1"
+                                    type="button"
+                                    @click="edit(product)"
+                                >
+                                    ✏️
+                                </button>
+                                <button
+                                    class="rounded bg-red-500 px-2 py-1 text-white"
+                                    type="button"
+                                    @click="deleteProduct(product)"
+                                >
+                                    🗑️
+                                </button>
+                                <ToolTip
+                                    v-if="product.stock <= 3"
+                                    :tooltip="
+                                        product.stock === 0
+                                            ? 'Stock vide'
+                                            : 'Il ne reste plus que ' +
+                                              product.stock +
+                                              ' produit en stock'
+                                    "
+                                >
+                                    <ExclamationTriangleIcon
+                                        class="size-[36px]"
+                                        :class="[
+                                            product.stock === 0
+                                                ? 'text-red-500'
+                                                : 'text-amber-500',
+                                        ]"
+                                    />
+                                </ToolTip>
+                            </div>
                         </td>
                     </tr>
                 </tbody>
@@ -97,6 +119,8 @@ import { Category, Option, Product, ResourcePaginated } from '@/models';
 import ProductRepository from '@/services/ProductRepository';
 import { router } from '@inertiajs/vue3';
 import { ref } from 'vue';
+import ExclamationTriangleIcon from '@/components/Icon/ExclamationTriangleIcon.vue';
+import ToolTip from '@/components/ToolTip.vue';
 
 const { productsPaginated } = defineProps<{
     productsPaginated: ResourcePaginated<Product>;

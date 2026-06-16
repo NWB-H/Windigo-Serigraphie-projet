@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Requests\CheckoutRequest;
+use App\Http\Requests\CheckoutFormRequest;
 use App\Services\Order\OrderRepository;
 use App\Services\Payment\StripeProvider;
 use Illuminate\Support\Facades\Log;
@@ -18,7 +18,7 @@ final readonly class CartController
     ) {
     }
 
-    public function checkout(CheckoutRequest $request)
+    public function checkout(CheckoutFormRequest $request)
     {
         try {
             $checkout = $request->value();

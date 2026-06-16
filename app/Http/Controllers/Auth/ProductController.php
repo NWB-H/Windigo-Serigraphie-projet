@@ -32,7 +32,7 @@ final class ProductController
         $validated = $request->validate([
             'id' => 'int',
             'name' => 'required|string',
-            'price' => 'required|integer|between:1,50',
+            'price' => 'required|numeric',
             'stock' => 'required|integer',
             'description' => 'required|string',
             'archived' => 'boolean',

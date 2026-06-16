@@ -7,16 +7,19 @@
             class="form-control"
             placeholder="Nom"
             id="name"
+            inputContainerClass="bg-white"
         />
         <div class="flex gap-4">
             <AppInput
                 v-model.number="formData.price"
                 :error="formData.errors.price"
                 type="number"
+                step="0.01"
                 containerClass="flex-1"
                 class="form-control"
                 placeholder="Prix (1-50)"
                 id="price"
+                inputContainerClass="bg-white"
             />
             <AppInput
                 v-model.number="formData.stock"
@@ -26,13 +29,14 @@
                 class="form-control"
                 placeholder="Stock"
                 id="stock"
+                inputContainerClass="bg-white"
             />
         </div>
 
         <AppTextarea
             v-model="formData.description"
             :error="formData.errors.description"
-            class="form-control my-3"
+            id="description"
             placeholder="Description"
         />
 

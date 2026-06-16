@@ -5,6 +5,7 @@
             :error="form.errors.name"
             label="Nom"
             placeholder="Nom"
+            id="name"
             type="text"
             class="form-control"
         />

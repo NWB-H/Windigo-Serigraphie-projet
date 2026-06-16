@@ -1,16 +1,21 @@
 <template>
     <div>
-        <select v-model="model" class="form-select mb-2">
+        <select
+            v-model="model"
+            class="form-select p-2 border-2"
+            :class="error ? 'border-red-500!' : ''"
+        >
             <option disabled :value="0">-- {{ placeholder }} --</option>
             <option
                 v-for="item in items"
-                :key="item[value]"
-                :value="item[value]"
+                :key="value ? item[value] : item"
+                :value="value ? item[value] : item"
             >
-                {{ item[label] }}
+                {{ label ? item[label] : item }}
             </option>
         </select>
-        <p v-if="error" class="error">{{ error }}</p>
+
+        <p v-if="error" class="text-red-500">{{ error }}</p>
     </div>
 </template>
 
@@ -20,16 +25,11 @@ const model = defineModel();
 defineProps<{
     placeholder: string;
     items: U[];
-    value: string;
-    label: string;
+    value?: string;
+    label?: string;
     error?: string;
 }>();
 </script>
 
 <style scoped>
-.error {
-    color: #b00020;
-    font-size: 0.9em;
-    margin-top: 0.25em;
-}
 </style>

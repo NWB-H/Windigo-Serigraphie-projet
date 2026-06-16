@@ -7,24 +7,26 @@
                     <div class="container-champ">
                         <div>
                             <AppInput
-                                type="text"
-                                placeholder="Email"
                                 v-model="form.email"
                                 :error="form.errors.email"
+                                inputContainerClass="bg"
+                                type="text"
+                                placeholder="Email"
+                                id="email"
                             />
                         </div>
                         <div class="form-group">
                             <AppInput
-                                type="password"
-                                placeholder="Mot de passe"
                                 v-model="form.password"
                                 :error="form.errors.password"
+                                inputContainerClass="bg"
+                                type="password"
+                                placeholder="Mot de passe"
+                                id="password"
                             />
                         </div>
                         <div class="form-group">
-                            <button type="submit" class="button">
-                                Connexion
-                            </button>
+                            <AppButton>Connexion</AppButton>
                         </div>
                         <p class="register">
                             Vous n'avez pas encore de compte ?
@@ -44,6 +46,7 @@
 import AppInput from '@/components/Global/AppInput.vue';
 import AppLayout from '@/layouts/AppLayout.vue';
 import { Link, useForm } from '@inertiajs/vue3';
+import AppButton from '@/components/Global/AppButton.vue';
 
 const form = useForm({
     email: null,
@@ -73,46 +76,6 @@ const form = useForm({
 
 .form-title {
     text-align: center;
-}
-
-.button {
-    width: fit-content;
-    padding: 0 1vw;
-    height: 2.3em;
-    margin: 0.5em;
-    background: white;
-    color: #a78770;
-    border: none;
-    border-radius: 0.625em;
-    font-size: 20px;
-    font-weight: bold;
-    cursor: pointer;
-    position: relative;
-    z-index: 1;
-    overflow: hidden;
-}
-
-button:hover {
-    color: white;
-}
-
-button:after {
-    content: '';
-    background: black;
-    position: absolute;
-    z-index: -1;
-    left: -20%;
-    right: -20%;
-    top: 0;
-    bottom: 0;
-    transform: skewX(-45deg) scale(0, 1);
-    transition: all 0.5s;
-}
-
-button:hover:after {
-    transform: skewX(-45deg) scale(1, 1);
-    -webkit-transition: all 0.5s;
-    transition: all 0.5s;
 }
 
 .container-champ {

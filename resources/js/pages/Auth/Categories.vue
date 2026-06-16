@@ -25,7 +25,11 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="category in categories.items" :key="category.id">
+                    <tr
+                        v-for="category in categories.items"
+                        :key="category.id"
+                        class="align-middle"
+                    >
                         <td>{{ category.id }}</td>
                         <td>{{ category.name }}</td>
                         <td class="flex gap-2">
