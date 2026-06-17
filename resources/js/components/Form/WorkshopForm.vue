@@ -1,116 +1,113 @@
-<script setup lang="ts"></script>
-
 <template>
-    <form @submit.prevent="saveWorkshop" class="space-y-3">
-        <input
-            v-model="form.name"
-            placeholder="Nom"
-            class="w-full border p-2"
-            required
+    <form @submit.prevent="saveWorkshop">
+        <AppInput
+            v-model="formData.name"
+            :error="formData.errors.name"
+            type="text"
+            placeholder="Name"
+            id="name"
+            inputContainerClass="bg-white"
         />
-        <input
-            v-model="form.type"
-            placeholder="Type"
-            class="w-full border p-2"
-            required
-        />
-        <input
-            v-model.number="form.price"
-            type="number"
-            placeholder="Prix"
-            class="w-full border p-2"
-            required
-        />
-        <input
-            v-model.number="form.duration"
-            type="number"
-            placeholder="Durée (min)"
-            class="w-full border p-2"
-            required
-        />
-        <input
-            v-model.number="form.age"
-            type="number"
-            placeholder="Age minimum"
-            class="w-full border p-2"
-            required
-        />
-
-        <!-- Description -->
-        <textarea
-            v-model="form.description"
-            placeholder="Description"
-            class="w-full border p-2"
-            rows="4"
-        ></textarea>
-
-        <!-- Upload images multiples -->
-        <div>
-            <label class="mb-1 block font-medium"
-                >Images (plusieurs possibles)</label
-            >
-            <input
-                type="file"
-                multiple
-                @change="handleFilesChange"
-                class="w-full border p-1"
+        <div class="flex gap-1">
+            <AppSelect
+                v-model="formData.type"
+                :error="formData.errors.type"
+                :items="types"
+                placeholder="Type"
+                class="flex-1"
+            />
+            <AppInput
+                v-model="formData.price"
+                :error="formData.errors.price"
+                type="number"
+                step="0.01"
+                placeholder="Prix"
+                id="price"
+                containerClass="flex-1"
+                inputContainerClass="bg-white"
+            />
+            <AppInput
+                v-model="formData.duration"
+                :error="formData.errors.duration"
+                type="number"
+                id="duration"
+                placeholder="Durée (en minutes)"
+                containerClass="flex-1"
+                inputContainerClass="bg-white"
+            />
+            <AppInput
+                v-model="formData.age"
+                :error="formData.errors.age"
+                type="number"
+                id="age"
+                placeholder="Age minimum"
+                containerClass="flex-1"
+                inputContainerClass="bg-white"
             />
         </div>
 
-        <!-- Aperçu images existantes et nouvelles -->
-        <div class="mt-2 flex flex-wrap gap-2">
-            <!-- Images existantes -->
-            <div
-                v-for="(img, index) in visibleImages"
-                :key="'existing-' + index"
-                class="relative"
-            >
-                <img
-                    :src="`https://back.windigoprint.com/storage/${img}`"
-                    class="table-image border"
-                />
-                <button
-                    type="button"
-                    @click="removedImages.push(img)"
-                    class="absolute top-0 right-0 flex h-5 w-5 items-center justify-center rounded-full bg-red-600 text-xs text-white"
-                >
-                    x
-                </button>
-            </div>
+        <AppTextarea
+            v-model="formData.description"
+            :error="formData.errors.description"
+            id="description"
+            placeholder="Description"
+        />
 
-            <!-- Nouvelles images sélectionnées -->
-            <div
-                v-for="(img, index) in previewImages"
-                :key="'preview-' + index"
-                class="relative"
-            >
-                <img :src="img" class="table-image border" />
-                <button
-                    type="button"
-                    @click="removePreviewImage(index)"
-                    class="absolute top-0 right-0 flex h-5 w-5 items-center justify-center rounded-full bg-red-600 text-xs text-white"
-                >
-                    x
-                </button>
-            </div>
-        </div>
-
-        <div class="mt-2 space-x-2">
-            <button
-                class="rounded bg-blue-600 px-4 py-2 text-white"
-                :disabled="store.loading"
-            >
-                {{ form.id ? 'Mettre à jour' : 'Créer' }}
-            </button>
-            <button
-                type="button"
-                @click="resetForm"
-                class="rounded bg-gray-300 px-4 py-2"
-            >
-                Annuler
-            </button>
+        <div class="flex gap-2">
+            <AppButton>
+                {{ formData.id !== 0 ? 'Mettre à jour' : 'Créer' }}
+            </AppButton>
+            <AppButton type="cancel" @click="$emit('close')">Annuler</AppButton>
         </div>
     </form>
 </template>
+
+<script setup lang="ts">
+import { Workshop, WorkshopForm } from '@/models';
+import { ref } from 'vue';
+import { useForm } from '@inertiajs/vue3';
+import AppInput from '@/components/Global/AppInput.vue';
+import AppTextarea from '@/components/Global/AppTextarea.vue';
+import AppButton from '@/components/Global/AppButton.vue';
+import { store } from '@/actions/App/Http/Controllers/Auth/WorkshopController';
+import AppSelect from '@/components/Global/AppSelect.vue';
+
+const props = defineProps<{
+    workshop?: Workshop;
+    types: string[];
+}>();
+
+const emits = defineEmits<{ (e: 'close'): void }>();
+
+const workshop = ref(
+    props.workshop ?? {
+        id: 0,
+        name: '',
+        type: '',
+        price: 0,
+        duration: 0,
+        age: 0,
+        description: '',
+    },
+);
+
+const formData = useForm<WorkshopForm>(store().method, store().url, {
+    id: workshop.value.id,
+    name: workshop.value.name,
+    type: workshop.value.type,
+    price: workshop.value.price,
+    duration: workshop.value.duration,
+    age: workshop.value.age,
+    description: workshop.value.description,
+});
+
+function saveWorkshop() {
+    formData.submit({
+        onSuccess: () => {
+            emits('close')
+        },
+    });
+}
+</script>
 
 <style scoped></style>

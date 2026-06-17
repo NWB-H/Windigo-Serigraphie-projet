@@ -1,11 +1,13 @@
 <template>
     <div>
         <AppInput
-            type="password"
-            placeholder="Mot de passe"
             v-model="model"
             :error="error"
             @input="handleInput"
+            :inputContainerClass="inputContainerClass"
+            type="password"
+            placeholder="Mot de passe"
+            id="password"
         />
         <p class="loader">
             <span
@@ -31,7 +33,7 @@ import { computed, ref } from 'vue';
 
 const model = defineModel<string>();
 
-defineProps<{ error?: string }>();
+defineProps<{ error?: string, inputContainerClass?: string }>();
 
 const emits = defineEmits<{ (e: 'password:valid', isValid: boolean): void }>();
 

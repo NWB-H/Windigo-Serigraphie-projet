@@ -7,7 +7,7 @@ use App\Http\Requests\Dto\CheckoutProduct;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
-class CheckoutRequest extends FormRequest implements FormRequestInterface
+class CheckoutFormRequest extends FormRequest implements FormRequestInterface
 {
     public function authorize(): bool
     {

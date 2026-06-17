@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\OptionController;
 use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\Webhook\StripeWebhookController;
+use App\Http\Controllers\Api\WorkshopController;
 use Illuminate\Support\Facades\Route;
 
 Route::post('/api/webhook/stripe', [StripeWebhookController::class, 'handlePaymentIntentSucceeded'])
@@ -27,4 +28,10 @@ Route::middleware('auth:sanctum')
     ->prefix('api/options')
     ->group(function () {
         Route::delete('/{option}', [OptionController::class, 'delete'])->name('api.options.delete');
+    });
+
+Route::middleware('auth:sanctum')
+    ->prefix('api/workshops')
+    ->group(function () {
+        Route::delete('/{workshop}', [WorkshopController::class, 'delete'])->name('api.workshops.delete');
     });

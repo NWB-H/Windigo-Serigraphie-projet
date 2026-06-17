@@ -9,6 +9,7 @@
                             v-model="form.name"
                             :error="form.errors.name"
                             type="text"
+                            inputContainerClass="bg"
                             placeholder="Nom"
                             id="name"
                         />
@@ -17,12 +18,15 @@
                             v-model="form.email"
                             :error="form.errors.email"
                             type="text"
+                            inputContainerClass="bg"
                             placeholder="Email"
+                            id="email"
                         />
 
                         <AppPassword
                             v-model="form.password"
                             :error="form.errors.password"
+                            inputContainerClass="bg"
                             placeholdder="Mot de passe"
                         />
 
@@ -30,7 +34,9 @@
                             v-model="form.password_confirmation"
                             :error="form.errors.password_confirmation"
                             type="password"
+                            inputContainerClass="bg"
                             placeholder="Confirmer le mot de passe"
+                            id="password_confirmation"
                         />
 
                         <div class="register__action">
