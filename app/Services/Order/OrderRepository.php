@@ -9,6 +9,7 @@ use App\Http\Requests\Dto\CheckoutProduct;
 use App\Models\Dto\PaymentProvider;
 use App\Models\Order;
 use App\Services\Order\Exception\OrderByProviderIdNotFoundException;
+use App\Services\Order\Exception\OrderCreationException;
 use Illuminate\Support\Facades\DB;
 
 final class OrderRepository
@@ -45,7 +46,7 @@ final class OrderRepository
                 );
             });
         } catch (\Throwable $e) {
-            dd($e->getMessage());
+            throw new OrderCreationException($e->getMessage());
         }
     }
 

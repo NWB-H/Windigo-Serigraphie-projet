@@ -6,6 +6,8 @@ namespace App\Services\Payment;
 
 use App\Http\Requests\CheckoutRequest;
 use App\Http\Requests\Dto\Checkout;
+use App\Services\Payment\Exception\StripeProviderException;
+use Stripe\Exception\ApiErrorException;
 use Stripe\PaymentIntent;
 use Stripe\StripeClient;
 
@@ -19,7 +21,7 @@ final class StripeProvider
         $this->stripeClient = new StripeClient(config('services.stripe.key'));
     }
 
-    public function getIntentFromCheckoutFormValue(Checkout $checkout)
+    public function getIntentFromCheckoutFormValue(Checkout $checkout): PaymentIntent
     {
         try {
             return $this->stripeClient->paymentIntents->create([
@@ -27,8 +29,8 @@ final class StripeProvider
                 'currency' => 'eur',
                 'payment_method_types' => ['card'],
             ]);
-        } catch (\Throwable $e) {
-            dd($e->getMessage());
+        } catch (ApiErrorException $e) {
+            throw new StripeProviderException(message: "Erreur lors de la récupération de l'intent Stripe depuis la commande", previous: $e);
         }
     }
 
@@ -38,9 +40,8 @@ final class StripeProvider
             return $this->stripeClient->paymentIntents->update($clientSecret, [
                 'amount' => intval($total * 100),
             ]);
-        } catch (\Throwable $e) {
-            // todo
-            dd($e->getMessage());
+        } catch (ApiErrorException $e) {
+            throw new StripeProviderException(message: "Erreur lors de la mise à jour de l'intent Stripe", previous: $e);
         }
     }
 
