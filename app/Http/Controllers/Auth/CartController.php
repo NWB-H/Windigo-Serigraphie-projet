@@ -7,6 +7,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Requests\CheckoutRequest;
 use App\Services\Order\OrderRepository;
 use App\Services\Payment\StripeProvider;
+use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 
 final readonly class CartController
@@ -32,7 +33,7 @@ final readonly class CartController
                 'clientSecret' => $intent->client_secret,
             ]);
         } catch (\Throwable $e) {
-            dd($e->getMessage());
+            Log::error("Erreur lors du paiement", ['error' => $e->getMessage()]);
             return redirect()->to('home');
         }
     }

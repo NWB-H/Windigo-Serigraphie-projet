@@ -29,3 +29,4 @@
 - [ ] Notification quand on a besoin d'etre connecté
 - [ ] Une fois que l'on a payé le panier, il faut reset le panier (session php)
 - [ ] Enlever le notification store
+- [ ] Ajouter du cache
