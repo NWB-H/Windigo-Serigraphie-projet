@@ -8,6 +8,7 @@ use App\Http\Resources\PaginatedResourceCollection;
 use App\Models\Option;
 use App\Services\Notifications\NotificationType;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 
 final class OptionController
@@ -34,6 +35,7 @@ final class OptionController
 
             Inertia::notification('Option enregistré avec succès', NotificationType::SUCCESS);
         } catch (\Throwable $e) {
+            Log::error("Erreur lors de l'enregistrement de l'option", ['error' => $e->getMessage(), 'option_id' => $validated['id'] ?? 'new option']);
             Inertia::notification('Une erreur est survenue.', NotificationType::ERROR);
         }
 

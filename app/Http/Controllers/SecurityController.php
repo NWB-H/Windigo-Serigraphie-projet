@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
@@ -84,6 +85,7 @@ class SecurityController
 
             Inertia::notification('Un email vous à été envoyé.', NotificationType::SUCCESS);
         } catch (\Throwable $e) {
+            Log::error("Erreur lors de l'envoie de l'email d'inscription", ['error' => $e->getMessage()]);
             Inertia::notification('Une erreur est survenue.', NotificationType::ERROR);
         }
 
@@ -129,6 +131,7 @@ class SecurityController
 
             Inertia::notification('Un emails vous à été envoyé.', NotificationType::SUCCESS);
         } catch (\Throwable $e) {
+            Log::error("Erreur lors de l'envoie de l'email du mot de passe oublié", ['error' => $e->getMessage()]);
             Inertia::notification('Une erreur est survenue.', NotificationType::ERROR);
         }
 
@@ -170,6 +173,7 @@ class SecurityController
 
             Inertia::notification('Votre mot de passe a été mis à jour.', NotificationType::SUCCESS);
         } catch (\Throwable $e) {
+            Log::error("Erreur lors de la mise à jour du mot de passe", ['error' => $e->getMessage()]);
             Inertia::notification('Une erreur est survenue.', NotificationType::ERROR);
         }
 

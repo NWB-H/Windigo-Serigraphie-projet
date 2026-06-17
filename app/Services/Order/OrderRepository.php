@@ -11,6 +11,7 @@ use App\Models\Order;
 use App\Services\Order\Exception\OrderByProviderIdNotFoundException;
 use App\Services\Order\Exception\OrderCreationException;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 final class OrderRepository
 {
@@ -46,6 +47,7 @@ final class OrderRepository
                 );
             });
         } catch (\Throwable $e) {
+            Log::error("Erreur lors de la création de la commande", ['error' => $e->getMessage()]);
             throw new OrderCreationException($e->getMessage());
         }
     }

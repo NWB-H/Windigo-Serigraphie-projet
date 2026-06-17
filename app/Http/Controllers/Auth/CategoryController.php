@@ -8,6 +8,7 @@ use App\Http\Resources\PaginatedResourceCollection;
 use App\Models\Category;
 use App\Services\Notifications\NotificationType;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 
 final class CategoryController
@@ -37,6 +38,7 @@ final class CategoryController
 
             Inertia::notification('Catégorie enregistré avec succès', NotificationType::SUCCESS);
         } catch (\Throwable $e) {
+            Log::error("Erreur lors de l'enregistrement de la catégorie", ['error' => $e->getMessage(), 'category_id' => $validated['id'] ?? 'new category']);
             Inertia::notification('Une erreur est survenue.', NotificationType::ERROR);
         }
 

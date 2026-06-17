@@ -8,6 +8,7 @@ use App\Http\Requests\CheckoutRequest;
 use App\Http\Requests\Dto\Checkout;
 use App\Services\Payment\Exception\StripeProviderException;
 use Stripe\Exception\ApiErrorException;
+use Illuminate\Support\Facades\Log;
 use Stripe\PaymentIntent;
 use Stripe\StripeClient;
 
@@ -30,6 +31,7 @@ final class StripeProvider
                 'payment_method_types' => ['card'],
             ]);
         } catch (ApiErrorException $e) {
+            Log::error("Erreur lors de la création de l'intent de paiement", ['error' => $e->getMessage()]);
             throw new StripeProviderException(message: "Erreur lors de la récupération de l'intent Stripe depuis la commande", previous: $e);
         }
     }
@@ -41,6 +43,8 @@ final class StripeProvider
                 'amount' => intval($total * 100),
             ]);
         } catch (ApiErrorException $e) {
+            Log::error("Erreur lors de la récupération de l'intent de paiement", ['error' => $e->getMessage()]);
+
             throw new StripeProviderException(message: "Erreur lors de la mise à jour de l'intent Stripe", previous: $e);
         }
     }

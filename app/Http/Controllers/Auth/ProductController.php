@@ -10,6 +10,7 @@ use App\Models\Option;
 use App\Models\Product;
 use App\Services\Notifications\NotificationType;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 
 final class ProductController
@@ -66,6 +67,7 @@ final class ProductController
 
             Inertia::notification('Produit enregistré avec succès', NotificationType::SUCCESS);
         } catch (\Throwable $e) {
+            Log::error("Erreur lors de l'enregistrement du produit", ['error' => $e->getMessage(), 'product_id' => $validated['id'] ?? 'new product']);
             Inertia::notification('Une erreur est survenure.', NotificationType::ERROR);
         }
 

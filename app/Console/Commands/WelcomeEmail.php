@@ -13,7 +13,7 @@ class WelcomeEmail extends Command
 
     protected $description = 'Send welcome email';
 
-    public function handle()
+    public function handle(): void
     {
         try {
             $user = User::where('id', $this->argument('userId'))->first();
