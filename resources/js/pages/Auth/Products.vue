@@ -55,7 +55,7 @@
                         <td>{{ product.archived ? 'Oui' : 'Non' }}</td>
                         <td>
                             <AppImage
-                                :url="product.picture_url"
+                                :url="product.highlighted_image?.url"
                                 alt="Image produit"
                                 imgCssClass="img-cover-50"
                             />
@@ -63,20 +63,22 @@
 
                         <td>
                             <div class="flex gap-2">
-                                <button
+                                <AppButton
+                                    ignoreStyle
                                     class="rounded bg-yellow-400 px-2 py-1"
                                     type="button"
                                     @click="edit(product)"
                                 >
                                     ✏️
-                                </button>
-                                <button
+                                </AppButton>
+                                <AppButton
+                                    ignoreStyle
                                     class="rounded bg-red-500 px-2 py-1 text-white"
                                     type="button"
                                     @click="deleteProduct(product)"
                                 >
                                     🗑️
-                                </button>
+                                </AppButton>
                                 <ToolTip
                                     v-if="product.stock <= 3"
                                     :tooltip="
@@ -121,6 +123,7 @@ import { router } from '@inertiajs/vue3';
 import { ref } from 'vue';
 import ExclamationTriangleIcon from '@/components/Icon/ExclamationTriangleIcon.vue';
 import ToolTip from '@/components/ToolTip.vue';
+import AppButton from '@/components/Global/AppButton.vue';
 
 const { productsPaginated } = defineProps<{
     productsPaginated: ResourcePaginated<Product>;

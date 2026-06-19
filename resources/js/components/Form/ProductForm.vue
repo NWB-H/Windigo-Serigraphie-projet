@@ -80,7 +80,7 @@
                     @image:loaded="loadPreviewImage"
                 />
             </li>
-            <ProductFormCarousel
+            <AppFormCarousel
                 :images="product.images"
                 @delete="deleteImage"
                 @star="toggleStar"
@@ -100,7 +100,7 @@ import AppPreviewImage from '@/components/AppPreviewImage.vue';
 import AppInput from '@/components/Global/AppInput.vue';
 import AppSelect from '@/components/Global/AppSelect.vue';
 import AppTextarea from '@/components/Global/AppTextarea.vue';
-import ProductFormCarousel from '@/components/ProductFormCarousel.vue';
+import AppFormCarousel from '@/components/AppFormCarousel.vue';
 import { Category, Image, Option, Product, ProductForm } from '@/models';
 import ProductRepository from '@/services/ProductRepository';
 import { useForm } from '@inertiajs/vue3';

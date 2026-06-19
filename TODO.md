@@ -1,11 +1,5 @@
 # Liste des taches à faire
 
-- [ ] Lors de l'incrementation d'un produit depuis notre panier, il faut vérifier via une API si le stock est disponible
-- [x] Les messages d'erreur dans les formulaires doivent etre en francais
-- [x] sur le formulaire d'inscription ajouter les informations pour que le mot de passe soit valide (longueur, caracteres spéciaux, etc...)
-- [x] systeme de notification à revoir car ils sont en doublons par moment
-- [x] ajouter/modifier une image 
-- [x] taille des images dans la partie admin pour atelier
 - [ ] Admin
   - [ ] pagination
     - [x] produits
@@ -14,20 +8,13 @@
     - [x] options
     - [ ] portfolio
     - [ ] workshop
-- [x] Inscription
-  - [x] Pas d'email envoyé
-- [ ] Mot de passe perdu
-- [x] Mentions légales
 - [ ] Portfolio
 - [ ] Accueil
-  - [x] Boutique
-    - [x] Au clique on ne va pas sur le produit
-  - [x] Ateliers
-    - [x] Au clique on ne va pas sur l'atelier
   - [ ] Contact ne fonctionne pas
 - [ ] Quand on clique sur "Passer la commande" et que l'on est pas connecté, on est redirigé vers la page de connexion. Par contre une fois connecté on est pas redirigé vers la page de paiement
 - [ ] Notification quand on a besoin d'etre connecté
 - [ ] Une fois que l'on a payé le panier, il faut reset le panier (session php)
 - [ ] Enlever le notification store
 - [ ] Ajouter du cache
-- [ ] Revoir la gestion des logs d'erreurs
+- [ ] Au click sur le changement d'une image en highlight ce n'est pas repercuté sur le tableau
+- [ ] Sur la partie store des images voir pour mutualiser la sauvegarde d'un media

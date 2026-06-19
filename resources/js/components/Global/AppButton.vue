@@ -1,6 +1,6 @@
 <template>
     <button
-        type="submit"
+        :type="$attrs.type ?? 'submit'"
         v-bind="$attrs"
         :class=" !ignoreStyle ? 'button button--' + type : ''"
         :disabled="loading || disabled"

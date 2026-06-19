@@ -14,7 +14,7 @@ class PaginatedResourceCollection extends ResourceCollection
         return $this->collection->toArray();
     }
 
-    public function paginationInformation($request, $paginated, $default)
+    public function paginationInformation($request, $paginated, $default): array
     {
         return [
             'pagination' => [

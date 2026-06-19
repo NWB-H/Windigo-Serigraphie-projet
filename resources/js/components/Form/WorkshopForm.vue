@@ -52,6 +52,19 @@
             id="description"
             placeholder="Description"
         />
+        <ul class="flex items-center justify-center gap-1">
+            <li>
+                <AppPreviewImage
+                    class="size-[150px]"
+                    @image:loaded="loadPreviewImage"
+                />
+            </li>
+            <AppFormCarousel
+                :images="workshop.images"
+                @star="toggleStar"
+                @delete="deleteImage"
+            />
+        </ul>
 
         <div class="flex gap-2">
             <AppButton>
@@ -63,7 +76,7 @@
 </template>
 
 <script setup lang="ts">
-import { Workshop, WorkshopForm } from '@/models';
+import { Workshop, WorkshopForm, Image } from '@/models';
 import { ref } from 'vue';
 import { useForm } from '@inertiajs/vue3';
 import AppInput from '@/components/Global/AppInput.vue';
@@ -71,6 +84,9 @@ import AppTextarea from '@/components/Global/AppTextarea.vue';
 import AppButton from '@/components/Global/AppButton.vue';
 import { store } from '@/actions/App/Http/Controllers/Auth/WorkshopController';
 import AppSelect from '@/components/Global/AppSelect.vue';
+import AppPreviewImage from '@/components/AppPreviewImage.vue';
+import AppFormCarousel from '@/components/AppFormCarousel.vue';
+import WorkshopRepository from '@/services/WorkshopRepository';
 
 const props = defineProps<{
     workshop?: Workshop;
@@ -88,6 +104,7 @@ const workshop = ref(
         duration: 0,
         age: 0,
         description: '',
+        images: [],
     },
 );
 
@@ -99,14 +116,56 @@ const formData = useForm<WorkshopForm>(store().method, store().url, {
     duration: workshop.value.duration,
     age: workshop.value.age,
     description: workshop.value.description,
+    images: [],
 });
+
+function loadPreviewImage(image: File) {
+    workshop.value.images.push({
+        url: URL.createObjectURL(image),
+        isHighlighted: false,
+    } as Image);
+    formData.images.push({ file: image, isHighlighted: false });
+}
 
 function saveWorkshop() {
     formData.submit({
         onSuccess: () => {
-            emits('close')
+            emits('close');
         },
     });
+}
+
+async function deleteImage(index: number) {
+    const image = workshop.value.images[index];
+
+    if (!image) {
+        return;
+    }
+
+    await WorkshopRepository.deleteImage(workshop.value, image);
+
+    workshop.value.images.splice(index, 1);
+}
+
+async function toggleStar(index: number) {
+    const image = workshop.value.images[index];
+
+    if (!image) {
+        return;
+    }
+
+    await WorkshopRepository.setHighlighted(workshop.value, image);
+
+    workshop.value.images.map((image, i) => {
+        image.isHighlighted = i === index;
+    })
+
+    formData.images.map((image, i) => {
+        const searchIndex =
+            index - (workshop.value.images.length - formData.images.length);
+
+        image.isHighlighted = searchIndex === i;
+    })
 }
 </script>
 

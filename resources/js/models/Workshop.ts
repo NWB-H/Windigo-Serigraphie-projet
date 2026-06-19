@@ -1,3 +1,5 @@
+import { Image, ImageForm } from '@/models/Common';
+
 export interface Workshop {
     id: number;
     name: string;
@@ -6,8 +8,8 @@ export interface Workshop {
     duration: number;
     age: number;
     description?: string;
-    images?: string[];
-    first_image_url?: string;
+    images: Image[];
+    highlighted_image?: Image;
     workshop_sessions?: WorkshopSession[];
 }
 
@@ -28,4 +30,5 @@ export interface WorkshopForm {
     duration: number
     age: number,
     description?: string
+    images: ImageForm[]
 }
