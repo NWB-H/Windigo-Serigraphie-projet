@@ -3,14 +3,14 @@
         v-for="(image, key) in images"
         :key="image.url"
         class="container_product-form"
-        @mouseenter="showActions = true"
-        @mouseleave="showActions = false"
+        @mouseenter="handleMouse(image.id)"
+        @mouseleave="handleMouse(null)"
     >
         <AppImage :url="image.url" class="h-[150px] w-[150px] object-fill" />
         <Transition>
             <p
                 class="absolute right-0 bottom-0 left-0 m-0 flex"
-                v-if="showActions"
+                v-if="currentImageHover === image.id"
             >
                 <button
                     class="flex flex-1 justify-center bg-blue-500 p-2 text-white hover:bg-blue-700"
@@ -48,7 +48,11 @@ defineEmits<{
     (e: 'star', index: number): void;
 }>();
 
-const showActions = ref(false);
+function handleMouse(id: number | null) {
+    currentImageHover.value = id;
+}
+
+const currentImageHover = ref<number | null>(null);
 </script>
 
 <style scoped>
