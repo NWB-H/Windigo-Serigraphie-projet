@@ -1,11 +1,6 @@
 import type { Category } from './Category';
 import type { Option } from './Option';
-
-export interface Image {
-    id?: number;
-    isHighlighted: boolean;
-    url: string;
-}
+import { Image, ImageForm } from '@/models/Common';
 
 export interface Product {
     id: number;
@@ -15,6 +10,7 @@ export interface Product {
     description: string;
     archived: boolean;
     images: Image[];
+    highlighted_image?: Image;
 
     // Relations
     category?: Category;
@@ -29,10 +25,7 @@ export interface ProductForm {
     stock: number;
     description: string;
     archived: boolean;
-    images: {
-        file: File;
-        isHighlighted: boolean;
-    }[];
+    images: ImageForm[];
 
     // Relations
     category_id?: number;

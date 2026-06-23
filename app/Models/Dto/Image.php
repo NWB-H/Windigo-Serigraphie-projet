@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models\Dto;
 
-final class Image
+class Image
 {
     public function __construct(
         public int $id,

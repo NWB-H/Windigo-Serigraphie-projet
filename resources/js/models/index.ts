@@ -5,6 +5,7 @@ export * from './Order';
 export * from './Product';
 export * from './Reservation';
 export * from './Workshop';
+export * from './Common';
 
 export interface Pagination {
     currentPage: number;

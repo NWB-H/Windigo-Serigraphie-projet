@@ -22,6 +22,9 @@ final class WorkshopFormRequest extends FormRequest implements FormRequestInterf
             'duration' => ['required', 'integer', 'min:1'],
             'age' => ['required', 'integer', 'min:1'],
             'description' => ['required', 'string'],
+            'images' => 'nullable|array',
+            'images.*.file' => 'image|mimes:jpeg,png,jpg,gif,svg',
+            'images.*.isHighlighted' => 'boolean',
         ];
     }
 

@@ -2,17 +2,22 @@
 
 namespace App\Models;
 
+use App\Models\Dto\Image;
+use App\Models\Traits\MediaTrait;
 use Database\Factories\WorkshopFactory;
 use Illuminate\Database\Eloquent\Attributes\UseFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
+use Illuminate\Database\Eloquent\Casts\Attribute;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 #[UseFactory(WorkshopFactory::class)]
-class Workshop extends Model
+class Workshop extends Model implements HasMedia
 {
-    use HasFactory;
+    use HasFactory, InteractsWithMedia, MediaTrait;
 
-    // Champs modifiables via mass assignment
     protected $fillable = [
         'name',
         'type',
@@ -20,28 +25,11 @@ class Workshop extends Model
         'duration',
         'age',
         'description',
-        'images', // stocké en JSON
     ];
 
-    // Cast JSON pour images
-    protected $casts = [
-        'images' => 'array',
-    ];
-
-    // Accessors à ajouter automatiquement dans le JSON renvoyé par l'API
-    protected $appends = ['first_image_url'];
-
-    /**
-     * Retourne l'URL complète de la première image
-     */
-    public function getFirstImageUrlAttribute(): ?string
+    protected function collectionName(): string
     {
-        if (is_array($this->images) && count($this->images) > 0) {
-            // Génère le lien complet vers le storage public
-            return asset('storage/'.$this->images[0]);
-        }
-
-        return null;
+        return 'workshops';
     }
 
     /**

@@ -34,4 +34,6 @@ Route::middleware('auth:sanctum')
     ->prefix('api/workshops')
     ->group(function () {
         Route::delete('/{workshop}', [WorkshopController::class, 'delete'])->name('api.workshops.delete');
+        Route::delete('/{workshop}/medias/{media}', [WorkshopController::class, 'deleteMedia'])->name('api.workshops.deleteMedia');
+        Route::patch('/{workshop}/medias/{media}/highlighted', [WorkshopController::class, 'highlightImage'])->name('api.workshops.highlightImage');
     });

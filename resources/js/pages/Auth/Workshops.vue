@@ -50,7 +50,7 @@
                         <!-- Image principale -->
                         <td>
                             <AppImage
-                                :url="workshop.first_image_url"
+                                :url="workshop.highlighted_image?.url"
                                 :alt="workshop.name"
                                 imgCssClass="table-image img-cover-50"
                             />

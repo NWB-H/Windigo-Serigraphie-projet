@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Dto\Image;
+use App\Models\Traits\MediaTrait;
 use Database\Factories\ProductFactory;
 use Illuminate\Database\Eloquent\Attributes\UseFactory;
 use Illuminate\Database\Eloquent\Casts\Attribute;
@@ -15,7 +16,7 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
 #[UseFactory(ProductFactory::class)]
 class Product extends Model implements HasMedia
 {
-    use HasFactory, InteractsWithMedia;
+    use HasFactory, InteractsWithMedia, MediaTrait;
 
     public $timestamps = false;
 
@@ -30,42 +31,9 @@ class Product extends Model implements HasMedia
         'picture',
     ];
 
-    // --- pour récupérer l'URL complète de l'image ---
-    protected $appends = [
-        'picture_url',
-        'images',
-    ];
-
-    public function getPictureUrlAttribute(): ?string
+    protected function collectionName(): string
     {
-        $picture = $this->getFirstMedia('products', ['isHighlighted' => true]);
-
-        if ($picture) {
-            return $picture->getUrl();
-        }
-
-        return $this->getFirstMedia('products')?->getUrl();
-    }
-
-    public function images(): Attribute
-    {
-        return Attribute::make(
-            get: fn () => array_map(
-                fn (Media $image) => new Image(
-                    id: $image->id,
-                    url: $image->getUrl(),
-                    isHighlighted: $image->getCustomProperty('isHighlighted', false),
-                ),
-                $this->getMedia('products')->all()
-            )
-        );
-    }
-
-    public function resetHighlightedImages(): void
-    {
-        $this->getMedia('products')->each(function (Media $media) {
-            $media->setCustomProperty('isHighlighted', false)->save(); // Non optimisé, il faudrait update la collection d'un coup
-        });
+        return 'products';
     }
 
     // --- Recherche filtrée ---

@@ -30,10 +30,24 @@ final class WorkshopController
         $validated = $request->validated();
 
         try {
-            Workshop::updateOrCreate(
+            $workshop = Workshop::updateOrCreate(
                 ['id' => $validated['id'] ?? null],
                 $validated,
             );
+
+            foreach ($validated['images'] as $key => $image) {
+                $isHighlighted = (bool) $image['isHighlighted'];
+
+                if ($isHighlighted) {
+                    $workshop->resetHighlightedImages();
+                }
+
+                if ($request->hasFile("images.$key.file")) {
+                    $workshop
+                        ->addMedia($request->file("images.$key.file"))
+                        ->toMediaCollection('workshops');
+                }
+            }
 
             Inertia::notification('Atelier créé avec succès', NotificationType::SUCCESS);
         } catch (\Throwable $e) {
