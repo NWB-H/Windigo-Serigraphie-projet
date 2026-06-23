@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Auth;
 
+use App\Http\Requests\Form\OptionFormRequest;
 use App\Http\Resources\PaginatedResourceCollection;
 use App\Models\Option;
 use App\Services\Notifications\NotificationType;
@@ -23,12 +24,9 @@ final class OptionController
         );
     }
 
-    public function store(Request $request)
+    public function store(OptionFormRequest $request)
     {
-        $validated = $request->validate([
-            'id' => 'int',
-            'name' => 'required|string|unique:options,name',
-        ]);
+        $validated = $request->validated();
 
         try {
             Option::updateOrCreate(['id' => $validated['id'] ?? null], $validated);
