@@ -1,5 +1,5 @@
 <template>
-    <AppLayoutAdmin>
+    <AppLayoutAdmin title="Administration options">
         <div class="container my-5">
             <div class="flex gap-2">
                 <h2>Gestion des Options</h2>
