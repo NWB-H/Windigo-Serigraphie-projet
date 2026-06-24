@@ -74,7 +74,7 @@ final class OrderRepository
 
             $order->save();
 
-            StripePaymentSucceeded::dispatch();
+            StripePaymentSucceeded::dispatch($order);
         } catch (\Throwable $e) {
             throw new OrderSavePaymentSucceededException($e->getMessage());
         }
