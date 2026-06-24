@@ -4,12 +4,14 @@ declare(strict_types=1);
 
 namespace App\Services\Order;
 
+use App\Events\StripePaymentSucceeded;
 use App\Http\Requests\Dto\Checkout;
 use App\Http\Requests\Dto\CheckoutProduct;
 use App\Models\Dto\PaymentProvider;
 use App\Models\Order;
 use App\Services\Order\Exception\OrderByProviderIdNotFoundException;
 use App\Services\Order\Exception\OrderCreationException;
+use App\Services\Order\Exception\OrderSavePaymentSucceededException;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
@@ -59,16 +61,23 @@ final class OrderRepository
 
     public function registerOrderSucceededPayment(string $providerId): void
     {
-        $order = $this->getByProviderId($providerId);
+        try {
+            $order = $this->getByProviderId($providerId);
 
-        if (null === $order) {
-            throw new OrderByProviderIdNotFoundException($providerId);
+            if (null === $order) {
+                throw new OrderByProviderIdNotFoundException($providerId);
+            }
+
+            $order->update([
+                'status' => 'paid',
+            ]);
+
+            $order->save();
+
+            StripePaymentSucceeded::dispatch();
+        } catch (\Throwable $e) {
+            throw new OrderSavePaymentSucceededException($e->getMessage());
         }
 
-        $order->update([
-            'status' => 'paid',
-        ]);
-
-        $order->save();
     }
 }
