@@ -1,11 +1,5 @@
-<script setup lang="ts">
-import AppLayout from '@/layouts/AppLayout.vue';
-import { Link } from '@inertiajs/vue3';
-</script>
-
 <template>
-    <AppLayout title="Authentification requise">
-        <section
+    <section
             class="mx-auto flex min-h-[80vh] w-full items-center justify-center bg-[#f7f3f0] px-6 py-16 text-gray-800"
         >
             <div class="mx-auto max-w-2xl text-center">
@@ -39,7 +33,15 @@ import { Link } from '@inertiajs/vue3';
                 </div>
             </div>
         </section>
-    </AppLayout>
 </template>
+
+<script setup lang="ts">
+import AppLayout from '@/layouts/AppLayout.vue';
+import { Link } from '@inertiajs/vue3';
+
+defineOptions({
+    layout: AppLayout,
+})
+</script>
 
 <style scoped></style>

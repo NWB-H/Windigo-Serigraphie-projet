@@ -29,10 +29,7 @@
 </template>
 
 <script setup lang="ts">
-import { useNotificationStore } from '@/stores/Notifications';
 import { ref } from 'vue';
-
-const { addItem } = useNotificationStore();
 
 const form = ref({
     email: '',
@@ -40,7 +37,6 @@ const form = ref({
 });
 
 function onSubmit() {
-    addItem({ type: 'success', message: 'Hello world !' });
 }
 </script>
 

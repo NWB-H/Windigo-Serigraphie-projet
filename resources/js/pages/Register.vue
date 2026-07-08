@@ -1,6 +1,5 @@
 <template>
-    <AppLayout title="Inscription">
-        <div class="top-container">
+    <div class="top-container">
             <form @submit.prevent="form.post(route('register.store'))">
                 <div class="register__container">
                     <h2 class="register__title">Inscription</h2>
@@ -58,7 +57,6 @@
                 </div>
             </form>
         </div>
-    </AppLayout>
 </template>
 
 <script setup lang="ts">
@@ -68,6 +66,10 @@ import { Link, useForm } from '@inertiajs/vue3';
 import { ref } from 'vue';
 import AppButton from '@/components/Global/AppButton.vue';
 import AppPassword from '@/components/Global/AppPassword.vue';
+
+defineOptions({
+    layout: [AppLayout, { title: 'Inscription' }],
+})
 
 const form = useForm({
     name: null,

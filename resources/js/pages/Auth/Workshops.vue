@@ -1,6 +1,5 @@
 <template>
-    <AppLayoutAdmin title="Gestion des Ateliers">
-        <div class="container my-5">
+    <div class="container my-5">
             <div class="flex gap-2">
                 <h2>Gestion des Ateliers</h2>
                 <AppButton
@@ -105,7 +104,6 @@
                 :path="workshops.pagination.path"
             />
         </div>
-    </AppLayoutAdmin>
 </template>
 
 <script setup lang="ts">
@@ -119,6 +117,9 @@ import { ref } from 'vue';
 import AppButton from '@/components/Global/AppButton.vue';
 import WorkshopRepository from '@/services/WorkshopRepository';
 
+defineOptions({
+    layout: AppLayoutAdmin,
+})
 defineProps<{ workshops: ResourcePaginated<Workshop>; types: string[] }>();
 
 const showForm = ref(false);

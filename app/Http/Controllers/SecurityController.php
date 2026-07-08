@@ -172,4 +172,11 @@ class SecurityController
 
         return to_route('login');
     }
+
+    public function profile()
+    {
+        Auth::user()->load('addresses');
+
+        return Inertia::render('Profile');
+    }
 }

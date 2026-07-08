@@ -1,5 +1,6 @@
 import { InertiaLinkProps } from '@inertiajs/vue3';
 import type { LucideIcon } from 'lucide-vue-next';
+import { Address } from '@/models/Address';
 
 export interface Auth {
     user: User|null;
@@ -35,6 +36,7 @@ export interface User {
     created_at: string;
     updated_at: string;
     role: string;
+    addresses: Address[];
 }
 
 export type BreadcrumbItemType = BreadcrumbItem;

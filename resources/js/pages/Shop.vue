@@ -1,6 +1,5 @@
 <template>
-    <AppLayout title="Boutique">
-        <div class="container my-5">
+    <div class="container my-5">
             <h2 class="mb-4">Boutique</h2>
             <div class="row">
                 <div
@@ -12,7 +11,6 @@
                 </div>
             </div>
         </div>
-    </AppLayout>
 </template>
 
 <script setup lang="ts">
@@ -20,6 +18,9 @@ import ProductCartItem from '@/components/Shop/ProductCartItem.vue';
 import AppLayout from '@/layouts/AppLayout.vue';
 import { Product } from '@/models/Product';
 
+defineOptions({
+    layout: AppLayout,
+})
 defineProps<{ products: Product[] }>();
 </script>
 

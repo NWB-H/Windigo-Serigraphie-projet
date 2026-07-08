@@ -1,6 +1,5 @@
 <template>
-    <AppLayoutAdmin title="Administration catégories">
-        <div class="container my-5">
+    <div class="container my-5">
             <div class="flex gap-2">
                 <h2>Gestion des Catégories</h2>
                 <button @click.prevent="newCategory" class="btn btn-success">
@@ -55,7 +54,6 @@
                 :currentPage="categories.pagination.currentPage"
             />
         </div>
-    </AppLayoutAdmin>
 </template>
 
 <script setup lang="ts">
@@ -67,6 +65,9 @@ import CategoryRepository from '@/services/CategoryRepository';
 import { router } from '@inertiajs/vue3';
 import { ref } from 'vue';
 
+defineOptions({
+    layout: AppLayoutAdmin,
+})
 const { categories } = defineProps<{
     categories: ResourcePaginated<Category>;
 }>();

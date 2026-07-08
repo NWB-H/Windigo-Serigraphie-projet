@@ -1,6 +1,5 @@
 <template>
-    <AppLayout title="Aterliers de sérigraphie">
-        <div class="container my-5">
+    <div class="container my-5">
             <h2 class="mb-4 text-center">Nos Ateliers</h2>
             <div class="row g-4">
                 <div
@@ -46,7 +45,6 @@
                 </div>
             </div>
         </div>
-    </AppLayout>
 </template>
 
 <script setup lang="ts">
@@ -55,6 +53,9 @@ import AppLayout from '@/layouts/AppLayout.vue';
 import { Workshop } from '@/models/Workshop';
 import { Link } from '@inertiajs/vue3';
 
+defineOptions({
+    layout: AppLayout,
+})
 defineProps<{ workshops: Workshop[] }>();
 </script>
 

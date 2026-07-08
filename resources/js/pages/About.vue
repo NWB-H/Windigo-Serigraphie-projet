@@ -1,6 +1,5 @@
 <template>
-    <AppLayout title="A propos">
-        <div class="container my-5">
+    <div class="container my-5">
             <div class="row">
                 <!-- Colonne gauche -->
                 <div class="col-lg-6">
@@ -64,13 +63,16 @@
                 </div>
             </div>
         </div>
-    </AppLayout>
 </template>
 
 <script setup lang="ts">
 import AppImage from '@/components/AppImage.vue';
 import SectionItem from '@/components/SectionItem.vue';
 import AppLayout from '@/layouts/AppLayout.vue';
+
+defineOptions({
+    layout: [AppLayout, { title: 'A propos'}],
+})
 </script>
 
 <style scoped>

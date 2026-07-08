@@ -1,6 +1,5 @@
 <template>
-    <AppLayoutAdmin title="Administration produits">
-        <div class="container my-5">
+    <div class="container my-5">
             <div class="flex gap-2">
                 <h2>Gestion Produits</h2>
                 <button class="btn btn-success mb-3" @click="newProduct()">
@@ -109,7 +108,6 @@
                 :path="productsPaginated.pagination.path"
             />
         </div>
-    </AppLayoutAdmin>
 </template>
 
 <script setup lang="ts">
@@ -125,6 +123,9 @@ import ExclamationTriangleIcon from '@/components/Icon/ExclamationTriangleIcon.v
 import ToolTip from '@/components/ToolTip.vue';
 import AppButton from '@/components/Global/AppButton.vue';
 
+defineOptions({
+    layout: AppLayoutAdmin,
+})
 const { productsPaginated } = defineProps<{
     productsPaginated: ResourcePaginated<Product>;
     categories: Category[];

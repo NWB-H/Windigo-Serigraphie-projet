@@ -1,6 +1,5 @@
 <template>
-    <AppLayout :title="workshop.name">
-        <div class="container my-5">
+    <div class="container my-5">
             <div class="row mb-4">
                 <div class="col-md-6">
                     <Link
@@ -112,7 +111,6 @@
             </div>
             <p v-else>Aucune session prévue pour le moment.</p>
         </div>
-    </AppLayout>
 </template>
 
 <script setup lang="ts">
@@ -121,6 +119,9 @@ import AppLayout from '@/layouts/AppLayout.vue';
 import { Workshop } from '@/models/Workshop';
 import { Link } from '@inertiajs/vue3';
 
+defineOptions({
+    layout: AppLayout,
+})
 defineProps<{ workshop: Workshop }>();
 </script>
 

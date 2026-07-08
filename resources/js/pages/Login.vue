@@ -1,11 +1,10 @@
 <template>
-    <AppLayout title="Connexion">
-        <div class="top-container">
+    <div class="top-container">
             <div class="login">
                 <form @submit.prevent="form.post(route('login.store'))">
                     <h2 class="form-title">Connexion</h2>
                     <div class="container-champ">
-                        <div>
+                        <div class="w-[200px]">
                             <AppInput
                                 v-model="form.email"
                                 :error="form.errors.email"
@@ -15,7 +14,7 @@
                                 id="email"
                             />
                         </div>
-                        <div class="form-group">
+                        <div class="w-[200px]">
                             <AppInput
                                 v-model="form.password"
                                 :error="form.errors.password"
@@ -25,7 +24,7 @@
                                 id="password"
                             />
                         </div>
-                        <div class="form-group">
+                        <div>
                             <AppButton>Connexion</AppButton>
                         </div>
                         <p class="register">
@@ -39,7 +38,6 @@
                 </form>
             </div>
         </div>
-    </AppLayout>
 </template>
 
 <script setup lang="ts">
@@ -48,6 +46,9 @@ import AppLayout from '@/layouts/AppLayout.vue';
 import { Link, useForm } from '@inertiajs/vue3';
 import AppButton from '@/components/Global/AppButton.vue';
 
+defineOptions({
+    layout: [AppLayout, { title: 'Connexion' }],
+})
 const form = useForm({
     email: null,
     password: null,

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Enums\RoleEnum;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Auth;
@@ -23,8 +24,7 @@ class User extends Authenticatable
         'role',
         'email',
         'password',
-        'billing_address',
-        'delivery_address',
+        'addresses',
         'reset_password_token',
         'reset_password_token_expires_at',
     ];
@@ -51,14 +51,6 @@ class User extends Authenticatable
     ];
 
     /**
-     * Vérifie si l'utilisateur est admin
-     */
-    public function isAdmin(): bool
-    {
-        return $this->role === RoleEnum::ROLE_ADMIN;
-    }
-
-    /**
      * Résout le "me" pour les routes
      */
     public function resolveRouteBinding($value, $field = null): ?self
@@ -69,6 +61,14 @@ class User extends Authenticatable
     // ---------------------
     // RELATIONS
     // ---------------------
+
+    /**
+     * @return HasMany<Address>
+     */
+    public function addresses(): HasMany
+    {
+        return $this->hasMany(Address::class);
+    }
 
     public function cartProducts()
     {
@@ -83,16 +83,6 @@ class User extends Authenticatable
     public function orders()
     {
         return $this->hasMany(Order::class, 'order_id');
-    }
-
-    public function deliveryAddress()
-    {
-        return $this->belongsTo(City::class, 'delivery_address');
-    }
-
-    public function billingAddress()
-    {
-        return $this->belongsTo(City::class, 'billing_address');
     }
 
     public function reservationSessions()

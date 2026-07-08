@@ -14,21 +14,31 @@
 
             <div class="user-actions">
                 <div v-if="user" class="logged-in">
-                    <span>Bienvenue {{ user.email }}</span>
                     <Link
                         v-if="user.role === 'ROLE_ADMIN'"
                         :href="route('admin.product.index')"
-                        class="btn btn-warning"
-                        >Panel Admin</Link
-                    >
+                        class="text-black! no-underline! hover:text-gray-600!"
+                        ><ProfileIcon
+                    /></Link>
+                    <ToolTip v-else tooltip="Profile" direction="down">
+                        <Link
+                            class="text-black! no-underline! hover:text-gray-600!"
+                            :href="route('profile')"
+                        >
+                            <ProfileIcon />
+                        </Link>
+                    </ToolTip>
 
-                    <Link
-                        type="button"
-                        class="btn btn-outline-secondary"
-                        :href="route('logout')"
-                    >
-                        Déconnexion
-                    </Link>
+                    <ToolTip tooltip="Déconnexion" direction="down">
+                        <Link
+                            type="button"
+                            as="button"
+                            class="text-black! no-underline! hover:text-red-600!"
+                            :href="route('logout')"
+                        >
+                            <LogoutIcon />
+                        </Link>
+                    </ToolTip>
                 </div>
                 <Link :href="route('cart')" v-if="totalCartItem > 0">
                     <p class="cart bg-secondary">
@@ -36,13 +46,15 @@
                         <span class="badge-cart">{{ totalCartItem }}</span>
                     </p>
                 </Link>
-                <Link
-                    v-if="!user"
-                    :href="route('login')"
-                    class="btn btn-outline-secondary"
-                >
-                    <img src="/images/account.svg" alt="Login" />
-                </Link>
+                <ToolTip tooltip="Connexion" direction="down">
+                    <Link
+                        v-if="!user"
+                        :href="route('login')"
+                        class="text-black! no-underline!"
+                    >
+                        <ProfileIcon />
+                    </Link>
+                </ToolTip>
             </div>
         </div>
     </header>
@@ -54,10 +66,13 @@ import { User } from '@/types';
 import { Link, usePage } from '@inertiajs/vue3';
 import { storeToRefs } from 'pinia';
 import { ref } from 'vue';
+import LogoutIcon from '@/components/Icon/LogoutIcon.vue';
+import ProfileIcon from '@/components/Icon/ProfileIcon.vue';
+import ToolTip from '@/components/ToolTip.vue';
 
 const page = usePage();
 
-const user = ref<User|null>(page.props.auth?.user);
+const user = ref<User | null>(page.props.auth?.user);
 
 const { totalCartItem } = storeToRefs(useCartStore());
 </script>

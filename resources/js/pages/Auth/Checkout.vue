@@ -1,6 +1,5 @@
 <template>
-    <AppLayoutAdmin title="Administration catégories">
-        <form @submit.prevent="handleSubmit" class="flex flex-col gap-2">
+    <form @submit.prevent="handleSubmit" class="flex flex-col gap-2">
             <div id="stripe"></div>
             <AppButton
                 class="flex w-100 justify-center rounded bg-[#a78770] px-6 py-2 font-semibold text-white shadow-sm transition hover:bg-[#8f6e58] focus:ring-2 focus:ring-[#8f6e58]/40 focus:outline-none active:scale-95 disabled:cursor-not-allowed disabled:opacity-50"
@@ -9,7 +8,6 @@
                 <template v-else> Payer </template>
             </AppButton>
         </form>
-    </AppLayoutAdmin>
 </template>
 
 <script setup lang="ts">
@@ -21,6 +19,9 @@ import { Stripe } from '@stripe/stripe-js';
 import AppLoader from '@/components/Global/AppLoader.vue';
 import { router } from '@inertiajs/vue3';
 
+defineOptions({
+    layout: AppLayoutAdmin,
+})
 const props = defineProps<{ clientSecret: string }>();
 
 const ready = ref(false);
