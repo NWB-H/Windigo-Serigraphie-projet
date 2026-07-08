@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Auth;
 
+use App\Http\Requests\Form\ProductFormRequest;
 use App\Http\Resources\PaginatedResourceCollection;
 use App\Models\Category;
 use App\Models\Option;
@@ -27,21 +28,9 @@ final class ProductController
         );
     }
 
-    public function store(Request $request)
+    public function store(ProductFormRequest $request)
     {
-        $validated = $request->validate([
-            'id' => 'int',
-            'name' => 'required|string',
-            'price' => 'required|numeric',
-            'stock' => 'required|integer',
-            'description' => 'required|string',
-            'archived' => 'boolean',
-            'option_id' => 'required|exists:options,id',
-            'category_id' => 'required|exists:categories,id',
-            'images' => 'nullable|array',
-            'images.*.file' => 'image|mimes:jpeg,png,jpg,gif,svg',
-            'images.*.isHighlighted' => 'boolean',
-        ]);
+        $validated = $request->validated();
 
         try {
             /** @var Product $product */

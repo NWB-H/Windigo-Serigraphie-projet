@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Form\ForgotPasswordFormRequest;
+use App\Http\Requests\Form\LoginFormRequest;
+use App\Http\Requests\Form\RegisterFormRequest;
+use App\Http\Requests\Form\ResetPasswordFormRequest;
 use App\Mail\ForgotPasswordEmail;
 use App\Mail\RegisterEmail;
 use App\Models\User;
@@ -24,12 +28,9 @@ class SecurityController
         );
     }
 
-    public function loginStore(Request $request)
+    public function loginStore(LoginFormRequest $request)
     {
-        $credentials = $request->validate([
-            'email' => ['required', 'email'],
-            'password' => ['required'],
-        ]);
+        $credentials = $request->validated();
 
         if (
             Auth::attemptWhen(
@@ -65,13 +66,9 @@ class SecurityController
         );
     }
 
-    public function registerStore(Request $request)
+    public function registerStore(RegisterFormRequest $request)
     {
-        $formFields = $request->validate([
-            'name' => 'required|string',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => ['required', 'confirmed', 'min:8'],
-        ]);
+        $formFields = $request->validated();
         $formFields['password'] = Hash::make($formFields['password']);
 
         $user = new User;
@@ -118,11 +115,9 @@ class SecurityController
         );
     }
 
-    public function forgotPasswordStore(Request $request)
+    public function forgotPasswordStore(ForgotPasswordFormRequest $request)
     {
-        $validated = $request->validate([
-            'email' => 'required|string|email',
-        ]);
+        $validated = $request->validated();
 
         try {
             $user = User::where('email', $validated['email'])->firstOrFail();
@@ -152,15 +147,13 @@ class SecurityController
         );
     }
 
-    public function resetPasswordStore(Request $request)
+    public function resetPasswordStore(ResetPasswordFormRequest $request)
     {
         if (!$request->hasValidSignature()) {
             abort(401);
         }
 
-        $request->validate([
-            'password' => ['required', 'confirmed', 'min:8'],
-        ]);
+        $request->validated();
 
         try {
             $user = User::where('reset_password_token', $request->query('token'))->whereDate('reset_password_token_expires_at', '>=', now())->firstOrFail();

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Auth;
 
+use App\Http\Requests\Form\CategoryFormRequest;
 use App\Http\Resources\PaginatedResourceCollection;
 use App\Models\Category;
 use App\Services\Notifications\NotificationType;
@@ -23,12 +24,9 @@ final class CategoryController
         );
     }
 
-    public function store(Request $request)
+    public function store(CategoryFormRequest $request)
     {
-        $validated = $request->validate([
-            'id' => 'int',
-            'name' => 'required|string|unique:categories,name',
-        ]);
+        $validated = $request->validated();
 
         try {
             Category::updateOrCreate(
