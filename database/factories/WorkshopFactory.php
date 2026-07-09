@@ -22,7 +22,7 @@ class WorkshopFactory extends Factory
             'name' => fake()->domainName(),
             'type' => WorkshopEnum::random(),
             'price' => random_int(0, 50),
-            'duration' => fake()->numberBetween(1, 200),
+            'duration' => random_int(0, 50),
             'age' => 15,
         ];
     }

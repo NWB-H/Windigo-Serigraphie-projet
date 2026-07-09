@@ -30,6 +30,7 @@
                     class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-5"
                 >
                     <AppButton
+                        v-if="user.addresses.length < 5"
                         @click="updateModal()"
                         ignoreStyle
                         class="flex min-h-48 items-center justify-center rounded-xl border-2 border-dashed border-gray-300 transition hover:border-gray-900 hover:bg-gray-50"
@@ -39,7 +40,6 @@
 
                     <!-- Exemple card adresse -->
                     <div
-                        @click="updateModal(address)"
                         v-for="address in user.addresses"
                         :key="address.id"
                         class="flex min-h-48 flex-col justify-between rounded-xl border border-gray-200 p-4"
@@ -55,22 +55,27 @@
 
                             <p class="text-sm text-gray-600">
                                 {{ address.postal_code }}
-                                {{ address.city.nom }}
+                                {{ address.city }}
                             </p>
 
                             <p class="text-sm text-gray-600">{{ address.country }}</p>
                         </div>
 
                         <div class="flex gap-3 pt-4 text-sm">
-                            <button
+                            <AppButton
+                                ignoreStyle
                                 class="text-gray-700 hover:text-black"
-                                @click="modal.updateModal('edit-address')"
+                                @click.prevent="updateModal(address)"
                             >
                                 Modifier
-                            </button>
-                            <button class="text-red-500 hover:text-red-700">
+                            </AppButton>
+                            <AppButton
+                                ignoreStyle
+                                class="text-red-500 hover:text-red-700"
+                                @click.prevent="handleDeleteAddress(address)"
+                            >
                                 Supprimer
-                            </button>
+                            </AppButton>
                         </div>
                     </div>
                 </div>
@@ -149,22 +154,20 @@
 
 <script setup lang="ts">
 import AppLayout from '@/layouts/AppLayout.vue';
-import { usePage } from '@inertiajs/vue3';
-import { inject, ref } from 'vue';
-import AuthenticatedUserPage from '@/types/inertia';
-import { User } from '../types';
+import {router } from '@inertiajs/vue3';
+import { inject } from 'vue';
+import { User } from '@/types';
 import AppButton from '@/components/Global/AppButton.vue';
 import { modalKey } from '@/keys';
 import { Address } from '@/models/Address';
+import AddressRepository from "@/services/AddressRepository";
 
 defineOptions({
     layout: [AppLayout, { title: 'Profile' }],
     title: 'Mon compte',
 });
 
-const page = usePage<AuthenticatedUserPage>();
-
-const user = ref<User>(page.props.auth.user);
+defineProps<{ user: User }>()
 
 const modal = inject(modalKey);
 
@@ -173,8 +176,26 @@ function updateModal(address?: Address)
     if (!modal) {
         throw new Error('modalKey not provided');
     }
-
     modal.updateModal('address', { address: address })
+}
+
+async function handleDeleteAddress(address: Address)
+{
+    try {
+        await AddressRepository.deleteAddress(address);
+
+        router.reload({
+            only: ['user'],
+            onSuccess: () => {
+                router.flash('notification', {
+                    message: 'Adresse supprimé avec succès',
+                    type: 'success',
+                });
+            },
+        });
+    } catch (e) {
+        console.log(e)
+    }
 }
 </script>
 

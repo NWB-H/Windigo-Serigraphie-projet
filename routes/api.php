@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\AddressController;
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\CityController;
 use App\Http\Controllers\Api\OptionController;
@@ -43,4 +44,12 @@ Route::middleware('auth:sanctum')
     ->prefix('api/cities')
     ->group(function () {
         Route::get('/search/{postalCode}', [CityController::class, 'search'])->name('api.cities.search');
+    });
+
+Route::middleware('auth:sanctum')
+    ->prefix('api/addresses')
+    ->group(function () {
+        Route::delete('/{address}', [AddressController::class, 'delete'])
+            ->middleware('can:delete,address')
+            ->name('api.addresses.delete');
     });

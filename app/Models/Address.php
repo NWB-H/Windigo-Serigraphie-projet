@@ -14,9 +14,12 @@ final class Address extends Model
         'address_line1',
         'address_line2',
         'user_id',
+        'postal_code',
+        'country',
+        'city'
     ];
 
-    protected $with = ['city'];
+//    protected $with = ['city'];
 
     public function user(): BelongsTo
     {

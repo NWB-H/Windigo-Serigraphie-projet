@@ -7,12 +7,10 @@
                 :disabled="quantity <= 0"
                 >-</AppButton
             >
-            <AppInput
-                v-model.number="quantity"
-                type="number"
-                containerClass="min-w-[80px] max-w-1/3"
+            <span
                 class="w-full rounded-lg border border-[#bfa79a] bg-[#f7f3f0] px-4 py-2 text-center text-gray-800 placeholder-gray-500 shadow-sm transition outline-none focus:border-[#a18678] focus:ring-2 focus:ring-[#a18678]/40 disabled:cursor-not-allowed disabled:bg-[#e8ddd6] disabled:text-gray-500"
-            />
+            >{{ quantity }}</span
+            >
             <AppButton
                 class="w-1/3 rounded bg-[#3E7C59] text-white"
                 @click="handleIncrement"

@@ -175,8 +175,11 @@ class SecurityController
 
     public function profile()
     {
-        Auth::user()->load('addresses.city');
-
-        return Inertia::render('Profile');
+        return Inertia::render(
+            'Profile',
+            [
+                'user' => fn () => User::where('id', Auth::user()->id)->with('addresses')->firstOrFail(),
+            ],
+        );
     }
 }

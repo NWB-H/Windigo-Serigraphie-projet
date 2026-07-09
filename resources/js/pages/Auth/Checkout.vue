@@ -11,18 +11,18 @@
 </template>
 
 <script setup lang="ts">
-import AppLayoutAdmin from '@/layouts/AppLayoutAdmin.vue';
 import { loadStripe, StripeElements } from '@stripe/stripe-js';
-import { onMounted, ref } from 'vue';
+import { onMounted, ref  } from 'vue';
 import AppButton from '@/components/Global/AppButton.vue';
 import { Stripe } from '@stripe/stripe-js';
 import AppLoader from '@/components/Global/AppLoader.vue';
 import { router } from '@inertiajs/vue3';
+import AppLayout from "@/layouts/AppLayout.vue";
 
 defineOptions({
-    layout: AppLayoutAdmin,
+    layout: [AppLayout, { title: 'Paiement' }],
 })
-const props = defineProps<{ clientSecret: string }>();
+const props = defineProps<{ clientSecret: string, clientPublic: string }>();
 
 const ready = ref(false);
 const loading = ref(false);
@@ -60,9 +60,7 @@ async function handleSubmit() {
 }
 
 onMounted(async () => {
-    stripe = await loadStripe(
-        'pk_test_51TXRkiRxSmRZPP39mGRHUzhS8S2LcSgBxFSYw2PuudZdl4LFO8pEOu9umpTTRKgYuvcAPThgylurB1d5UB2rdfVi008jrzIbTg',
-    );
+    stripe = await loadStripe(props.clientPublic);
 
     if (!stripe) {
         return;
@@ -72,7 +70,14 @@ onMounted(async () => {
         clientSecret: props.clientSecret,
     });
 
-    const paymentElement = elements.create('payment');
+    const paymentElement = elements.create(
+        'payment',
+        {
+            fields: {
+                billingDetails: 'never'
+            }
+        }
+    );
 
     paymentElement.on('ready', () => {
         ready.value = true;

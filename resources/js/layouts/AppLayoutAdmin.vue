@@ -39,7 +39,7 @@
             </main>
         </div>
         <AppFooter />
-        <AppModalFullScreen></AppModalFullScreen>
+        <AppModalFullScreen v-show="false"></AppModalFullScreen>
     </div>
 </template>
 

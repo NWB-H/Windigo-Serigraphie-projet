@@ -47,8 +47,14 @@ function updateModal(modal: ModalName, data?: Record<string, unknown>) {
     modalProps.value = data ?? {};
 }
 
+function toggleModal()
+{
+    currentModal.value = null
+}
+
 provide(modalKey, {
     updateModal,
+    toggleModal
 });
 </script>
 

@@ -67,11 +67,14 @@
 
 <script setup lang="ts">
 import { Link } from '@inertiajs/vue3';
-import { storeToRefs } from 'pinia';
-import { useCartStore } from '@/stores/Cart';
 import CartLine from '@/components/Cart/CartLine.vue';
+import { ProductCart } from "@/models";
 
-const { totalProducts, items, totalPrice } = storeToRefs(useCartStore());
+defineProps<{
+    totalProducts: number,
+    items: ProductCart[],
+    totalPrice: number
+}>()
 </script>
 
 <style scoped></style>

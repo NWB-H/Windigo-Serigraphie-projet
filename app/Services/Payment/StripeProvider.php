@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Services\Payment;
 
-use App\Http\Requests\CheckoutFormRequest;
+use App\Http\Requests\Form\CheckoutFormRequest;
 use App\Http\Requests\Dto\Checkout;
 use App\Services\Payment\Exception\StripeProviderException;
 use Stripe\Exception\ApiErrorException;
@@ -31,6 +31,7 @@ final class StripeProvider
                 'payment_method_types' => ['card'],
             ]);
         } catch (ApiErrorException $e) {
+            dd($e->getMessage());
             Log::error("Erreur lors de la création de l'intent de paiement", ['error' => $e->getMessage()]);
             throw new StripeProviderException(message: "Erreur lors de la récupération de l'intent Stripe depuis la commande", previous: $e);
         }

@@ -18,3 +18,4 @@
 - [ ] Ajouter du cache
 - [ ] Au click sur le changement d'une image en highlight ce n'est pas repercuté sur le tableau
 - [ ] Sur la partie store des images voir pour mutualiser la sauvegarde d'un media
+- [ ] Sur le panier on ne doit pas pouvoir ajouter de produit

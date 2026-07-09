@@ -19,7 +19,7 @@ import AppLayout from '@/layouts/AppLayout.vue';
 import { Product } from '@/models/Product';
 
 defineOptions({
-    layout: AppLayout,
+    layout: [AppLayout, { title: 'Boutique' }],
 })
 defineProps<{ products: Product[] }>();
 </script>

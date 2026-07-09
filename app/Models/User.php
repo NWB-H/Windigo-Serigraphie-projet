@@ -71,4 +71,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(WorkshopSession::class);
     }
+
+    public function hasRole(RoleEnum $role): bool
+    {
+        return $this->role === $role;
+    }
 }

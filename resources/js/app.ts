@@ -9,6 +9,7 @@ import type { DefineComponent } from 'vue';
 import { createApp, h } from 'vue';
 import { route, ZiggyVue } from 'ziggy-js';
 import { Ziggy } from './ziggy';
+import { useCookies } from '@vueuse/integrations/useCookies'
 
 const pinia = createPinia();
 
@@ -16,7 +17,15 @@ const cartStore = useCartStore(pinia);
 
 cartStore.$subscribe(
     (mutation, state) => {
-        localStorage.setItem('cart', JSON.stringify(state.items));
+        const { set } = useCookies(['cart'])
+        set(
+            'cart',
+            JSON.stringify(state.items),
+            {
+                path: '/',
+                sameSite: 'lax',
+            }
+        )
     },
     { flush: 'sync' },
 );

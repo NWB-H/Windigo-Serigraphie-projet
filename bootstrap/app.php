@@ -21,7 +21,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'role' => EnsureHasRole::class,
         ]);
 
-        $middleware->encryptCookies(except: ['appearance', 'sidebar_state']);
+        $middleware->encryptCookies(except: ['appearance', 'sidebar_state', 'cart']);
 
         $middleware->web(append: [
             HandleAppearance::class,

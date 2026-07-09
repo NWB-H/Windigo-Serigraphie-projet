@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\AddressController;
 use App\Http\Controllers\Auth\CartController;
 use App\Http\Controllers\Auth\CategoryController;
 use App\Http\Controllers\Auth\OptionController;
@@ -41,5 +42,9 @@ Route::middleware('auth')->group(function () {
             Route::get('', [WorkshopController::class, 'index'])->name('admin.workshops.index');
             Route::post('', [WorkshopController::class, 'store'])->name('admin.workshops.store');
         });
+    });
+
+    Route::prefix('addresses')->group(function () {
+        Route::post('', [AddressController::class, 'store'])->name('admin.addresses.store');
     });
 });

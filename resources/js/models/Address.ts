@@ -1,14 +1,19 @@
-export interface City {
-    id: number;
-    name: string;
-}
-
 export interface Address {
-    id: number;
+    id?: number;
     name: string;
     address_line1: string;
-    address_line2: string;
+    address_line2?: string;
     postal_code: string;
-    city: City;
+    city: string;
     country: string;
+}
+
+export interface AddressForm {
+    id?: number,
+    name: string;
+    address_line1: string;
+    address_line2?: string;
+    postal_code: string;
+    country: string;
+    city: string;
 }
