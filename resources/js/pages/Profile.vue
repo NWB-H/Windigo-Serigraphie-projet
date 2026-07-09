@@ -30,7 +30,7 @@
                     class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-5"
                 >
                     <AppButton
-                        type="button"
+                        @click="updateModal()"
                         ignoreStyle
                         class="flex min-h-48 items-center justify-center rounded-xl border-2 border-dashed border-gray-300 transition hover:border-gray-900 hover:bg-gray-50"
                     >
@@ -39,6 +39,7 @@
 
                     <!-- Exemple card adresse -->
                     <div
+                        @click="updateModal(address)"
                         v-for="address in user.addresses"
                         :key="address.id"
                         class="flex min-h-48 flex-col justify-between rounded-xl border border-gray-200 p-4"
@@ -53,11 +54,11 @@
                             </p>
 
                             <p class="text-sm text-gray-600">
-                                {{ address.city.postal_code }}
-                                {{ address.city.name }}
+                                {{ address.postal_code }}
+                                {{ address.city.nom }}
                             </p>
 
-                            <p class="text-sm text-gray-600">address.country</p>
+                            <p class="text-sm text-gray-600">{{ address.country }}</p>
                         </div>
 
                         <div class="flex gap-3 pt-4 text-sm">
@@ -151,10 +152,10 @@ import AppLayout from '@/layouts/AppLayout.vue';
 import { usePage } from '@inertiajs/vue3';
 import { inject, ref } from 'vue';
 import AuthenticatedUserPage from '@/types/inertia';
-import { User } from '@/types';
+import { User } from '../types';
 import AppButton from '@/components/Global/AppButton.vue';
 import { modalKey } from '@/keys';
-import { add } from 'es-toolkit/compat';
+import { Address } from '@/models/Address';
 
 defineOptions({
     layout: [AppLayout, { title: 'Profile' }],
@@ -165,12 +166,15 @@ const page = usePage<AuthenticatedUserPage>();
 
 const user = ref<User>(page.props.auth.user);
 
-console.log(user.value);
-
 const modal = inject(modalKey);
 
-if (!modal) {
-    throw new Error('modalKey not provided');
+function updateModal(address?: Address)
+{
+    if (!modal) {
+        throw new Error('modalKey not provided');
+    }
+
+    modal.updateModal('address', { address: address })
 }
 </script>
 

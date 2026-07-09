@@ -11,7 +11,9 @@
             <NotificationsContainer />
         </main>
         <AppFooter />
-        <AppModalFullScreen v-if="showModal"> </AppModalFullScreen>
+        <AppModalFullScreen v-if="showModal">
+            <component :is="currentModalComponent" v-bind="modalProps" />
+        </AppModalFullScreen>
     </div>
 </template>
 
@@ -23,14 +25,26 @@ import { Head } from '@inertiajs/vue3';
 import AppModalFullScreen from '@/components/AppModalFullScreen.vue';
 import { computed, provide, ref } from 'vue';
 import { modalKey } from '@/keys';
+import { contentModal, ModalName } from '@/registries/modal';
 
 defineProps<{ title?: string }>();
 
 const showModal = computed(() => currentModal.value !== null);
-const currentModal = ref<string | null>(null);
+const modalProps = ref<Record<string, unknown>>({});
 
-function updateModal(modal: string) {
+const currentModal = ref<ModalName | null>(null);
+
+const currentModalComponent = computed(() => {
+    if (!currentModal.value) {
+        return null;
+    }
+
+    return contentModal[currentModal.value];
+});
+
+function updateModal(modal: ModalName, data?: Record<string, unknown>) {
     currentModal.value = modal;
+    modalProps.value = data ?? {};
 }
 
 provide(modalKey, {

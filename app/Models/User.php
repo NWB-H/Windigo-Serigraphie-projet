@@ -14,11 +14,6 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
-    /**
-     * Les attributs assignables en masse
-     *
-     * @var array<int, string>
-     */
     protected $fillable = [
         'name',
         'role',
@@ -29,30 +24,17 @@ class User extends Authenticatable
         'reset_password_token_expires_at',
     ];
 
-    /**
-     * Les attributs cachés pour la sérialisation
-     *
-     * @var array<int, string>
-     */
     protected $hidden = [
         'password',
         'remember_token',
     ];
 
-    /**
-     * Les casts automatiques
-     *
-     * @var array<string, string>
-     */
     protected $casts = [
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
         'role' => RoleEnum::class, // <-- cast enum
     ];
 
-    /**
-     * Résout le "me" pour les routes
-     */
     public function resolveRouteBinding($value, $field = null): ?self
     {
         return $value === 'me' ? Auth::user() : parent::resolveRouteBinding($value, $field);

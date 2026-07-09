@@ -62,7 +62,7 @@
 
 <script setup lang="ts">
 import { useCartStore } from '@/stores/Cart';
-import { User } from '@/types';
+import { User } from '../types';
 import { Link, usePage } from '@inertiajs/vue3';
 import { storeToRefs } from 'pinia';
 import { ref } from 'vue';

@@ -39,19 +39,7 @@
             </main>
         </div>
         <AppFooter />
-        <div
-            class="fixed inset-0 z-[9999] flex items-center justify-center bg-black/70"
-        >
-            <div class="w-full max-w-lg rounded-xl bg-white p-8 shadow-2xl">
-                <h2 class="mb-4 text-2xl font-bold">Maintenance</h2>
-
-                <p class="mb-6 text-gray-600">
-                    Le site est actuellement en maintenance. Merci de patienter.
-                </p>
-
-                <!-- Pas de bouton fermer -->
-            </div>
-        </div>
+        <AppModalFullScreen></AppModalFullScreen>
     </div>
 </template>
 
@@ -64,6 +52,7 @@ import AppFooter from '@/components/AppFooter.vue';
 import AppHeader from '@/components/AppHeader.vue';
 import NotificationsContainer from '@/components/Notifications/NotificationsContainer.vue';
 import { Head, Link, usePage } from '@inertiajs/vue3';
+import AppModalFullScreen from "@/components/AppModalFullScreen.vue";
 
 const { url } = usePage();
 defineProps<{ title?: string }>();

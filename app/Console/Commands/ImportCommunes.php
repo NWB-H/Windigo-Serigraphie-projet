@@ -32,7 +32,7 @@ final class ImportCommunes extends Command
 
         $this->info(count($communes) . ' communes récupérées.');
 
-        City::truncate();
+        City::query()->delete();
 
         foreach (array_chunk($communes, 500) as $chunk) {
             $data = [];
