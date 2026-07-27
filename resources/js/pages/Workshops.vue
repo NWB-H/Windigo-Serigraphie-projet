@@ -1,50 +1,50 @@
 <template>
     <div class="container my-5">
-            <h2 class="mb-4 text-center">Nos Ateliers</h2>
-            <div class="row g-4">
-                <div
-                    v-for="workshop in workshops"
-                    :key="workshop.id"
-                    class="col-md-6 col-lg-4 col-12"
-                >
-                    <Link :href="route('workshop', { id: workshop.id })">
-                        <div class="card shadow-sm">
-                            <div class="card--header">
-                                <AppImage
-                                    :src="workshop.first_image_url"
-                                    :alt="workshop.name"
-                                    class="card-header--image"
-                                    imgFit="fill"
-                                />
-                            </div>
-
-                            <div class="card-body d-flex flex-column">
-                                <h5 class="card-title">{{ workshop.name }}</h5>
-                                <h6 class="card-subtitle mb-2 text-muted">
-                                    {{ workshop.type }}
-                                </h6>
-                                <p class="card-text mb-1">
-                                    <strong>Prix :</strong>
-                                    {{ workshop.price }} €
-                                </p>
-                                <p class="card-text mb-2">
-                                    <strong>Durée :</strong>
-                                    {{ workshop.duration }} min
-                                </p>
-                                <p class="card-text mb-2">
-                                    <strong>Âge minimum :</strong>
-                                    {{ workshop.age }} ans
-                                </p>
-
-                                <button class="btn btn-primary mt-3 w-100">
-                                    Voir détails & Réserver
-                                </button>
-                            </div>
+        <h2 class="mb-4 text-center">Nos Ateliers</h2>
+        <div class="row g-4">
+            <div
+                v-for="workshop in workshops"
+                :key="workshop.id"
+                class="col-md-6 col-lg-4 col-12"
+            >
+                <Link :href="route('workshop', { id: workshop.id })">
+                    <div class="card shadow-sm">
+                        <div class="card--header">
+                            <AppImage
+                                :src="workshop.first_image_url"
+                                :alt="workshop.name"
+                                class="card-header--image"
+                                imgFit="fill"
+                            />
                         </div>
-                    </Link>
-                </div>
+
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title">{{ workshop.name }}</h5>
+                            <h6 class="card-subtitle mb-2 text-muted">
+                                {{ workshop.type }}
+                            </h6>
+                            <p class="card-text mb-1">
+                                <strong>Prix :</strong>
+                                {{ workshop.price }} €
+                            </p>
+                            <p class="card-text mb-2">
+                                <strong>Durée :</strong>
+                                {{ workshop.duration }} min
+                            </p>
+                            <p class="card-text mb-2">
+                                <strong>Âge minimum :</strong>
+                                {{ workshop.age }} ans
+                            </p>
+
+                            <button class="btn btn-primary mt-3 w-100">
+                                Voir détails & Réserver
+                            </button>
+                        </div>
+                    </div>
+                </Link>
             </div>
         </div>
+    </div>
 </template>
 
 <script setup lang="ts">
@@ -55,7 +55,7 @@ import { Link } from '@inertiajs/vue3';
 
 defineOptions({
     layout: AppLayout,
-})
+});
 defineProps<{ workshops: Workshop[] }>();
 </script>
 

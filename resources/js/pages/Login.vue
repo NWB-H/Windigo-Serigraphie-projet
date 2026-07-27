@@ -1,43 +1,43 @@
 <template>
     <div class="top-container">
-            <div class="login">
-                <form @submit.prevent="form.post(route('login.store'))">
-                    <h2 class="form-title">Connexion</h2>
-                    <div class="container-champ">
-                        <div class="w-[200px]">
-                            <AppInput
-                                v-model="form.email"
-                                :error="form.errors.email"
-                                inputContainerClass="bg"
-                                type="text"
-                                placeholder="Email"
-                                id="email"
-                            />
-                        </div>
-                        <div class="w-[200px]">
-                            <AppInput
-                                v-model="form.password"
-                                :error="form.errors.password"
-                                inputContainerClass="bg"
-                                type="password"
-                                placeholder="Mot de passe"
-                                id="password"
-                            />
-                        </div>
-                        <div>
-                            <AppButton>Connexion</AppButton>
-                        </div>
-                        <p class="register">
-                            Vous n'avez pas encore de compte ?
-                            <Link :href="route('register')">
-                                Inscrivez-vous
-                            </Link>
-                        </p>
-                        <Link :href="route('forgot-password')">Mot de passe oublié ?</Link>
+        <div class="login">
+            <form @submit.prevent="form.post(route('login.store'))">
+                <h2 class="form-title">Connexion</h2>
+                <div class="container-champ">
+                    <div class="w-[200px]">
+                        <AppInput
+                            v-model="form.email"
+                            :error="form.errors.email"
+                            inputContainerClass="bg"
+                            type="text"
+                            placeholder="Email"
+                            id="email"
+                        />
                     </div>
-                </form>
-            </div>
+                    <div class="w-[200px]">
+                        <AppInput
+                            v-model="form.password"
+                            :error="form.errors.password"
+                            inputContainerClass="bg"
+                            type="password"
+                            placeholder="Mot de passe"
+                            id="password"
+                        />
+                    </div>
+                    <div>
+                        <AppButton>Connexion</AppButton>
+                    </div>
+                    <p class="register">
+                        Vous n'avez pas encore de compte ?
+                        <Link :href="route('register')"> Inscrivez-vous </Link>
+                    </p>
+                    <Link :href="route('forgot-password')"
+                        >Mot de passe oublié ?</Link
+                    >
+                </div>
+            </form>
         </div>
+    </div>
 </template>
 
 <script setup lang="ts">
@@ -48,7 +48,7 @@ import AppButton from '@/components/Global/AppButton.vue';
 
 defineOptions({
     layout: [AppLayout, { title: 'Connexion' }],
-})
+});
 const form = useForm({
     email: null,
     password: null,

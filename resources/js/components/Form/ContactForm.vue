@@ -36,8 +36,7 @@ const form = ref({
     message: '',
 });
 
-function onSubmit() {
-}
+function onSubmit() {}
 </script>
 
 <style scoped></style>

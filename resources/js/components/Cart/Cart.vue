@@ -68,13 +68,13 @@
 <script setup lang="ts">
 import { Link } from '@inertiajs/vue3';
 import CartLine from '@/components/Cart/CartLine.vue';
-import { ProductCart } from "@/models";
+import { ProductCart } from '@/models';
 
 defineProps<{
-    totalProducts: number,
-    items: ProductCart[],
-    totalPrice: number
-}>()
+    totalProducts: number;
+    items: ProductCart[];
+    totalPrice: number;
+}>();
 </script>
 
 <style scoped></style>

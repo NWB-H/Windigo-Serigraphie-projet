@@ -1,59 +1,59 @@
 <template>
     <div class="container my-5">
-            <div class="flex gap-2">
-                <h2>Gestion des Catégories</h2>
-                <button @click.prevent="newCategory" class="btn btn-success">
-                    Nouvelle catégorie
-                </button>
-            </div>
+        <div class="flex gap-2">
+            <h2>Gestion des Catégories</h2>
+            <button @click.prevent="newCategory" class="btn btn-success">
+                Nouvelle catégorie
+            </button>
+        </div>
 
-            <div v-if="showForm" class="card mb-4 p-3">
-                <CategoryForm
-                    :form="currentCategory"
-                    :key="currentCategory ? currentCategory.id : 'new-category'"
-                    @reset="showForm = false"
-                />
-            </div>
-
-            <table class="table-striped table">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Nom</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr
-                        v-for="category in categories.items"
-                        :key="category.id"
-                        class="align-middle"
-                    >
-                        <td>{{ category.id }}</td>
-                        <td>{{ category.name }}</td>
-                        <td class="flex gap-2">
-                            <button
-                                @click.prevent="edit(category)"
-                                class="rounded bg-yellow-400 px-2 py-1"
-                            >
-                                ✏️
-                            </button>
-                            <button
-                                @click.prevent="deleteCategory(category)"
-                                class="rounded bg-red-500 px-2 py-1 text-white"
-                            >
-                                🗑️
-                            </button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <AppPagination
-                :path="categories.pagination.path"
-                :totalPage="categories.pagination.totalPage"
-                :currentPage="categories.pagination.currentPage"
+        <div v-if="showForm" class="card mb-4 p-3">
+            <CategoryForm
+                :form="currentCategory"
+                :key="currentCategory ? currentCategory.id : 'new-category'"
+                @reset="showForm = false"
             />
         </div>
+
+        <table class="table-striped table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nom</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr
+                    v-for="category in categories.items"
+                    :key="category.id"
+                    class="align-middle"
+                >
+                    <td>{{ category.id }}</td>
+                    <td>{{ category.name }}</td>
+                    <td class="flex gap-2">
+                        <button
+                            @click.prevent="edit(category)"
+                            class="rounded bg-yellow-400 px-2 py-1"
+                        >
+                            ✏️
+                        </button>
+                        <button
+                            @click.prevent="deleteCategory(category)"
+                            class="rounded bg-red-500 px-2 py-1 text-white"
+                        >
+                            🗑️
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <AppPagination
+            :path="categories.pagination.path"
+            :totalPage="categories.pagination.totalPage"
+            :currentPage="categories.pagination.currentPage"
+        />
+    </div>
 </template>
 
 <script setup lang="ts">
@@ -67,7 +67,7 @@ import { ref } from 'vue';
 
 defineOptions({
     layout: AppLayoutAdmin,
-})
+});
 const { categories } = defineProps<{
     categories: ResourcePaginated<Category>;
 }>();

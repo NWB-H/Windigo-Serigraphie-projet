@@ -1,7 +1,7 @@
 import { Product } from '@/models/Product';
+import { useCookies } from '@vueuse/integrations/useCookies';
 import { acceptHMRUpdate, defineStore } from 'pinia';
 import { computed, ref } from 'vue';
-import { useCookies } from '@vueuse/integrations/useCookies'
 
 export interface CartItem {
     quantity: number;
@@ -10,9 +10,9 @@ export interface CartItem {
 
 function getDefaultItems(): CartItem[] {
     // const savedCart = localStorage.getItem('cart');
-    const { get } = useCookies(['cart'])
+    const { get } = useCookies(['cart']);
 
-    const savedCart = get('cart')
+    const savedCart = get('cart');
 
     if (!savedCart) {
         return [];

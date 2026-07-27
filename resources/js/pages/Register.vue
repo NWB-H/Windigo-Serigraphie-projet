@@ -1,62 +1,60 @@
 <template>
     <div class="top-container">
-            <form @submit.prevent="form.post(route('register.store'))">
-                <div class="register__container">
-                    <h2 class="register__title">Inscription</h2>
-                    <div class="register__content">
-                        <AppInput
-                            v-model="form.name"
-                            :error="form.errors.name"
-                            type="text"
-                            inputContainerClass="bg"
-                            placeholder="Nom"
-                            id="name"
-                        />
+        <form @submit.prevent="form.post(route('register.store'))">
+            <div class="register__container">
+                <h2 class="register__title">Inscription</h2>
+                <div class="register__content">
+                    <AppInput
+                        v-model="form.name"
+                        :error="form.errors.name"
+                        type="text"
+                        inputContainerClass="bg"
+                        placeholder="Nom"
+                        id="name"
+                    />
 
-                        <AppInput
-                            v-model="form.email"
-                            :error="form.errors.email"
-                            type="text"
-                            inputContainerClass="bg"
-                            placeholder="Email"
-                            id="email"
-                        />
+                    <AppInput
+                        v-model="form.email"
+                        :error="form.errors.email"
+                        type="text"
+                        inputContainerClass="bg"
+                        placeholder="Email"
+                        id="email"
+                    />
 
-                        <AppPassword
-                            v-model="form.password"
-                            :error="form.errors.password"
-                            inputContainerClass="bg"
-                            placeholdder="Mot de passe"
-                        />
+                    <AppPassword
+                        v-model="form.password"
+                        :error="form.errors.password"
+                        inputContainerClass="bg"
+                        placeholdder="Mot de passe"
+                    />
 
-                        <AppInput
-                            v-model="form.password_confirmation"
-                            :error="form.errors.password_confirmation"
-                            type="password"
-                            inputContainerClass="bg"
-                            placeholder="Confirmer le mot de passe"
-                            id="password_confirmation"
-                        />
+                    <AppInput
+                        v-model="form.password_confirmation"
+                        :error="form.errors.password_confirmation"
+                        type="password"
+                        inputContainerClass="bg"
+                        placeholder="Confirmer le mot de passe"
+                        id="password_confirmation"
+                    />
 
-                        <div class="register__action">
-                            <AppButton :loading="loading">{{
-                                loading
-                                    ? 'Inscription en cours...'
-                                    : "S'inscrire"
-                            }}</AppButton>
-                        </div>
-
-                        <p class="register__footer">
-                            Déjà inscrit ?
-                            <Link :href="route('login')">Connectez-vous</Link>
-                            <Link :href="route('forgot-password')"
-                                >Mot de passe oublié ?</Link
-                            >
-                        </p>
+                    <div class="register__action">
+                        <AppButton :loading="loading">{{
+                            loading ? 'Inscription en cours...' : "S'inscrire"
+                        }}</AppButton>
                     </div>
+
+                    <p class="register__footer">
+                        Déjà inscrit ?
+                        <Link :href="route('login')">Connectez-vous</Link>
+                        <Link :href="route('forgot-password')"
+                            >Mot de passe oublié ?</Link
+                        >
+                    </p>
                 </div>
-            </form>
-        </div>
+            </div>
+        </form>
+    </div>
 </template>
 
 <script setup lang="ts">
@@ -69,7 +67,7 @@ import AppPassword from '@/components/Global/AppPassword.vue';
 
 defineOptions({
     layout: [AppLayout, { title: 'Inscription' }],
-})
+});
 
 const form = useForm({
     name: null,

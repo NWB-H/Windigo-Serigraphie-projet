@@ -2,7 +2,7 @@
     <div>
         <select
             v-model="model"
-            class="form-select p-2 border-2"
+            class="form-select border-2 p-2"
             :class="error ? 'border-red-500!' : ''"
         >
             <option disabled :value="0">-- {{ placeholder }} --</option>
@@ -31,5 +31,4 @@ defineProps<{
 }>();
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

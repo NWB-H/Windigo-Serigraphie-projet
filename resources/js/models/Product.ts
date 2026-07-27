@@ -1,6 +1,6 @@
+import { Image, ImageForm } from '@/models/Common';
 import type { Category } from './Category';
 import type { Option } from './Option';
-import { Image, ImageForm } from '@/models/Common';
 
 export interface Product {
     id: number;

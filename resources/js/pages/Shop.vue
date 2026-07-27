@@ -1,16 +1,16 @@
 <template>
     <div class="container my-5">
-            <h2 class="mb-4">Boutique</h2>
-            <div class="row">
-                <div
-                    v-for="product in products"
-                    :key="product.id"
-                    class="col-md-4 mb-4"
-                >
-                    <ProductCartItem :product="product" />
-                </div>
+        <h2 class="mb-4">Boutique</h2>
+        <div class="row">
+            <div
+                v-for="product in products"
+                :key="product.id"
+                class="col-md-4 mb-4"
+            >
+                <ProductCartItem :product="product" />
             </div>
         </div>
+    </div>
 </template>
 
 <script setup lang="ts">
@@ -20,7 +20,7 @@ import { Product } from '@/models/Product';
 
 defineOptions({
     layout: [AppLayout, { title: 'Boutique' }],
-})
+});
 defineProps<{ products: Product[] }>();
 </script>
 

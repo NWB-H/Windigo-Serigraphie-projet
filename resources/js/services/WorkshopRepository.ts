@@ -1,5 +1,5 @@
-import axios from 'axios';
 import { Workshop } from '@/models';
+import axios from 'axios';
 
 class WorkshopRepository {
     public async delete(workshop: Workshop) {

@@ -58,7 +58,9 @@
                                 {{ address.city }}
                             </p>
 
-                            <p class="text-sm text-gray-600">{{ address.country }}</p>
+                            <p class="text-sm text-gray-600">
+                                {{ address.country }}
+                            </p>
                         </div>
 
                         <div class="flex gap-3 pt-4 text-sm">
@@ -154,33 +156,31 @@
 
 <script setup lang="ts">
 import AppLayout from '@/layouts/AppLayout.vue';
-import {router } from '@inertiajs/vue3';
+import { router } from '@inertiajs/vue3';
 import { inject } from 'vue';
 import { User } from '@/types';
 import AppButton from '@/components/Global/AppButton.vue';
 import { modalKey } from '@/keys';
 import { Address } from '@/models/Address';
-import AddressRepository from "@/services/AddressRepository";
+import AddressRepository from '@/services/AddressRepository';
 
 defineOptions({
     layout: [AppLayout, { title: 'Profile' }],
     title: 'Mon compte',
 });
 
-defineProps<{ user: User }>()
+defineProps<{ user: User }>();
 
 const modal = inject(modalKey);
 
-function updateModal(address?: Address)
-{
+function updateModal(address?: Address) {
     if (!modal) {
         throw new Error('modalKey not provided');
     }
-    modal.updateModal('address', { address: address })
+    modal.updateModal('address', { address: address });
 }
 
-async function handleDeleteAddress(address: Address)
-{
+async function handleDeleteAddress(address: Address) {
     try {
         await AddressRepository.deleteAddress(address);
 
@@ -194,7 +194,7 @@ async function handleDeleteAddress(address: Address)
             },
         });
     } catch (e) {
-        console.log(e)
+        console.log(e);
     }
 }
 </script>

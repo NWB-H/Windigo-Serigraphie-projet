@@ -1,5 +1,5 @@
+import { ModalName } from '@/registries/modal';
 import type { InjectionKey } from 'vue';
-import { ModalName } from "@/registries/modal";
 
 export type ModalContext = {
     updateModal: (value: ModalName, params?: Record<string, unknown>) => void;

@@ -1,9 +1,9 @@
+import { Address } from '@/models/Address';
 import { InertiaLinkProps } from '@inertiajs/vue3';
 import type { LucideIcon } from 'lucide-vue-next';
-import { Address } from '@/models/Address';
 
 export interface Auth {
-    user: User|null;
+    user: User | null;
 }
 
 export interface BreadcrumbItem {

@@ -1,15 +1,15 @@
 import '../css/app.css';
-import '../css/app.scss'
+import '../css/app.scss';
 
 import { useCartStore } from '@/stores/Cart';
 import { createInertiaApp } from '@inertiajs/vue3';
+import { useCookies } from '@vueuse/integrations/useCookies';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { createPinia } from 'pinia';
 import type { DefineComponent } from 'vue';
 import { createApp, h } from 'vue';
 import { route, ZiggyVue } from 'ziggy-js';
 import { Ziggy } from './ziggy';
-import { useCookies } from '@vueuse/integrations/useCookies'
 
 const pinia = createPinia();
 
@@ -17,15 +17,11 @@ const cartStore = useCartStore(pinia);
 
 cartStore.$subscribe(
     (mutation, state) => {
-        const { set } = useCookies(['cart'])
-        set(
-            'cart',
-            JSON.stringify(state.items),
-            {
-                path: '/',
-                sameSite: 'lax',
-            }
-        )
+        const { set } = useCookies(['cart']);
+        set('cart', JSON.stringify(state.items), {
+            path: '/',
+            sameSite: 'lax',
+        });
     },
     { flush: 'sync' },
 );

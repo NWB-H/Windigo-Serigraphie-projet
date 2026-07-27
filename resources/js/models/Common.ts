@@ -4,4 +4,7 @@ export interface Image {
     url: string;
 }
 
-export interface ImageForm { file: File; isHighlighted: boolean }
+export interface ImageForm {
+    file: File;
+    isHighlighted: boolean;
+}

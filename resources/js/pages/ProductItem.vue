@@ -63,7 +63,10 @@ import { useCartStore } from '@/stores/Cart';
 const { product } = defineProps<{ product: Product }>();
 
 defineOptions({
-    layout: (props: { product: Product }) => [AppLayout, { title: props.product.name }],
+    layout: (props: { product: Product }) => [
+        AppLayout,
+        { title: props.product.name },
+    ],
 });
 
 const { getItem } = useCartStore();

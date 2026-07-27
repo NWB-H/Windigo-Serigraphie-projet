@@ -33,7 +33,7 @@ import { computed, ref } from 'vue';
 
 const model = defineModel<string>();
 
-defineProps<{ error?: string, inputContainerClass?: string }>();
+defineProps<{ error?: string; inputContainerClass?: string }>();
 
 const emits = defineEmits<{ (e: 'password:valid', isValid: boolean): void }>();
 
@@ -79,7 +79,7 @@ function handleInput(event: Event) {
         }
     });
 
-    emits('password:valid', rulesFailed.value.length === 0)
+    emits('password:valid', rulesFailed.value.length === 0);
 }
 </script>
 

@@ -12,17 +12,17 @@
 import AppLayout from '@/layouts/AppLayout.vue';
 import EmptyCart from '@/components/Cart/EmptyCart.vue';
 import Cart from '@/components/Cart/Cart.vue';
-import {ProductCart} from "@/models";
+import { ProductCart } from '@/models';
 
 defineOptions({
     layout: [AppLayout, { title: 'Pannier' }],
 });
 
 defineProps<{
-    totalProducts: number,
-    totalPrice: number,
-    products: ProductCart[]
-}>()
+    totalProducts: number;
+    totalPrice: number;
+    products: ProductCart[];
+}>();
 </script>
 
 <style scoped></style>
