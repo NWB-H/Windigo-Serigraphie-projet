@@ -55,6 +55,7 @@
                 :path="options.pagination.path"
             />
         </div>
+    </AppLayoutAdmin>
 </template>
 
 <script setup lang="ts">
@@ -68,7 +69,7 @@ import { ref } from 'vue';
 
 defineOptions({
     layout: AppLayoutAdmin,
-})
+});
 const { options } = defineProps<{ options: ResourcePaginated<Option> }>();
 
 const showForm = ref(false);
