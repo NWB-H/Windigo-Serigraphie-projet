@@ -158,14 +158,14 @@ async function toggleStar(index: number) {
 
     workshop.value.images.map((image, i) => {
         image.isHighlighted = i === index;
-    })
+    });
 
     formData.images.map((image, i) => {
         const searchIndex =
             index - (workshop.value.images.length - formData.images.length);
 
         image.isHighlighted = searchIndex === i;
-    })
+    });
 }
 </script>
 

@@ -172,4 +172,14 @@ class SecurityController
 
         return to_route('login');
     }
+
+    public function profile()
+    {
+        return Inertia::render(
+            'Profile',
+            [
+                'user' => fn () => User::where('id', Auth::user()->id)->with('addresses')->firstOrFail(),
+            ],
+        );
+    }
 }

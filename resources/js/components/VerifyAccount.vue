@@ -1,3 +1,6 @@
+<script setup lang="ts">
+import { Link } from '@inertiajs/vue3';
+</script>
 <template>
     <div>
         <slot name="header"></slot>
@@ -7,11 +10,12 @@
         </div>
 
         <div class="mt-8 flex flex-col gap-3 sm:flex-row sm:justify-center">
-            <button
-                class="rounded-xl border border-slate-300 px-6 py-3 text-sm font-semibold text-slate-700 transition hover:bg-slate-100"
+            <Link
+                :href="route('login')"
+                class="rounded-xl border border-slate-300 px-6 py-3 text-sm font-semibold text-slate-700 no-underline! transition hover:bg-slate-100"
             >
                 Retour à la connexion
-            </button>
+            </Link>
         </div>
     </div>
 </template>

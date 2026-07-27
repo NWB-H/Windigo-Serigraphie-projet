@@ -29,19 +29,14 @@
 </template>
 
 <script setup lang="ts">
-import { useNotificationStore } from '@/stores/Notifications';
 import { ref } from 'vue';
-
-const { addItem } = useNotificationStore();
 
 const form = ref({
     email: '',
     message: '',
 });
 
-function onSubmit() {
-    addItem({ type: 'success', message: 'Hello world !' });
-}
+function onSubmit() {}
 </script>
 
 <style scoped></style>

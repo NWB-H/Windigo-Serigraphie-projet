@@ -1,27 +1,28 @@
 <template>
-    <AppLayoutAdmin title="Administration catégories">
-        <form @submit.prevent="handleSubmit" class="flex flex-col gap-2">
-            <div id="stripe"></div>
-            <AppButton
-                class="flex w-100 justify-center rounded bg-[#a78770] px-6 py-2 font-semibold text-white shadow-sm transition hover:bg-[#8f6e58] focus:ring-2 focus:ring-[#8f6e58]/40 focus:outline-none active:scale-95 disabled:cursor-not-allowed disabled:opacity-50"
-            >
-                <AppLoader v-if="loading" />
-                <template v-else> Payer </template>
-            </AppButton>
-        </form>
-    </AppLayoutAdmin>
+    <form @submit.prevent="handleSubmit" class="flex flex-col gap-2">
+        <div id="stripe"></div>
+        <AppButton
+            class="flex w-100 justify-center rounded bg-[#a78770] px-6 py-2 font-semibold text-white shadow-sm transition hover:bg-[#8f6e58] focus:ring-2 focus:ring-[#8f6e58]/40 focus:outline-none active:scale-95 disabled:cursor-not-allowed disabled:opacity-50"
+        >
+            <AppLoader v-if="loading" />
+            <template v-else> Payer </template>
+        </AppButton>
+    </form>
 </template>
 
 <script setup lang="ts">
-import AppLayoutAdmin from '@/layouts/AppLayoutAdmin.vue';
 import { loadStripe, StripeElements } from '@stripe/stripe-js';
 import { onMounted, ref } from 'vue';
 import AppButton from '@/components/Global/AppButton.vue';
 import { Stripe } from '@stripe/stripe-js';
 import AppLoader from '@/components/Global/AppLoader.vue';
 import { router } from '@inertiajs/vue3';
+import AppLayout from '@/layouts/AppLayout.vue';
 
-const props = defineProps<{ clientSecret: string }>();
+defineOptions({
+    layout: [AppLayout, { title: 'Paiement' }],
+});
+const props = defineProps<{ clientSecret: string; clientPublic: string }>();
 
 const ready = ref(false);
 const loading = ref(false);
@@ -59,9 +60,7 @@ async function handleSubmit() {
 }
 
 onMounted(async () => {
-    stripe = await loadStripe(
-        'pk_test_51TXRkiRxSmRZPP39mGRHUzhS8S2LcSgBxFSYw2PuudZdl4LFO8pEOu9umpTTRKgYuvcAPThgylurB1d5UB2rdfVi008jrzIbTg',
-    );
+    stripe = await loadStripe(props.clientPublic);
 
     if (!stripe) {
         return;
@@ -71,7 +70,11 @@ onMounted(async () => {
         clientSecret: props.clientSecret,
     });
 
-    const paymentElement = elements.create('payment');
+    const paymentElement = elements.create('payment', {
+        fields: {
+            billingDetails: 'never',
+        },
+    });
 
     paymentElement.on('ready', () => {
         ready.value = true;

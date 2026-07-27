@@ -1,55 +1,53 @@
 <template>
-    <AppLayout :title="product.name">
-        <div class="container my-5">
-            <Link :href="route('shop')" class="btn btn-outline-primary mb-3"
-                >← Retour à la boutique</Link
-            >
+    <div class="container my-5">
+        <Link :href="route('shop')" class="btn btn-outline-primary mb-3"
+            >← Retour à la boutique</Link
+        >
 
-            <h2 class="mb-4">{{ product.name }}</h2>
+        <h2 class="mb-4">{{ product.name }}</h2>
 
-            <div class="row">
-                <!-- Galerie images -->
-                <div class="col-md-6">
-                    <!-- Image principale -->
-                    <div class="mb-3 text-center">
-                        <AppImage
-                            :url="product.images[selectedIndex]?.url"
-                            imgCssClass="main-image rounded h-[400px] w-full"
-                            alt="Produit selectionné"
-                        />
-                    </div>
-
-                    <!-- Miniatures -->
-                    <div
-                        class="justify-content-center flex-wrap gap-2"
-                        v-if="product.images.length > 1"
-                    >
-                        <AppCarousel
-                            :images="product.images"
-                            @click="handleClick"
-                        />
-                    </div>
+        <div class="row">
+            <!-- Galerie images -->
+            <div class="col-md-6">
+                <!-- Image principale -->
+                <div class="mb-3 text-center">
+                    <AppImage
+                        :url="product.images[selectedIndex]?.url"
+                        imgCssClass="main-image rounded h-[400px] w-full"
+                        alt="Produit selectionné"
+                    />
                 </div>
 
-                <!-- Infos produit -->
-                <div class="col-md-6">
-                    <p class="fw-bold fs-4">{{ product.price }} €</p>
-                    <p v-if="product.stock !== undefined">
-                        Stock : {{ product.stock }}
-                        <span
-                            v-if="currentQuantityInCart"
-                            class="inline-flex items-center rounded-full bg-[#3E7C59]/10 px-3 py-1 text-sm font-medium text-[#3E7C59]"
-                            >Dont {{ currentQuantityInCart }} en cours de
-                            commande</span
-                        >
-                    </p>
-                    <p class="mb-3">{{ product.description }}</p>
-
-                    <AddToCart :product="product" />
+                <!-- Miniatures -->
+                <div
+                    class="justify-content-center flex-wrap gap-2"
+                    v-if="product.images.length > 1"
+                >
+                    <AppCarousel
+                        :images="product.images"
+                        @click="handleClick"
+                    />
                 </div>
             </div>
+
+            <!-- Infos produit -->
+            <div class="col-md-6">
+                <p class="fw-bold fs-4">{{ product.price }} €</p>
+                <p v-if="product.stock !== undefined">
+                    Stock : {{ product.stock }}
+                    <span
+                        v-if="currentQuantityInCart"
+                        class="inline-flex items-center rounded-full bg-[#3E7C59]/10 px-3 py-1 text-sm font-medium text-[#3E7C59]"
+                        >Dont {{ currentQuantityInCart }} en cours de
+                        commande</span
+                    >
+                </p>
+                <p class="mb-3">{{ product.description }}</p>
+
+                <AddToCart :product="product" />
+            </div>
         </div>
-    </AppLayout>
+    </div>
 </template>
 
 <script setup lang="ts">
@@ -63,6 +61,13 @@ import AddToCart from '@/components/Shop/AddToCart.vue';
 import { useCartStore } from '@/stores/Cart';
 
 const { product } = defineProps<{ product: Product }>();
+
+defineOptions({
+    layout: (props: { product: Product }) => [
+        AppLayout,
+        { title: props.product.name },
+    ],
+});
 
 const { getItem } = useCartStore();
 

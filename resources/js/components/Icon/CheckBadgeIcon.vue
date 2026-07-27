@@ -4,7 +4,7 @@
         fill="none"
         viewBox="0 0 24 24"
         stroke-width="1.5"
-        stroke="currentColor"
+        :stroke="color"
         v-bind="$attrs"
     >
         <path
@@ -15,6 +15,8 @@
     </svg>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+const { color = 'currentColor' } = defineProps<{ color?: string }>();
+</script>
 
 <style scoped></style>

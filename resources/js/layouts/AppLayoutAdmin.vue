@@ -39,6 +39,7 @@
             </main>
         </div>
         <AppFooter />
+        <AppModalFullScreen v-show="false"></AppModalFullScreen>
     </div>
 </template>
 
@@ -51,6 +52,7 @@ import AppFooter from '@/components/AppFooter.vue';
 import AppHeader from '@/components/AppHeader.vue';
 import NotificationsContainer from '@/components/Notifications/NotificationsContainer.vue';
 import { Head, Link, usePage } from '@inertiajs/vue3';
+import AppModalFullScreen from '@/components/AppModalFullScreen.vue';
 
 const { url } = usePage();
 defineProps<{ title?: string }>();

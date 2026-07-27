@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\AddressController;
 use App\Http\Controllers\Auth\CartController;
 use App\Http\Controllers\Auth\CategoryController;
 use App\Http\Controllers\Auth\OptionController;
@@ -19,7 +20,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/logout', [SecurityController::class, 'logout'])->name('logout');
     Route::post('/checkout', [CartController::class, 'checkout'])->name('checkout');
 
-    Route::prefix('admin')->group(function () {
+    Route::get('/profile', [SecurityController::class, 'profile'])->name('profile');
+
+    Route::prefix('admin')->middleware(['auth:sanctum', 'role:ROLE_ADMIN'])->group(function () {
         Route::prefix('products')->group(function () {
             Route::get('', [ProductController::class, 'index'])->name('admin.product.index');
             Route::post('', [ProductController::class, 'store'])->name('admin.product.store');
@@ -39,5 +42,9 @@ Route::middleware('auth')->group(function () {
             Route::get('', [WorkshopController::class, 'index'])->name('admin.workshops.index');
             Route::post('', [WorkshopController::class, 'store'])->name('admin.workshops.store');
         });
+    });
+
+    Route::prefix('addresses')->group(function () {
+        Route::post('', [AddressController::class, 'store'])->name('admin.addresses.store');
     });
 });

@@ -1,8 +1,9 @@
 import '../css/app.css';
-import '../css/app.scss'
+import '../css/app.scss';
 
 import { useCartStore } from '@/stores/Cart';
 import { createInertiaApp } from '@inertiajs/vue3';
+import { useCookies } from '@vueuse/integrations/useCookies';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { createPinia } from 'pinia';
 import type { DefineComponent } from 'vue';
@@ -16,7 +17,11 @@ const cartStore = useCartStore(pinia);
 
 cartStore.$subscribe(
     (mutation, state) => {
-        localStorage.setItem('cart', JSON.stringify(state.items));
+        const { set } = useCookies(['cart']);
+        set('cart', JSON.stringify(state.items), {
+            path: '/',
+            sameSite: 'lax',
+        });
     },
     { flush: 'sync' },
 );

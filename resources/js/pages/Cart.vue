@@ -1,18 +1,28 @@
 <template>
-    <AppLayout title="Pannier">
-        <Cart v-if="totalProducts > 0" />
-        <EmptyCart v-else />
-    </AppLayout>
+    <Cart
+        v-if="totalProducts > 0"
+        :items="products"
+        :totalProducts
+        :totalPrice
+    />
+    <EmptyCart v-else />
 </template>
 
 <script setup lang="ts">
 import AppLayout from '@/layouts/AppLayout.vue';
-import { useCartStore } from '@/stores/Cart';
-import { storeToRefs } from 'pinia';
 import EmptyCart from '@/components/Cart/EmptyCart.vue';
 import Cart from '@/components/Cart/Cart.vue';
+import { ProductCart } from '@/models';
 
-const { totalProducts } = storeToRefs(useCartStore());
+defineOptions({
+    layout: [AppLayout, { title: 'Pannier' }],
+});
+
+defineProps<{
+    totalProducts: number;
+    totalPrice: number;
+    products: ProductCart[];
+}>();
 </script>
 
 <style scoped></style>

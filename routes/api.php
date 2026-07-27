@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\Api\AddressController;
 use App\Http\Controllers\Api\CategoryController;
+use App\Http\Controllers\Api\CityController;
 use App\Http\Controllers\Api\OptionController;
 use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\Webhook\StripeWebhookController;
@@ -36,4 +38,18 @@ Route::middleware('auth:sanctum')
         Route::delete('/{workshop}', [WorkshopController::class, 'delete'])->name('api.workshops.delete');
         Route::delete('/{workshop}/medias/{media}', [WorkshopController::class, 'deleteMedia'])->name('api.workshops.deleteMedia');
         Route::patch('/{workshop}/medias/{media}/highlighted', [WorkshopController::class, 'highlightImage'])->name('api.workshops.highlightImage');
+    });
+
+Route::middleware('auth:sanctum')
+    ->prefix('api/cities')
+    ->group(function () {
+        Route::get('/search/{postalCode}', [CityController::class, 'search'])->name('api.cities.search');
+    });
+
+Route::middleware('auth:sanctum')
+    ->prefix('api/addresses')
+    ->group(function () {
+        Route::delete('/{address}', [AddressController::class, 'delete'])
+            ->middleware('can:delete,address')
+            ->name('api.addresses.delete');
     });

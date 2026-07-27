@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Requests\CheckoutFormRequest;
+use App\Http\Requests\Form\CheckoutFormRequest;
+use App\Services\Notifications\NotificationType;
 use App\Services\Order\OrderRepository;
 use App\Services\Payment\StripeProvider;
 use Illuminate\Support\Facades\Log;
@@ -31,8 +32,10 @@ final readonly class CartController
 
             return Inertia::render('Auth/Checkout', [
                 'clientSecret' => $intent->client_secret,
+                'clientPublic' => config('services.stripe.secret'),
             ]);
         } catch (\Throwable $e) {
+            Inertia::notification('Erreur, veuillez recommencez.', NotificationType::ERROR);
             Log::error("Erreur lors du paiement", ['error' => $e->getMessage()]);
             return redirect()->to('home');
         }

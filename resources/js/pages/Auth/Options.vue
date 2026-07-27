@@ -67,6 +67,9 @@ import OptionRepository from '@/services/OptionRepository';
 import { router } from '@inertiajs/vue3';
 import { ref } from 'vue';
 
+defineOptions({
+    layout: AppLayoutAdmin,
+});
 const { options } = defineProps<{ options: ResourcePaginated<Option> }>();
 
 const showForm = ref(false);

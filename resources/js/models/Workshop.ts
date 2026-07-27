@@ -23,12 +23,12 @@ export interface WorkshopSession {
 }
 
 export interface WorkshopForm {
-    id: number,
-    name: string,
-    type: string,
-    price: number
-    duration: number
-    age: number,
-    description?: string
-    images: ImageForm[]
+    id: number;
+    name: string;
+    type: string;
+    price: number;
+    duration: number;
+    age: number;
+    description?: string;
+    images: ImageForm[];
 }

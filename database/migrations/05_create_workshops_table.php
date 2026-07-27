@@ -14,7 +14,7 @@ return new class extends Migration
             $table->string('name');
             $table->enum('type', WorkshopEnum::values());
             $table->integer('price');
-            $table->time('duration');
+            $table->integer('duration');
             $table->integer('age');
             $table->text('description')->nullable();
             $table->json('images')->nullable();

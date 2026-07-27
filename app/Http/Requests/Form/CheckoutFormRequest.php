@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Form;
 
 use App\Http\Requests\Dto\Checkout;
 use App\Http\Requests\Dto\CheckoutProduct;
