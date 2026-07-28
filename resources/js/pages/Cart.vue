@@ -1,7 +1,7 @@
 <template>
     <Cart
         v-if="totalProducts > 0"
-        :items="products"
+        :products
         :totalProducts
         :totalPrice
     />

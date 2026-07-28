@@ -26,24 +26,25 @@
 
             <!-- Quantity -->
             <div class="flex items-center gap-3">
-                <button
+                <RemoveToCartButton
+                    ignoreStyle
                     class="flex h-9 w-9 items-center justify-center rounded-lg bg-red-100 text-red-600 transition hover:bg-red-200"
-                    @click="decrement(product)"
+                    :product
+                    @remove="handleRemove"
+                    >-</RemoveToCartButton
                 >
-                    -
-                </button>
 
                 <span
                     class="min-w-[30px] text-center font-medium text-gray-800"
                     >{{ quantity }}</span
                 >
 
-                <button
+                <AddToCartButton
+                    ignoreStyle
                     class="flex h-9 w-9 items-center justify-center rounded-lg bg-[#3E7C59]/10 text-[#3E7C59] transition hover:bg-[#3E7C59]/20"
-                    @click="increment(product)"
+                    :product
+                    >+</AddToCartButton
                 >
-                    +
-                </button>
             </div>
 
             <!-- Price -->
@@ -60,7 +61,7 @@
             <!-- Delete -->
             <button
                 class="rounded-lg bg-red-50 px-4 py-2 text-sm font-medium text-red-600 transition hover:bg-red-100"
-                @click="removeItem(product)"
+                @click="handleRemove"
             >
                 Supprimer
             </button>
@@ -72,13 +73,23 @@
 import { Product } from '@/models';
 import AppImage from '@/components/AppImage.vue';
 import { useCartStore } from '@/stores/Cart';
+import RemoveToCartButton from '@/components/Cart/RemoveToCartButton.vue';
+import AddToCartButton from '@/components/Cart/AddToCartButton.vue';
+import { computed } from 'vue';
 
-defineProps<{
+const props = defineProps<{
     product: Product;
-    quantity: number;
 }>();
+const emits = defineEmits<{ (e: 'remove', product: Product): void }>()
 
-const { removeItem, increment, decrement } = useCartStore();
+const { getItem } = useCartStore();
+
+const quantity = computed(() => getItem(props.product)?.quantity ?? 0)
+
+function handleRemove()
+{
+    emits('remove', props.product)
+}
 </script>
 
 <style scoped></style>
