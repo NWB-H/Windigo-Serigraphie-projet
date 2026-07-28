@@ -14,10 +14,11 @@
 
             <!-- Cart Items -->
             <CartLine
-                v-for="item in items"
+                v-for="(item, key) in items"
                 :key="item.id"
                 :product="item.product"
                 :quantity="item.quantity"
+                @remove="items.splice(key, 1)"
             />
 
             <!-- Summary -->
@@ -69,12 +70,15 @@
 import { Link } from '@inertiajs/vue3';
 import CartLine from '@/components/Cart/CartLine.vue';
 import { ProductCart } from '@/models';
+import { ref } from 'vue';
 
-defineProps<{
+const props = defineProps<{
     totalProducts: number;
-    items: ProductCart[];
+    products: ProductCart[];
     totalPrice: number;
 }>();
+
+const items = ref(props.products);
 </script>
 
 <style scoped></style>

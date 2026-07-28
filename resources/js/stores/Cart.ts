@@ -9,7 +9,6 @@ export interface CartItem {
 }
 
 function getDefaultItems(): CartItem[] {
-    // const savedCart = localStorage.getItem('cart');
     const { get } = useCookies(['cart']);
 
     const savedCart = get('cart');
@@ -47,6 +46,22 @@ export const useCartStore = defineStore('cart', () => {
 
     function getItem(product: Product): CartItem | undefined {
         return items.value.find((i: CartItem) => i.product_id === product.id);
+    }
+
+    function productCanIncrease(product: Product): boolean {
+        const currentItem = items.value.find((i: CartItem) => i.product_id === product.id);
+
+        if (!currentItem) {
+            return true;
+        }
+
+        return currentItem.quantity < product.stock;
+    }
+
+    function productCanDecrease(product: Product): boolean {
+        const currentItem = items.value.find((i: CartItem) => i.product_id === product.id);
+
+        return (undefined !== currentItem)
     }
 
     function decrement(product: Product) {
@@ -96,6 +111,8 @@ export const useCartStore = defineStore('cart', () => {
         decrement,
         increment,
         getItem,
+        productCanIncrease,
+        productCanDecrease,
     };
 });
 

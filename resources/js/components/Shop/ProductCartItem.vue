@@ -14,13 +14,9 @@
             <p class="fw-bold">{{ product.price }} €</p>
             <p v-if="product.stock !== undefined">
                 Stock : {{ product.stock }}
+                <BadgeStock :product />
             </p>
-            <button
-                class="btn btn-primary w-100"
-                @click.prevent="addItem(product)"
-            >
-                Ajouter au panier
-            </button>
+            <AddToCartButton :product ignoreStyle />
         </div>
     </div>
 </template>
@@ -28,12 +24,13 @@
 <script setup lang="ts">
 import AppImage from '@/components/AppImage.vue';
 import type { Product } from '@/models/Product';
-import { useCartStore } from '@/stores/Cart';
 import { Link } from '@inertiajs/vue3';
+import AddToCartButton from '@/components/Cart/AddToCartButton.vue';
+import BadgeStock from '@/components/Shop/BadgeStock.vue';
 
 defineProps<{ product: Product }>();
 
-const { addItem } = useCartStore();
+
 </script>
 
 <style scoped></style>

@@ -35,15 +35,9 @@
                 <p class="fw-bold fs-4">{{ product.price }} €</p>
                 <p v-if="product.stock !== undefined">
                     Stock : {{ product.stock }}
-                    <span
-                        v-if="currentQuantityInCart"
-                        class="inline-flex items-center rounded-full bg-[#3E7C59]/10 px-3 py-1 text-sm font-medium text-[#3E7C59]"
-                        >Dont {{ currentQuantityInCart }} en cours de
-                        commande</span
-                    >
+                    <BadgeStock :product />
                 </p>
                 <p class="mb-3">{{ product.description }}</p>
-
                 <AddToCart :product="product" />
             </div>
         </div>
@@ -51,14 +45,15 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue';
+import { ref } from 'vue';
 import { Link } from '@inertiajs/vue3';
 import AppImage from '@/components/AppImage.vue';
 import AppLayout from '@/layouts/AppLayout.vue';
-import { Image, Product } from '@/models/Product';
+import { Product } from '@/models/Product';
 import AppCarousel from '@/components/AppCarousel.vue';
 import AddToCart from '@/components/Shop/AddToCart.vue';
-import { useCartStore } from '@/stores/Cart';
+import BadgeStock from '@/components/Shop/BadgeStock.vue';
+import { Image } from '@/models';
 
 const { product } = defineProps<{ product: Product }>();
 
@@ -67,18 +62,6 @@ defineOptions({
         AppLayout,
         { title: props.product.name },
     ],
-});
-
-const { getItem } = useCartStore();
-
-const currentQuantityInCart = computed(() => {
-    const currentCartItem = getItem(product);
-
-    if (!currentCartItem) {
-        return null;
-    }
-
-    return currentCartItem.quantity;
 });
 
 const selectedIndex = ref<number>(
