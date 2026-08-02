@@ -31,7 +31,6 @@ final class StripeProvider
                 'payment_method_types' => ['card'],
             ]);
         } catch (ApiErrorException $e) {
-            dd($e->getMessage());
             Log::error("Erreur lors de la création de l'intent de paiement", ['error' => $e->getMessage()]);
             throw new StripeProviderException(message: "Erreur lors de la récupération de l'intent Stripe depuis la commande", previous: $e);
         }

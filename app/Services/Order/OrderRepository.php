@@ -23,6 +23,13 @@ final class OrderRepository
             $order = Order::where('payment_provider_id', $providerId)->first();
 
             if ($order) {
+                $order->update([
+                    'shipping_line1' => $checkout->address->line1,
+                    'shipping_line2' => $checkout->address->line2,
+                    'shipping_postal_code' => $checkout->address->postalCode,
+                    'shipping_city' => $checkout->address->city,
+                    'shipping_country' => $checkout->address->country,
+                ]);
                 return;
             }
 
@@ -33,6 +40,11 @@ final class OrderRepository
                         'total' => $checkout->total,
                         'payment_provider_id' => $providerId,
                         'payment_provider_name' => PaymentProvider::STRIPE->value,
+                        'shipping_line1' => $checkout->address->line1,
+                        'shipping_line2' => $checkout->address->line2,
+                        'shipping_postal_code' => $checkout->address->postalCode,
+                        'shipping_city' => $checkout->address->city,
+                        'shipping_country' => $checkout->address->country,
                         'status' => 'pending',
                     ]
                 );

@@ -2,9 +2,9 @@
 
 namespace App\Http\Requests\Form;
 
+use App\Http\Requests\Dto\Address;
 use App\Http\Requests\Dto\Checkout;
 use App\Http\Requests\Dto\CheckoutProduct;
-use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class CheckoutFormRequest extends FormRequest implements FormRequestInterface
@@ -18,27 +18,37 @@ class CheckoutFormRequest extends FormRequest implements FormRequestInterface
     {
         return [
             'totalPrice' => ['required', 'numeric'],
+            'totalProducts' => ['required', 'numeric'],
+            'address' => ['required', 'array'],
+            'address.line1' => ['required', 'string'],
+            'address.line2' => ['nullable', 'string'],
+            'address.city' => ['required', 'string'],
+            'address.postal_code' => ['required', 'string'],
+            'address.country' => ['required', 'string'],
             'items.*' => ['required', 'array'],
             'items.*.quantity' => ['required', 'integer', 'min:1'],
-            'items.*.product' => ['required', 'array'],
-            'items.*.product.price' => ['required', 'numeric'],
-            'items.*.product.id' => ['required', 'numeric'],
+            'items.*.product_price' => ['required', 'numeric'],
+            'items.*.product_id' => ['required', 'numeric'],
         ];
     }
 
     public function value(): Checkout
     {
         return new Checkout(
-            quantity: array_reduce(
-                $this->array('items'),
-                fn ($total, $item) => $total + $item['quantity'],
-            ),
+            quantity: $this->integer('totalProducts'),
             total: $this->integer('totalPrice'),
+            address: new Address(
+                line1: $this->string('address.line1'),
+                line2: $this->string('address.line2'),
+                city: $this->string('address.city'),
+                postalCode: $this->string('address.postal_code'),
+                country: $this->string('address.country'),
+            ),
             products: array_map(
                 fn ($item) => new CheckoutProduct(
-                    id: $item['product']['id'],
+                    id: $item['product_id'],
                     quantity: $item['quantity'],
-                    price: $item['product']['price'],
+                    price: $item['product_price'],
                 ),
                 $this->array('items'),
             )

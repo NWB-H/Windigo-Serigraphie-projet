@@ -7,6 +7,7 @@ use App\Http\Controllers\Auth\OptionController;
 use App\Http\Controllers\Auth\ProductController;
 use App\Http\Controllers\Auth\WorkshopController;
 use App\Http\Controllers\SecurityController;
+use App\Http\Controllers\ShopController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest')->group(function () {
@@ -19,6 +20,7 @@ Route::middleware('guest')->group(function () {
 Route::middleware('auth')->group(function () {
     Route::get('/logout', [SecurityController::class, 'logout'])->name('logout');
     Route::post('/checkout', [CartController::class, 'checkout'])->name('checkout');
+    Route::get('/recapitulatif-commande', [ShopController::class, 'summaryCart'])->name('summaryCart');
 
     Route::get('/profile', [SecurityController::class, 'profile'])->name('profile');
 

@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Models\Product;
-use App\Services\Cart\Dto\ProductCart;
-use App\Services\Cart\Dto\ProductCartCollection;
+use App\Models\User;
 use App\Services\Cart\ProductCartFactory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Inertia\Inertia;
 
@@ -57,11 +57,12 @@ class ShopController
         $productCart = $productCartFactory->getCurrentProductsInCart();
 
         return Inertia::render(
-            'SummaryCart',
+            'Auth/SummaryCart',
             [
                 'products' => $productCart->products,
                 'totalProducts' => $productCart->totalProducts,
                 'totalPrice' => $productCart->totalPrice,
+                'user' => fn () => User::where('id', Auth::user()->id)->with('addresses')->firstOrFail()
             ],
         );
     }

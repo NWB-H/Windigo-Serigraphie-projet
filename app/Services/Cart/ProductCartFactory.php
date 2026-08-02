@@ -15,7 +15,7 @@ final class ProductCartFactory
     public function getCurrentProductsInCart(): ProductCartCollection
     {
         $request = request();
-        $cart = json_decode($request->cookie(self::COOKIE_NAME, []), true);
+        $cart = json_decode($request->cookie(self::COOKIE_NAME, ''), true);
 
         $productsModel = Product::whereIn(
             'id',
@@ -30,6 +30,7 @@ final class ProductCartFactory
 
         $products = array_map(
             function (Product $product) use ($cart, &$totalProducts, &$totalPrice) {
+                /** @var array{ quantity: int, product_id: int } $item */
                 $item = collect($cart)->firstWhere('product_id', $product->id);
 
                 if (!$item) {
@@ -41,7 +42,7 @@ final class ProductCartFactory
 
                 return new ProductCart(
                     product: $product,
-                    quantity: 1,
+                    quantity: $item['quantity'],
                 );
             },
             $productsModel->all(),

@@ -16,7 +16,6 @@ Route::get('/portfolio', [InformationController::class, 'portfolio'])->name('por
 Route::get('/ateliers', [WorkshopController::class, 'workshops'])->name('workshops');
 Route::get('/ateliers/{workshop}', [WorkshopController::class, 'workshop'])->name('workshop');
 Route::get('/panier', [ShopController::class, 'cart'])->name('cart');
-Route::get('/recapitulatif-commande', [ShopController::class, 'summaryCart'])->name('summaryCart');
 Route::get('/verify-account', [SecurityController::class, 'verifyAccount'])->name('verify-account');
 Route::get('/mentions-legales', [InformationController::class, 'mentions'])->name('mentions');
 Route::get('/forgot-password', [SecurityController::class, 'forgotPassword'])->name('forgot-password');
