@@ -47,7 +47,6 @@
 
 <script setup lang="ts">
 import {Address} from "@/models/Address";
-import {Link} from "@inertiajs/vue3";
 import AppButton from "@/components/Global/AppButton.vue";
 
 defineProps<{ address: Address }>()

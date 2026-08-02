@@ -97,7 +97,6 @@ import AddressDetail from "@/components/Cart/AddressDetail.vue";
 import AddressList, {Actions} from "@/components/Address/AddressList.vue";
 import {User} from "@/types";
 import {ref} from "vue";
-import SummaryCartLine from "@/components/Cart/SummaryCartLine.vue";
 
 defineOptions({
     layout: [AppLayout, { title: 'Récapitulatif du panier' }],

@@ -23,7 +23,7 @@
                 <span class="text-5xl text-gray-400">+</span>
             </AppButton>
 
-            <template v-for="address in addresses">
+            <template v-for="address in addresses" :key="address.id">
                 <AddressCard
                     :address="address"
                     :actions="actions.card"
