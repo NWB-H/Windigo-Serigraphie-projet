@@ -17,6 +17,11 @@ class Order extends Model
         'status',
         'payment_provider_id',
         'payment_provider_name',
+        'shipping_line1',
+        'shipping_line2',
+        'shipping_postal_code',
+        'shipping_city',
+        'shipping_country',
     ];
 
     public function products()

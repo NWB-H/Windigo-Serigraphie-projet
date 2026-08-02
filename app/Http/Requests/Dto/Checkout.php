@@ -12,6 +12,7 @@ final class Checkout
     public function __construct(
         public int $quantity,
         public float $total,
+        public Address $address,
         public array $products = [],
     ) {
     }

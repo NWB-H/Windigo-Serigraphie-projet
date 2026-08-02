@@ -16,73 +16,12 @@
                 </div>
             </section>
 
-            <section class="rounded-2xl bg-white p-6 shadow-sm">
-                <div class="mb-6 flex items-center justify-between">
-                    <h2 class="text-2xl font-bold text-gray-900">
-                        Mes adresses
-                    </h2>
-                    <span class="text-sm text-gray-500"
-                        >Maximum 5 adresses</span
-                    >
-                </div>
-
-                <div
-                    class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-5"
-                >
-                    <AppButton
-                        v-if="user.addresses.length < 5"
-                        @click="updateModal()"
-                        ignoreStyle
-                        class="flex min-h-48 items-center justify-center rounded-xl border-2 border-dashed border-gray-300 transition hover:border-gray-900 hover:bg-gray-50"
-                    >
-                        <span class="text-5xl text-gray-400">+</span>
-                    </AppButton>
-
-                    <!-- Exemple card adresse -->
-                    <div
-                        v-for="address in user.addresses"
-                        :key="address.id"
-                        class="flex min-h-48 flex-col justify-between rounded-xl border border-gray-200 p-4"
-                    >
-                        <div>
-                            <h3 class="font-semibold text-gray-900">
-                                {{ address.name }}
-                            </h3>
-
-                            <p class="mt-3 text-sm text-gray-600">
-                                {{ address.address_line1 }}
-                            </p>
-
-                            <p class="text-sm text-gray-600">
-                                {{ address.postal_code }}
-                                {{ address.city }}
-                            </p>
-
-                            <p class="text-sm text-gray-600">
-                                {{ address.country }}
-                            </p>
-                        </div>
-
-                        <div class="flex gap-3 pt-4 text-sm">
-                            <AppButton
-                                ignoreStyle
-                                class="text-gray-700 hover:text-black"
-                                @click.prevent="updateModal(address)"
-                            >
-                                Modifier
-                            </AppButton>
-                            <AppButton
-                                ignoreStyle
-                                class="text-red-500 hover:text-red-700"
-                                @click.prevent="handleDeleteAddress(address)"
-                            >
-                                Supprimer
-                            </AppButton>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
+            <AddressList
+                :addresses="user.addresses"
+                @add="updateModal()"
+                @edit="address => updateModal(address)"
+                @delete="address => handleDeleteAddress(address)"
+            />
             <!-- Bloc 3 : Tableau commandes -->
             <section class="rounded-2xl bg-white p-6 shadow-sm">
                 <h2 class="mb-6 text-2xl font-bold text-gray-900">
@@ -139,13 +78,6 @@
                                     </a>
                                 </td>
                             </tr>
-                            <!--                            @empty-->
-                            <!--                            <tr>-->
-                            <!--                                <td colspan="6" class="px-4 py-8 text-center text-gray-500">-->
-                            <!--                                    Aucune commande passée pour le moment.-->
-                            <!--                                </td>-->
-                            <!--                            </tr>-->
-                            <!--                            @endforelse-->
                         </tbody>
                     </table>
                 </div>
@@ -159,10 +91,10 @@ import AppLayout from '@/layouts/AppLayout.vue';
 import { router } from '@inertiajs/vue3';
 import { inject } from 'vue';
 import { User } from '@/types';
-import AppButton from '@/components/Global/AppButton.vue';
 import { modalKey } from '@/keys';
 import { Address } from '@/models/Address';
 import AddressRepository from '@/services/AddressRepository';
+import AddressList from "@/components/Address/AddressList.vue";
 
 defineOptions({
     layout: [AppLayout, { title: 'Profile' }],

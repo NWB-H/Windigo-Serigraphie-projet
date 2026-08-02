@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use App\Dto\ProductCart;
 use App\Models\Product;
+use App\Models\User;
+use App\Services\Cart\ProductCartFactory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Inertia\Inertia;
 
@@ -36,43 +38,31 @@ class ShopController
         );
     }
 
-    public function cart(Request $request)
+    public function cart(Request $request, ProductCartFactory $productCartFactory)
     {
-        $cart = json_decode($request->cookie('cart', []), true);
-        $productsModel = Product::whereIn(
-            'id',
-            array_map(
-                fn (array $product) => $product['product_id'],
-                $cart,
-            ),
-        )->get();
-
-        $products = [];
-        $totalProducts = 0;
-        $totalPrice = 0;
-
-        foreach ($productsModel as $product) {
-            $item = collect($cart)->firstWhere('product_id', $product->id);
-
-            if (!$item) {
-                continue;
-            }
-
-            $totalProducts += $item['quantity'];
-            $totalPrice += $item['quantity'] * $product->price;
-
-            $products[] = new ProductCart(
-                product: $product,
-                quantity: $item['quantity'],
-            );
-        }
+        $productCart = $productCartFactory->getCurrentProductsInCart();
 
         return Inertia::render(
             'Cart',
             [
-                'products' => $products,
-                'totalProducts' => $totalProducts,
-                'totalPrice' => $totalPrice,
+                'products' => $productCart->products,
+                'totalProducts' => $productCart->totalProducts,
+                'totalPrice' => $productCart->totalPrice,
+            ],
+        );
+    }
+
+    public function summaryCart(ProductCartFactory $productCartFactory)
+    {
+        $productCart = $productCartFactory->getCurrentProductsInCart();
+
+        return Inertia::render(
+            'Auth/SummaryCart',
+            [
+                'products' => $productCart->products,
+                'totalProducts' => $productCart->totalProducts,
+                'totalPrice' => $productCart->totalPrice,
+                'user' => fn () => User::where('id', Auth::user()->id)->with('addresses')->firstOrFail()
             ],
         );
     }

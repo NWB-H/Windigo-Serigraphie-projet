@@ -44,21 +44,19 @@
                     </div>
                 </div>
 
-                <!-- Actions -->
                 <div class="mt-6 flex flex-col gap-3 sm:flex-row">
-                    <button
-                        class="flex-1 rounded-xl border border-gray-300 px-6 py-3 font-medium text-gray-700 !no-underline transition hover:bg-gray-100"
+                    <AppButton
+                        ignoreStyle
+                        class="flex-1 rounded-xl border border-gray-300 px-6 py-3 font-medium text-gray-700 no-underline! transition hover:bg-gray-100"
                     >
                         Continuer mes achats
-                    </button>
+                    </AppButton>
 
                     <Link
-                        class="flex-1 rounded-xl bg-[#3E7C59] px-6 py-3 font-medium text-white !no-underline transition hover:bg-[#326548]"
-                        :href="route('checkout')"
-                        method="POST"
-                        :data="{ items, totalPrice }"
+                        class="flex-1 rounded-xl bg-[#3E7C59] px-6 py-3 font-medium text-white no-underline! transition hover:bg-[#326548] text-center"
+                        :href="route('summaryCart')"
                     >
-                        Passer la commande
+                        Valider le panier
                     </Link>
                 </div>
             </div>
@@ -71,6 +69,7 @@ import { Link } from '@inertiajs/vue3';
 import CartLine from '@/components/Cart/CartLine.vue';
 import { ProductCart } from '@/models';
 import { ref } from 'vue';
+import AppButton from '@/components/Global/AppButton.vue';
 
 const props = defineProps<{
     totalProducts: number;
