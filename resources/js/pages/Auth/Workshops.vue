@@ -123,7 +123,7 @@ import WorkshopRepository from '@/services/WorkshopRepository';
 import ToolTip from '@/components/ToolTip.vue';
 
 defineOptions({
-    layout: [AppLayoutAdmin, { title: 'Administration des ateliers' }],
+    layout: [AppLayoutAdmin, { title: 'Administration des ateliers'}],
 });
 defineProps<{ workshops: ResourcePaginated<Workshop>; types: string[] }>();
 
