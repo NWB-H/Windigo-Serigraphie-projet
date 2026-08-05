@@ -103,6 +103,7 @@
             </tbody>
         </table>
         <AppPagination
+            v-if="productsPaginated.pagination.totalPage > 1"
             :totalPage="productsPaginated.pagination.totalPage"
             :currentPage="productsPaginated.pagination.currentPage"
             :path="productsPaginated.pagination.path"
