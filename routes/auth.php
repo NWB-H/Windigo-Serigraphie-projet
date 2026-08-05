@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\CartController;
 use App\Http\Controllers\Auth\CategoryController;
 use App\Http\Controllers\Auth\OptionController;
 use App\Http\Controllers\Auth\ProductController;
+use App\Http\Controllers\Auth\UserController;
 use App\Http\Controllers\Auth\WorkshopController;
 use App\Http\Controllers\SecurityController;
 use App\Http\Controllers\ShopController;
@@ -43,6 +44,10 @@ Route::middleware('auth')->group(function () {
         Route::prefix('workshops')->group(function () {
             Route::get('', [WorkshopController::class, 'index'])->name('admin.workshops.index');
             Route::post('', [WorkshopController::class, 'store'])->name('admin.workshops.store');
+        });
+
+        Route::prefix('users')->group(function () {
+            Route::get('', [UserController::class, 'index'])->name('admin.users.index');
         });
     });
 

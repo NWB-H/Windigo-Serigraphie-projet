@@ -53,6 +53,7 @@ import AppHeader from '@/components/AppHeader.vue';
 import NotificationsContainer from '@/components/Notifications/NotificationsContainer.vue';
 import { Head, Link, usePage } from '@inertiajs/vue3';
 import AppModalFullScreen from '@/components/AppModalFullScreen.vue';
+import UserController from "@/actions/App/Http/Controllers/Auth/UserController";
 
 const { url } = usePage();
 defineProps<{ title?: string }>();
@@ -77,6 +78,10 @@ const links = [
         name: 'Options',
         icon: 'bi bi-sliders',
         url: OptionController.index().url,
+    },
+    {
+        name: 'Users',
+        url: UserController.index().url,
     },
     { name: 'Portfolio', icon: '', url: 'todo4' },
 ];

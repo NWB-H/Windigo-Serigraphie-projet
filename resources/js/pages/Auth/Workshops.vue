@@ -97,6 +97,7 @@
             </tbody>
         </table>
         <AppPagination
+            v-if="workshops.pagination.totalPage > 1"
             :totalPage="workshops.pagination.totalPage"
             :currentPage="workshops.pagination.currentPage"
             :path="workshops.pagination.path"
@@ -116,7 +117,7 @@ import AppButton from '@/components/Global/AppButton.vue';
 import WorkshopRepository from '@/services/WorkshopRepository';
 
 defineOptions({
-    layout: AppLayoutAdmin,
+    layout: [AppLayoutAdmin, { title: 'Administration des ateliers'}],
 });
 defineProps<{ workshops: ResourcePaginated<Workshop>; types: string[] }>();
 
