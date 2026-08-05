@@ -34,9 +34,7 @@
                             class="bg-gray-50 text-xs text-gray-600 uppercase"
                         >
                             <tr>
-                                <th class="px-4 py-3">Commande</th>
                                 <th class="px-4 py-3">Date</th>
-                                <th class="px-4 py-3">Paiement</th>
                                 <th class="px-4 py-3">Statut</th>
                                 <th class="px-4 py-3 text-right">Total</th>
                                 <th class="px-4 py-3 text-right">Action</th>
@@ -44,30 +42,18 @@
                         </thead>
 
                         <tbody class="divide-y divide-gray-200">
-                            <tr class="hover:bg-gray-50">
-                                <td class="px-4 py-4 font-medium text-gray-900">
-                                    #ID
-                                </td>
-
-                                <td class="px-4 py-4 text-gray-600">
-                                    CreatedAt
-                                </td>
-
-                                <td class="px-4 py-4 text-gray-600">A voir</td>
+                            <tr
+                                v-for="order in user.orders"
+                                :key="order.id"
+                                class="hover:bg-gray-50"
+                            >
+                                <td class="px-4 py-4 text-gray-600">{{ order.created_at }}</td>
 
                                 <td class="px-4 py-4">
-                                    <span
-                                        class="inline-flex rounded-full px-3 py-1 text-xs font-medium"
-                                    >
-                                        order.status
-                                    </span>
+                                    <Status :status="order.status"/>
                                 </td>
 
-                                <td
-                                    class="px-4 py-4 text-right font-semibold text-gray-900"
-                                >
-                                    order.total €
-                                </td>
+                                <td class="px-4 py-4 text-right font-semibold text-gray-900">{{ order.total }} €</td>
 
                                 <td class="px-4 py-4 text-right">
                                     <a
@@ -95,6 +81,7 @@ import { modalKey } from '@/keys';
 import { Address } from '@/models/Address';
 import AddressRepository from '@/services/AddressRepository';
 import AddressList from "@/components/Address/AddressList.vue";
+import Status from "@/components/Order/Status.vue";
 
 defineOptions({
     layout: [AppLayout, { title: 'Profile' }],

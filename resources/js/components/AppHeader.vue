@@ -7,7 +7,7 @@
 
             <nav class="nav-links">
                 <Link :href="route('shop')">BOUTIQUE</Link>
-                <Link :href="route('workshops')">ATELIERS</Link>
+                <Link v-if="workshopLinkEnable" :href="route('workshops')">ATELIERS</Link>
                 <Link :href="route('portfolio')">PORTFOLIO</Link>
                 <Link :href="route('about')">A PROPOS</Link>
             </nav>
@@ -73,6 +73,8 @@ import ToolTip from '@/components/ToolTip.vue';
 const page = usePage();
 
 const user = ref<User | null>(page.props.auth?.user);
+
+const workshopLinkEnable = ref(page.props.app.workshop_enabled)
 
 const { totalCartItem } = storeToRefs(useCartStore());
 </script>

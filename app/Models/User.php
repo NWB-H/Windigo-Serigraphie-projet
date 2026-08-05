@@ -32,17 +32,8 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
-        'role' => RoleEnum::class, // <-- cast enum
+        'role' => RoleEnum::class,
     ];
-
-    public function resolveRouteBinding($value, $field = null): ?self
-    {
-        return $value === 'me' ? Auth::user() : parent::resolveRouteBinding($value, $field);
-    }
-
-    // ---------------------
-    // RELATIONS
-    // ---------------------
 
     /**
      * @return HasMany<Address>
@@ -52,24 +43,9 @@ class User extends Authenticatable
         return $this->hasMany(Address::class);
     }
 
-    public function cartProducts()
+    public function orders(): HasMany
     {
-        return $this->hasMany(Product::class);
-    }
-
-    public function customerReviews()
-    {
-        return $this->hasMany(CustomerReview::class);
-    }
-
-    public function orders()
-    {
-        return $this->hasMany(Order::class, 'order_id');
-    }
-
-    public function reservationSessions()
-    {
-        return $this->hasMany(WorkshopSession::class);
+        return $this->hasMany(Order::class);
     }
 
     public function hasRole(RoleEnum $role): bool

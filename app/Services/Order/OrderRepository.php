@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Services\Order;
 
+use App\Enums\OrderEnum;
 use App\Events\StripePaymentSucceeded;
 use App\Http\Requests\Dto\Checkout;
 use App\Http\Requests\Dto\CheckoutProduct;
@@ -45,7 +46,7 @@ final class OrderRepository
                         'shipping_postal_code' => $checkout->address->postalCode,
                         'shipping_city' => $checkout->address->city,
                         'shipping_country' => $checkout->address->country,
-                        'status' => 'pending',
+                        'status' => OrderEnum::PENDING,
                     ]
                 );
 
@@ -81,7 +82,7 @@ final class OrderRepository
             }
 
             $order->update([
-                'status' => 'paid',
+                'status' => OrderEnum::PAID,
             ]);
 
             $order->save();

@@ -20,4 +20,5 @@ return [
         'driver' => env('APP_MAINTENANCE_DRIVER', 'file'),
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
+    'workshop_enabled' => env('APP_WORKSHOP_ENABLE', false),
 ];
