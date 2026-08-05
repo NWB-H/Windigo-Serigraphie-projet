@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\OnLoginSuccess;
 use App\Http\Requests\Form\ForgotPasswordFormRequest;
 use App\Http\Requests\Form\LoginFormRequest;
 use App\Http\Requests\Form\RegisterFormRequest;
@@ -43,6 +44,8 @@ class SecurityController
             $request->session()->regenerate();
 
             Inertia::notification('Bienvenue sur votre espace personnels.', NotificationType::SUCCESS);
+
+            OnLoginSuccess::dispatch($request->user());
 
             return redirect()->intended(route('home'));
         }
