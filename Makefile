@@ -55,3 +55,6 @@ lint:
 
 format:
 	$(NODE) npm run format
+
+reset-database:
+	$(LARAVEL) migrate:fresh --seed
