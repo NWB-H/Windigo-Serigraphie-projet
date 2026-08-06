@@ -36,6 +36,7 @@ export interface User {
     email_verified_at: string | null;
     created_at: string;
     updated_at: string;
+    last_login_at: Date;
     role: string;
     addresses: Address[];
 }
