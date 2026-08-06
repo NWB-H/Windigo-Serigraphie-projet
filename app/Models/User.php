@@ -24,6 +24,7 @@ class User extends Authenticatable
         'reset_password_token_expires_at',
         'created_at',
         'updated_at',
+        'last_login_at',
     ];
 
     protected $hidden = [
