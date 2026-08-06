@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\RoleEnum;
 use App\Events\OnLoginSuccess;
 use App\Http\Requests\Form\ForgotPasswordFormRequest;
 use App\Http\Requests\Form\LoginFormRequest;
@@ -37,7 +38,7 @@ class SecurityController
             Auth::attemptWhen(
                 $credentials,
                 function (User $user) {
-                    return $user->email_verified_at !== null;
+                    return $user->email_verified_at !== null && !$user->hasRole(RoleEnum::ROLE_BLOCKED);
                 }
             )
         ) {
