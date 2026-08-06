@@ -11,7 +11,7 @@ class OnLoginSuccessListener
     {
         try {
             $event->getUser()->update([
-                'updated_at' => now(),
+                'last_login_at' => now(),
             ]);
         } catch (\Throwable $th) {
             throw new BadRequestHttpException($th->getMessage());
