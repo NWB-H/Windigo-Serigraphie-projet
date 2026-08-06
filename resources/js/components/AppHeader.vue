@@ -62,17 +62,17 @@
 
 <script setup lang="ts">
 import { useCartStore } from '@/stores/Cart';
-import { User } from '../types';
+import { User } from '@/types';
 import { Link, usePage } from '@inertiajs/vue3';
 import { storeToRefs } from 'pinia';
-import { ref } from 'vue';
+import { computed } from 'vue';
 import LogoutIcon from '@/components/Icon/LogoutIcon.vue';
 import ProfileIcon from '@/components/Icon/ProfileIcon.vue';
 import ToolTip from '@/components/ToolTip.vue';
 
 const page = usePage();
 
-const user = ref<User | null>(page.props.auth?.user);
+const user = computed<User | null>(() => page.props.auth?.user);
 
 const { totalCartItem } = storeToRefs(useCartStore());
 </script>
