@@ -23,33 +23,13 @@ import AppHeader from '@/components/AppHeader.vue';
 import NotificationsContainer from '@/components/Notifications/NotificationsContainer.vue';
 import { Head } from '@inertiajs/vue3';
 import AppModalFullScreen from '@/components/AppModalFullScreen.vue';
-import { computed, provide, ref } from 'vue';
+import { provide } from 'vue';
 import { modalKey } from '@/keys';
-import { contentModal, ModalName } from '@/registries/modal';
+import { useModal } from "@/composable/useModal";
 
 defineProps<{ title?: string }>();
 
-const showModal = computed(() => currentModal.value !== null);
-const modalProps = ref<Record<string, unknown>>({});
-
-const currentModal = ref<ModalName | null>(null);
-
-const currentModalComponent = computed(() => {
-    if (!currentModal.value) {
-        return null;
-    }
-
-    return contentModal[currentModal.value];
-});
-
-function updateModal(modal: ModalName, data?: Record<string, unknown>) {
-    currentModal.value = modal;
-    modalProps.value = data ?? {};
-}
-
-function toggleModal() {
-    currentModal.value = null;
-}
+const { showModal, currentModalComponent, modalProps, updateModal, toggleModal } = useModal()
 
 provide(modalKey, {
     updateModal,

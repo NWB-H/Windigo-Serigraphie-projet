@@ -1,4 +1,5 @@
 <template>
+    <Head title="Profile" />
     <div class="min-h-screen px-4 py-10">
         <div class="mx-auto max-w-7xl space-y-8">
             <section class="rounded-2xl bg-white p-6 shadow-sm">
@@ -88,20 +89,25 @@
 
 <script setup lang="ts">
 import AppLayout from '@/layouts/AppLayout.vue';
-import { router } from '@inertiajs/vue3';
+import {Head, router } from '@inertiajs/vue3';
 import { inject } from 'vue';
-import { User } from '@/types';
 import { modalKey } from '@/keys';
 import { Address } from '@/models/Address';
 import AddressRepository from '@/services/AddressRepository';
 import AddressList from "@/components/Address/AddressList.vue";
+import {Roles, User} from "@/models/User";
+import AppLayoutAdmin from "@/layouts/AppLayoutAdmin.vue";
 
 defineOptions({
-    layout: [AppLayout, { title: 'Profile' }],
-    title: 'Mon compte',
+    layout: (h, page) => {
+        return h(
+            page.props.user.role === Roles.ADMIN ? AppLayoutAdmin : AppLayout,
+            () => page
+        )
+    },
 });
 
-defineProps<{ user: User }>();
+const props = defineProps<{ user: User }>();
 
 const modal = inject(modalKey);
 
