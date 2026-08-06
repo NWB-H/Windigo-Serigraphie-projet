@@ -56,10 +56,10 @@ import NotificationsContainer from '@/components/Notifications/NotificationsCont
 import { Head, Link, usePage } from '@inertiajs/vue3';
 import AppModalFullScreen from '@/components/AppModalFullScreen.vue';
 import UserController from '@/actions/App/Http/Controllers/Auth/UserController';
-import SecurityController from '@/actions/App/Http/Controllers/SecurityController';
-import { useModal } from '@/composable/useModal';
-import { provide } from 'vue';
-import { modalKey } from '@/keys';
+import SecurityController from "@/actions/App/Http/Controllers/SecurityController";
+import { useModal } from "@/composable/useModal";
+import { provide } from "vue";
+import { modalKey } from "@/keys";
 
 defineProps<{ title?: string }>();
 

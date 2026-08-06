@@ -53,10 +53,10 @@ import { modalKey } from '@/keys';
 import { Address } from '@/models/Address';
 import AddressRepository from '@/services/AddressRepository';
 import AddressList from '@/components/Address/AddressList.vue';
-import { Roles, User } from '@/models/User';
-import AppLayoutAdmin from '@/layouts/AppLayoutAdmin.vue';
 import OrderTable from '@/components/Order/OrderTable.vue';
 import AppEmptyList from '@/components/Global/AppEmptyList.vue';
+import {Roles, User} from "@/models/User";
+import AppLayoutAdmin from "@/layouts/AppLayoutAdmin.vue";
 
 defineOptions({
     layout: (h, page) => {
@@ -67,7 +67,7 @@ defineOptions({
     },
 });
 
-defineProps<{ user: User }>();
+const props = defineProps<{ user: User }>();
 
 const modal = inject(modalKey);
 

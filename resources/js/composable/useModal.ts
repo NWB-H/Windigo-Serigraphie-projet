@@ -23,6 +23,7 @@ export function useModal() {
         currentModal.value = null;
     }
 
+
     return {
         showModal,
         modalProps,

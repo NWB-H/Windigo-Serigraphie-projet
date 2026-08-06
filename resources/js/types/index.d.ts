@@ -1,6 +1,6 @@
-import { User } from '@/models/User';
 import { InertiaLinkProps } from '@inertiajs/vue3';
 import type { LucideIcon } from 'lucide-vue-next';
+import {User} from '@/models/User';
 
 export interface Auth {
     user: User | null;
