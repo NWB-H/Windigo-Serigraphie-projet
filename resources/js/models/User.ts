@@ -1,4 +1,5 @@
 import { Address } from "@/models/Address";
+import { Order } from "@/models/Order";
 
 export const Roles = {
     USER: 'ROLE_USER',
@@ -18,4 +19,5 @@ export interface User {
     updated_at: string;
     role: Role;
     addresses: Address[];
+    orders: Order[];
 }

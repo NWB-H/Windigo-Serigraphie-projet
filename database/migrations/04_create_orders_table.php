@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\OrderEnum;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -15,7 +16,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->references('id')->on('users');
             $table->decimal('total', 10, 2);
-            $table->string('status')->default('en attente');
+            $table->enum('status', OrderEnum::values())->default(OrderEnum::PENDING);
             $table->timestamps();
         });
     }
