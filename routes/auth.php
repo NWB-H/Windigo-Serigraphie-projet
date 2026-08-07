@@ -48,6 +48,8 @@ Route::middleware('auth')->group(function () {
 
         Route::prefix('users')->group(function () {
             Route::get('', [UserController::class, 'index'])->name('admin.users.index');
+            Route::post('/{user}/lock', [UserController::class, 'lock'])->name('admin.users.lock');
+            Route::post('/{user}/unlock', [UserController::class, 'unlock'])->name('admin.users.unlock');
         });
     });
 
