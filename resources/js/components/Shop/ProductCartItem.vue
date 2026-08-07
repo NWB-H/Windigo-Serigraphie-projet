@@ -29,8 +29,6 @@ import AddToCartButton from '@/components/Cart/AddToCartButton.vue';
 import BadgeStock from '@/components/Shop/BadgeStock.vue';
 
 defineProps<{ product: Product }>();
-
-
 </script>
 
 <style scoped></style>

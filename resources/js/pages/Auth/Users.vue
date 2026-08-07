@@ -30,7 +30,18 @@
                         </ToolTip>
                     </td>
                     <td>
-                        <AppButton @click="handleBlockUser(user)">Bloqué l'utilisateur</AppButton>
+                        <Link
+                            v-if="isBlocked(user)"
+                            :href="route('admin.users.unlock', { user: user.id })"
+                            method="post"
+                            class="link link--default"
+                        >Débloquer l'utilisateur</Link>
+                        <Link
+                            v-else
+                            :href="route('admin.users.lock', { user: user.id })"
+                            method="post"
+                            class="link link--error"
+                        >Bloquer l'utilisateur</Link>
                     </td>
                 </tr>
             </tbody>
@@ -47,27 +58,53 @@
 <script setup lang="ts">
 import AppLayoutAdmin from "@/layouts/AppLayoutAdmin.vue";
 import AppPagination from "@/components/AppPagination.vue";
-import { User } from "@/types";
 import { ResourcePaginated } from "@/models";
 import AppAvatar from "@/components/Shop/AppAvatar.vue";
 import {useDateFormat} from "@vueuse/shared";
 import XMarkIcon from "@/components/Icon/XMarkIcon.vue";
 import CheckBadgeIcon from "@/components/Icon/CheckBadgeIcon.vue";
 import ToolTip from "@/components/ToolTip.vue";
-import AppButton from "@/components/Global/AppButton.vue";
+import {Roles, User} from "@/models/User";
+import {Link} from "@inertiajs/vue3";
 
 defineOptions({
     layout: [AppLayoutAdmin, { title: 'Administration utilisateurs' }]
 })
 defineProps<{ users: ResourcePaginated<User> }>()
 
-function tooltipText(emailVerified: string | null) {
+function tooltipText(emailVerified: string | null): string {
     return 'email %s'.replace('%', emailVerified ? 'vérifié' : 'non vérifié')
 }
 
-function handleBlockUser(user: User) {}
+function isBlocked(user: User): boolean {
+    return user.role === Roles.BLOCKED;
+}
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+.link {
+    border-radius: 0.25rem;
+    padding: 0.5rem 1.5rem;
+    font-weight: 600;
+    box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+    transition: all 0.2s ease;
+    color: #FFFFFF;
+    text-decoration: none;
 
+    &--default {
+        background-color: #16A34A;
+
+        &:hover {
+            background-color: #15803D;
+        }
+    }
+
+    &--error {
+        background-color: #DC2626;
+
+        &:hover {
+            background-color: #B91C1C;
+        }
+    }
+}
 </style>
