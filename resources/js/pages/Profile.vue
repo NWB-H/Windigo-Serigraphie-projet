@@ -1,6 +1,6 @@
 <template>
     <Head title="Profile" />
-    <div class="min-h-screen w-[50%] px-4 py-10">
+    <div class="min-h-screen w-[50%] px-4 py-10 w-[50%]">
         <div class="mx-auto max-w-7xl space-y-8">
             <section class="rounded-2xl bg-white p-6 shadow-sm">
                 <div
@@ -30,10 +30,7 @@
                 </h2>
 
                 <div class="overflow-x-auto">
-                    <OrderTable
-                        v-if="user.orders.length > 0"
-                        :orders="user.orders"
-                    />
+                    <OrderTable v-if="user.orders.length > 0" :orders="user.orders" />
                     <AppEmptyList v-else>
                         <template #content>
                             Pas de commande actuellement
@@ -57,6 +54,9 @@ import OrderTable from '@/components/Order/OrderTable.vue';
 import AppEmptyList from '@/components/Global/AppEmptyList.vue';
 import {Roles, User} from "@/models/User";
 import AppLayoutAdmin from "@/layouts/AppLayoutAdmin.vue";
+import OrderTable from "@/components/Order/OrderTable.vue";
+import CartItem from "@/components/CartItem.vue";
+import AppEmptyList from "@/components/Global/AppEmptyList.vue";
 
 defineOptions({
     layout: (h, page) => {
