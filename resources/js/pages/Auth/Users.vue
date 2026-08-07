@@ -39,19 +39,16 @@
                     <td>
                         <Link
                             v-if="isBlocked(user)"
-                            :href="
-                                route('admin.users.unlock', { user: user.id })
-                            "
+                            :href="route('admin.users.unlock', { user: user.id })"
                             method="post"
                             class="link link--default"
-                            >Débloquer l'utilisateur</Link
-                        >
+                        >Débloquer l'utilisateur</Link>
                         <Link
                             v-else
                             :href="route('admin.users.lock', { user: user.id })"
                             method="post"
                             class="link link--error"
-                            >Bloquer l'utilisateur</Link
+                        >Bloquer l'utilisateur</Link
                         >
                     </td>
                 </tr>
