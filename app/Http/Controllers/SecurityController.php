@@ -182,7 +182,7 @@ class SecurityController
         return Inertia::render(
             'Profile',
             [
-                'user' => fn () => User::where('id', Auth::user()->id)->with('addresses')->firstOrFail(),
+                'user' => fn () => User::where('id', Auth::user()->id)->with(['addresses', 'orders'])->firstOrFail(),
             ],
         );
     }
