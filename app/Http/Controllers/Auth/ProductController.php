@@ -57,7 +57,7 @@ final class ProductController
             Inertia::notification('Produit enregistré avec succès', NotificationType::SUCCESS);
         } catch (\Throwable $e) {
             Log::error("Erreur lors de l'enregistrement du produit", ['error' => $e->getMessage(), 'product_id' => $validated['id'] ?? 'new product']);
-            Inertia::notification('Une erreur est survenure.', NotificationType::ERROR);
+            Inertia::notification('Une erreur est survenue.', NotificationType::ERROR);
         }
 
         return back();
