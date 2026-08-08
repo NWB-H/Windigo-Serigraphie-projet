@@ -7,8 +7,8 @@
 
             <nav class="nav-links">
                 <Link :href="route('shop')">BOUTIQUE</Link>
-                <Link :href="route('workshops')">ATELIERS</Link>
-                <Link :href="route('portfolio')">PORTFOLIO</Link>
+                <Link :href="route('workshops')" v-if="page.props.enabled">ATELIERS</Link>
+                <Link :href="route('portfolio')" v-if="page.props.enabled">PORTFOLIO</Link>
                 <Link :href="route('about')">A PROPOS</Link>
             </nav>
 

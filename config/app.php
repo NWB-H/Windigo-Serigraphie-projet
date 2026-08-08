@@ -20,4 +20,5 @@ return [
         'driver' => env('APP_MAINTENANCE_DRIVER', 'file'),
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
+    'enable_v1' => env('APP_ENABLE_V1', false),
 ];

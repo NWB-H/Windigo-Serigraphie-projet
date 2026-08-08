@@ -22,6 +22,7 @@ class HandleInertiaRequests extends Middleware
                 'user' => $request->user(),
             ],
             'notifications' => fn () => $request->session()->pull('notifications', []),
+            'enable' => config('app.enable_v1')
         ];
     }
 }
