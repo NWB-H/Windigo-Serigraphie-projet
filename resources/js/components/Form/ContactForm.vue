@@ -20,7 +20,8 @@
 
 <script setup lang="ts">
 import { useForm } from '@inertiajs/vue3';
-import { ref } from 'vue';
+import { useForm } from '@inertiajs/vue3';
+import { contactFormStore } from '@/actions/App/Http/Controllers/ContactFormController';
 import { contactFormStore } from '@/actions/App/Http/Controllers/ContactFormController';
 
 
@@ -36,7 +37,7 @@ const form = useForm(
 function onSubmit() {
     form.submit({
         onSuccess: () => {
-            
+
         },
     });
 }

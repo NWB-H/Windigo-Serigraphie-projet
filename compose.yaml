@@ -7,18 +7,8 @@ services:
     working_dir: /var/www/html
     volumes:
       - ./:/var/www/html
-    environment:
-      # Adaptez à votre .env Laravel
-      APP_ENV: local
-      APP_DEBUG: "true"
-      APP_URL: http://localhost:8000
-      # Ces variables seront lues par Laravel
-      DB_CONNECTION: mysql
-      DB_HOST: mysql
-      DB_PORT: 3306
-      DB_DATABASE: app
-      DB_USERNAME: user
-      DB_PASSWORD: password
+    env_file:
+      - .env.local
     depends_on:
       mysql:
         condition: service_healthy

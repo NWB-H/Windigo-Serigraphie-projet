@@ -1,0 +1,201 @@
+name: Deploy production
+
+on:
+  push:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Build production .env
+        env:
+          APP_ENV: production
+          APP_KEY: ${{ secrets.APP_KEY }}
+          APP_URL: ${{ vars.APP_URL }}
+
+          DB_CONNECTION: ${{ vars.DB_CONNECTION }}
+          DB_HOST: ${{ vars.DB_HOST }}
+          DB_PORT: ${{ vars.DB_PORT }}
+          DB_DATABASE: ${{ vars.DB_DATABASE }}
+          DB_USERNAME: ${{ secrets.DB_USERNAME }}
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+
+          MAIL_MAILER: ${{ vars.MAIL_MAILER }}
+          MAIL_HOST: ${{ vars.MAIL_HOST }}
+          MAIL_PORT: ${{ vars.MAIL_PORT }}
+          MAIL_USERNAME: ${{ secrets.MAIL_USERNAME }}
+          MAIL_PASSWORD: ${{ secrets.MAIL_PASSWORD }}
+        run: |
+          cp .env.example .env
+
+          set_env() {
+            KEY="$1"
+            VALUE="$2"
+
+            if grep -q "^${KEY}=" .env; then
+              sed -i "/^${KEY}=/d" .env
+            fi
+
+            printf '%s="%s"\n' "$KEY" "$VALUE" >> .env
+          }
+
+          set_env APP_ENV "$APP_ENV"
+          set_env APP_KEY "$APP_KEY"
+          set_env APP_URL "$APP_URL"
+
+          set_env DB_CONNECTION "$DB_CONNECTION"
+          set_env DB_HOST "$DB_HOST"
+          set_env DB_PORT "$DB_PORT"
+          set_env DB_DATABASE "$DB_DATABASE"
+          set_env DB_USERNAME "$DB_USERNAME"
+          set_env DB_PASSWORD "$DB_PASSWORD"
+
+          set_env MAIL_MAILER "$MAIL_MAILER"
+          set_env MAIL_HOST "$MAIL_HOST"
+          set_env MAIL_PORT "$MAIL_PORT"
+          set_env MAIL_USERNAME "$MAIL_USERNAME"
+          set_env MAIL_PASSWORD "$MAIL_PASSWORD"
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          tools: composer:v2
+          coverage: none
+      - name: Install Composer dependencies
+        run: |
+          composer install \
+            --no-dev \
+            --prefer-dist \
+            --no-interaction \
+            --optimize-autoloader
+
+      - name: Generate Laravel frontend files
+        run: |
+          php artisan z:g
+          php artisan w:g
+
+        # Build des assets avec Yarn
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20 # a changer car plus supporté
+          cache: yarn
+      - name: Install & build assets
+        run: |
+          yarn install --frozen-lockfile
+          yarn build
+
+      # -----------------------------------------
+      # Récupération de l'IP publique du runner
+      # -----------------------------------------
+
+      - name: Get runner public IP
+        id: ip
+        uses: haythem/public-ip@v1.3
+
+      - name: Show runner IP
+        run: |
+          echo "GitHub runner IP: ${{ steps.ip.outputs.ipv4 }}"
+
+      # -----------------------------------------
+      # Autorisation temporaire chez o2switch
+      # -----------------------------------------
+
+      - name: Whitelist runner IP on o2switch
+        run: |
+          RESPONSE=$(curl -sm 45 \
+            -H "Authorization: cpanel ${{ secrets.CPANEL_USERNAME }}:${{ secrets.CPANEL_API_TOKEN }}" \
+            "https://${{ secrets.CPANEL_SERVER }}:2083/execute/SshWhitelist/add?address=${{ steps.ip.outputs.ipv4 }}&port=22")
+
+          echo "$RESPONSE" | jq
+
+          echo "$RESPONSE" | jq -e '.status == 1'
+
+      - name: Verify SSH whitelist
+        run: |
+          RESPONSE=$(curl -sm 45 \
+            -H "Authorization: cpanel ${{ secrets.CPANEL_USERNAME }}:${{ secrets.CPANEL_API_TOKEN }}" \
+            "https://${{ secrets.CPANEL_SERVER }}:2083/execute/SshWhitelist/list")
+
+          echo "$RESPONSE" | jq
+
+          echo "$RESPONSE" \
+            | jq -e \
+            --arg ip "${{ steps.ip.outputs.ipv4 }}" \
+            '.data.list[] | select(.address == $ip)'
+
+      # -----------------------------------------
+      # Configuration SSH
+      # -----------------------------------------
+
+      - name: Configure SSH
+        run: |
+          mkdir -p ~/.ssh
+          chmod 700 ~/.ssh
+
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+
+          ssh-keyscan -H "${{ secrets.SSH_HOST }}" >> ~/.ssh/known_hosts
+
+      - name: Test SSH connection
+        run: |
+          ssh \
+            -i ~/.ssh/id_rsa \
+            -o IdentitiesOnly=yes \
+            -o BatchMode=yes \
+            -o ConnectTimeout=15 \
+            "${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}" \
+            "echo 'SSH connection OK'"
+
+      - name: Deploy files
+        run: |
+          rsync -az \
+            -e "ssh -o BatchMode=yes -o ConnectTimeout=10" \
+            --exclude=".git" \
+            --exclude=".github" \
+            --exclude="vendor" \
+            ./ \
+            "${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:${{ secrets.DEPLOY_PATH }}/"
+
+      - name: Laravel deploy
+        run: |
+          ssh "${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}" << EOF
+            set -e
+
+            cd "${{ secrets.DEPLOY_PATH }}"
+
+            export PATH="/opt/alt/php83/usr/bin:$PATH"
+
+            composer install \
+              --no-dev \
+              --prefer-dist \
+              --no-interaction \
+              --optimize-autoloader
+
+            php artisan k:g
+            php artisan migrate --force
+            php artisan optimize
+          EOF
+
+      - name: Remove runner IP from o2switch whitelist
+        if: always()
+        run: |
+          IP="${{ steps.ip.outputs.ipv4 }}"
+
+          echo "Removing $IP from incoming SSH whitelist..."
+
+          curl -sm 45 \
+            -H "Authorization: cpanel ${{ secrets.CPANEL_USERNAME }}:${{ secrets.CPANEL_API_TOKEN }}" \
+            "https://${{ secrets.CPANEL_SERVER }}:2083/execute/SshWhitelist/remove?address=$IP&port=22&direction=in" \
+            | jq
+
+          echo "Removing $IP from outgoing SSH whitelist..."
+
+          curl -sm 45 \
+            -H "Authorization: cpanel ${{ secrets.CPANEL_USERNAME }}:${{ secrets.CPANEL_API_TOKEN }}" \
+            "https://${{ secrets.CPANEL_SERVER }}:2083/execute/SshWhitelist/remove?address=$IP&port=22&direction=out" \
+            | jq

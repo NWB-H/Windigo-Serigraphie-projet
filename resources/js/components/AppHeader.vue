@@ -34,6 +34,7 @@
                             type="button"
                             as="button"
                             class="text-black! no-underline! hover:text-red-600!"
+                            method="post"
                             :href="route('logout')"
                         >
                             <LogoutIcon />

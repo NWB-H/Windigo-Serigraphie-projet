@@ -18,7 +18,7 @@ Route::middleware('guest')->group(function () {
 });
 
 Route::middleware('auth')->group(function () {
-    Route::get('/logout', [SecurityController::class, 'logout'])->name('logout');
+    Route::post('/logout', [SecurityController::class, 'logout'])->name('logout');
     Route::post('/checkout', [CartController::class, 'checkout'])->name('checkout');
     Route::get('/recapitulatif-commande', [ShopController::class, 'summaryCart'])->name('summaryCart');
 
