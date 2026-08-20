@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ContactFormController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\InformationController;
 use App\Http\Controllers\SecurityController;
@@ -22,6 +23,7 @@ Route::get('/forgot-password', [SecurityController::class, 'forgotPassword'])->n
 Route::post('/forgot-password', [SecurityController::class, 'forgotPasswordStore'])->name('forgot-password.store');
 Route::get('/reset-password', [SecurityController::class, 'resetPassword'])->name('password.reset');
 Route::post('/reset-password', [SecurityController::class, 'resetPasswordStore'])->name('password.reset.store');
+Route::post('/contact-form', [ContactFormController::class, 'contactFormStore'])->name('contact.form.store'); 
 
 require __DIR__.'/api.php';
 require __DIR__.'/auth.php';
