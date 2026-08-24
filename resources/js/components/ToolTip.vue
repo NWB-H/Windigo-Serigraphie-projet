@@ -2,7 +2,7 @@
     <div
         @mouseover="showTooltip = true"
         @mouseleave="showTooltip = false"
-        class="container"
+        class="container-tooltip"
     >
         <p v-if="showTooltip" :class="[direction]" ref="container">
             {{ tooltip }}
@@ -25,8 +25,9 @@ const showTooltip = ref(false);
 </script>
 
 <style scoped lang="scss">
-.container {
+.container-tooltip {
     position: relative;
+    width: auto;
 
     p {
         position: absolute;
