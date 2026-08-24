@@ -55,7 +55,6 @@
                         />
                     </td>
 
-                    <!-- Description tronquée -->
                     <td>
                         {{
                             workshop.description
@@ -68,29 +67,35 @@
                     </td>
                     <td>
                         <div class="flex gap-2">
-                            <AppButton
-                                ignoreStyle
-                                @click="editWorkshop(workshop)"
-                                class="rounded bg-yellow-400 px-2 py-1"
-                            >
-                                ✏️
-                            </AppButton>
-                            <AppButton
-                                ignoreStyle
-                                @click="deleteWorkshop(workshop)"
-                                class="rounded bg-red-500 px-2 py-1 text-white"
-                            >
-                                🗑️
-                            </AppButton>
-                            <Link
-                                :to="{
+                            <ToolTip tooltip="Modifier">
+                                <AppButton
+                                    ignoreStyle
+                                    @click="editWorkshop(workshop)"
+                                    class="rounded bg-yellow-400 px-2 py-1"
+                                >
+                                    ✏️
+                                </AppButton>
+                            </ToolTip>
+                            <ToolTip tooltip="Supprimer">
+                                <AppButton
+                                    ignoreStyle
+                                    @click="deleteWorkshop(workshop)"
+                                    class="rounded bg-red-500 px-2 py-1 text-white"
+                                >
+                                    🗑️
+                                </AppButton>
+                            </ToolTip>
+                            <ToolTip tooltip="Gérer les sessions">
+                                <Link
+                                    :to="{
                                     name: 'admin.workshop.sessions',
                                     params: { id: workshop.id },
                                 }"
-                                class="rounded bg-blue-500 px-2 py-1 text-white !no-underline"
-                            >
-                                📅
-                            </Link>
+                                    class="block rounded bg-blue-500 px-2 py-1 text-white !no-underline"
+                                >
+                                    📅
+                                </Link>
+                            </ToolTip>
                         </div>
                     </td>
                 </tr>
@@ -115,6 +120,7 @@ import WorkshopForm from '@/components/Form/WorkshopForm.vue';
 import { ref } from 'vue';
 import AppButton from '@/components/Global/AppButton.vue';
 import WorkshopRepository from '@/services/WorkshopRepository';
+import ToolTip from "@/components/ToolTip.vue";
 
 defineOptions({
     layout: [AppLayoutAdmin, { title: 'Administration des ateliers'}],
