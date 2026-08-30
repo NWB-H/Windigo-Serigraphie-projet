@@ -87,10 +87,7 @@
                             </ToolTip>
                             <ToolTip tooltip="Gérer les sessions">
                                 <Link
-                                    :to="{
-                                        name: 'admin.workshop.sessions',
-                                        params: { id: workshop.id },
-                                    }"
+                                    :href="route('admin.workshops.show', { workshop: workshop.id })"
                                     class="block rounded bg-blue-500 px-2 py-1 text-white !no-underline"
                                 >
                                     📅

@@ -75,8 +75,25 @@ services:
     networks:
       - windigo
 
+  codex:
+    build:
+      context: .
+      dockerfile: docker/codex/Dockerfile.codex
+    container_name: codex
+    working_dir: /var/www/html
+    stdin_open: true
+    tty: true
+    volumes:
+      - ./:/var/www/html
+      - codex-home:/root/.codex
+    environment:
+      TERM: xterm-256color
+    networks:
+      - windigo
+
 volumes:
   mysql-data:
+  codex-home:
 
 networks:
   windigo:
