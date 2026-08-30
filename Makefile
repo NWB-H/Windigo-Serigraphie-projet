@@ -2,6 +2,7 @@ DOCKER_COMP = docker compose
 PHP_CONT = $(DOCKER_COMP) exec app
 NODE = $(DOCKER_COMP) run --rm node
 STRIPE = $(DOCKER_COMP) run --rm stripe
+CODEX = $(DOCKER_COMP) run --rm codex
 
 PHP      = $(PHP_CONT) php
 COMPOSER = $(PHP_CONT) composer
@@ -58,3 +59,6 @@ format:
 
 reset-database:
 	$(LARAVEL) migrate:fresh --seed
+
+codex:
+	$(CODEX)
