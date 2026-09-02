@@ -16,7 +16,9 @@
                 >+</AddToCartButton
             >
         </div>
-        <AppButton @click="handleAddToCart" :disabled="!productCanIncrease(product)"
+        <AppButton
+            @click="handleAddToCart"
+            :disabled="!productCanIncrease(product)"
             >Ajouter au panier</AppButton
         >
     </div>

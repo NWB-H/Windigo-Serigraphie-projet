@@ -53,7 +53,7 @@
                     </AppButton>
 
                     <Link
-                        class="flex-1 rounded-xl bg-[#3E7C59] px-6 py-3 font-medium text-white no-underline! transition hover:bg-[#326548] text-center"
+                        class="flex-1 rounded-xl bg-[#3E7C59] px-6 py-3 text-center font-medium text-white no-underline! transition hover:bg-[#326548]"
                         :href="route('summaryCart')"
                     >
                         Valider le panier

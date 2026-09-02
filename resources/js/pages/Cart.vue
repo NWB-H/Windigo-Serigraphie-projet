@@ -1,10 +1,5 @@
 <template>
-    <Cart
-        v-if="totalProducts > 0"
-        :products
-        :totalProducts
-        :totalPrice
-    />
+    <Cart v-if="totalProducts > 0" :products :totalProducts :totalPrice />
     <EmptyCart v-else />
 </template>
 

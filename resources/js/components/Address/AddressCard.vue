@@ -1,7 +1,10 @@
 <template>
     <div
-        class="flex min-h-48 flex-col justify-between rounded-xl p-4 border"
-        :class="[$attrs.class ? $attrs.class : '', actions.hover ? 'hover:cursor-pointer': '']"
+        class="flex min-h-48 flex-col justify-between rounded-xl border p-4"
+        :class="[
+            $attrs.class ? $attrs.class : '',
+            actions.hover ? 'hover:cursor-pointer' : '',
+        ]"
     >
         <div>
             <h5 class="font-semibold text-gray-900">
@@ -42,26 +45,24 @@
 </template>
 
 <script setup lang="ts">
-import AppButton from "@/components/Global/AppButton.vue";
-import {Address} from "@/models/Address";
+import AppButton from '@/components/Global/AppButton.vue';
+import { Address } from '@/models/Address';
 
 export interface Actions {
-    click?: boolean
-    hover?: boolean,
-    footer?: boolean
+    click?: boolean;
+    hover?: boolean;
+    footer?: boolean;
 }
 
 const { actions = { click: false, hover: false, footer: true } } = defineProps<{
-    address: Address,
-    actions?: Actions
-}>()
+    address: Address;
+    actions?: Actions;
+}>();
 
 const emits = defineEmits<{
-    (e: 'edit', address: Address),
-    (e: 'delete', address: Address)
-}>()
+    (e: 'edit', address: Address);
+    (e: 'delete', address: Address);
+}>();
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

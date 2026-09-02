@@ -3,7 +3,7 @@
         <div class="mb-3">
             <Link :href="route('productItem', { id: product.id })">
                 <AppImage
-                    :url="product.picture_url ?? null"
+                    :url="product.highlighted_image?.url"
                     :alt="product.name"
                     img-css-class="rounded-3 shadow-sm h-[385px] w-[385px] max-w-[385px] max-h-[385px]"
                 />
@@ -29,8 +29,6 @@ import AddToCartButton from '@/components/Cart/AddToCartButton.vue';
 import BadgeStock from '@/components/Shop/BadgeStock.vue';
 
 defineProps<{ product: Product }>();
-
-
 </script>
 
 <style scoped></style>

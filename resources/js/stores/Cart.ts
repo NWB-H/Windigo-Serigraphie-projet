@@ -49,7 +49,9 @@ export const useCartStore = defineStore('cart', () => {
     }
 
     function productCanIncrease(product: Product): boolean {
-        const currentItem = items.value.find((i: CartItem) => i.product_id === product.id);
+        const currentItem = items.value.find(
+            (i: CartItem) => i.product_id === product.id,
+        );
 
         if (!currentItem) {
             return true;
@@ -59,9 +61,11 @@ export const useCartStore = defineStore('cart', () => {
     }
 
     function productCanDecrease(product: Product): boolean {
-        const currentItem = items.value.find((i: CartItem) => i.product_id === product.id);
+        const currentItem = items.value.find(
+            (i: CartItem) => i.product_id === product.id,
+        );
 
-        return (undefined !== currentItem)
+        return undefined !== currentItem;
     }
 
     function decrement(product: Product) {

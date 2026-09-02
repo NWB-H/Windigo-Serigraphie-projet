@@ -40,7 +40,7 @@ import AppLayout from '@/layouts/AppLayout.vue';
 import { Link } from '@inertiajs/vue3';
 
 defineOptions({
-    layout: [ AppLayout, { title: 'Accès refusé' } ],
+    layout: [AppLayout, { title: 'Accès refusé' }],
 });
 </script>
 

@@ -22,24 +22,27 @@
             <div class="border-t border-gray-200 pt-4">
                 <div class="flex items-center justify-between">
                     <span class="text-xl font-bold text-gray-800">Total</span>
-                    <span class="text-2xl font-bold text-[#3E7C59]">{{ formatPrice(totalPrice) }}</span>
+                    <span class="text-2xl font-bold text-[#3E7C59]">{{
+                        formatPrice(totalPrice)
+                    }}</span>
                 </div>
 
-                <p class="mt-1 text-right text-xs text-gray-500">Taxes incluses</p>
+                <p class="mt-1 text-right text-xs text-gray-500">
+                    Taxes incluses
+                </p>
             </div>
         </div>
     </div>
 </template>
 
 <script setup lang="ts">
-
-import {ProductCart} from "@/models";
-import SummaryCartLine from "@/components/Cart/SummaryCartLine.vue";
+import { ProductCart } from '@/models';
+import SummaryCartLine from '@/components/Cart/SummaryCartLine.vue';
 
 defineProps<{
-    totalPrice: number,
-    productsCart: ProductCart[],
-}>()
+    totalPrice: number;
+    productsCart: ProductCart[];
+}>();
 
 const formatPrice = (price: number): string => {
     return new Intl.NumberFormat('fr-FR', {
@@ -49,6 +52,4 @@ const formatPrice = (price: number): string => {
 };
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

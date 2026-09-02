@@ -19,8 +19,8 @@
             <AddressList
                 :addresses="user.addresses"
                 @add="updateModal()"
-                @edit="address => updateModal(address)"
-                @delete="address => handleDeleteAddress(address)"
+                @edit="(address) => updateModal(address)"
+                @delete="(address) => handleDeleteAddress(address)"
             />
             <!-- Bloc 3 : Tableau commandes -->
             <section class="rounded-2xl bg-white p-6 shadow-sm">
@@ -94,7 +94,7 @@ import { User } from '@/types';
 import { modalKey } from '@/keys';
 import { Address } from '@/models/Address';
 import AddressRepository from '@/services/AddressRepository';
-import AddressList from "@/components/Address/AddressList.vue";
+import AddressList from '@/components/Address/AddressList.vue';
 
 defineOptions({
     layout: [AppLayout, { title: 'Profile' }],
