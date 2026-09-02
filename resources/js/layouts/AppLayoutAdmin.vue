@@ -55,16 +55,22 @@ import AppHeader from '@/components/AppHeader.vue';
 import NotificationsContainer from '@/components/Notifications/NotificationsContainer.vue';
 import { Head, Link, usePage } from '@inertiajs/vue3';
 import AppModalFullScreen from '@/components/AppModalFullScreen.vue';
-import UserController from "@/actions/App/Http/Controllers/Auth/UserController";
-import SecurityController from "@/actions/App/Http/Controllers/SecurityController";
-import { useModal } from "@/composable/useModal";
-import { provide } from "vue";
-import { modalKey } from "@/keys";
+import UserController from '@/actions/App/Http/Controllers/Auth/UserController';
+import SecurityController from '@/actions/App/Http/Controllers/SecurityController';
+import { useModal } from '@/composable/useModal';
+import { provide } from 'vue';
+import { modalKey } from '@/keys';
 
 defineProps<{ title?: string }>();
 
 const { url } = usePage();
-const { showModal, currentModalComponent, modalProps, updateModal, toggleModal } = useModal()
+const {
+    showModal,
+    currentModalComponent,
+    modalProps,
+    updateModal,
+    toggleModal,
+} = useModal();
 
 provide(modalKey, {
     updateModal,
@@ -98,8 +104,10 @@ const links = [
     },
     { name: 'Portfolio', icon: '', url: 'todo4' },
     {
-        name: 'Mon profil', icon: '', url: SecurityController.profile().url
-    }
+        name: 'Mon profil',
+        icon: '',
+        url: SecurityController.profile().url,
+    },
 ];
 </script>
 

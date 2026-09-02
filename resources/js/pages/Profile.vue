@@ -1,6 +1,6 @@
 <template>
     <Head title="Profile" />
-    <div class="min-h-screen px-4 py-10 w-[50%]">
+    <div class="min-h-screen w-[50%] px-4 py-10">
         <div class="mx-auto max-w-7xl space-y-8">
             <section class="rounded-2xl bg-white p-6 shadow-sm">
                 <div
@@ -30,7 +30,10 @@
                 </h2>
 
                 <div class="overflow-x-auto">
-                    <OrderTable v-if="user.orders.length > 0" :orders="user.orders" />
+                    <OrderTable
+                        v-if="user.orders.length > 0"
+                        :orders="user.orders"
+                    />
                     <AppEmptyList v-else>
                         <template #content>
                             Pas de commande actuellement
@@ -44,28 +47,27 @@
 
 <script setup lang="ts">
 import AppLayout from '@/layouts/AppLayout.vue';
-import {Head, router } from '@inertiajs/vue3';
+import { Head, router } from '@inertiajs/vue3';
 import { inject } from 'vue';
 import { modalKey } from '@/keys';
 import { Address } from '@/models/Address';
 import AddressRepository from '@/services/AddressRepository';
 import AddressList from '@/components/Address/AddressList.vue';
-import {Roles, User} from "@/models/User";
-import AppLayoutAdmin from "@/layouts/AppLayoutAdmin.vue";
-import OrderTable from "@/components/Order/OrderTable.vue";
-import CartItem from "@/components/CartItem.vue";
-import AppEmptyList from "@/components/Global/AppEmptyList.vue";
+import { Roles, User } from '@/models/User';
+import AppLayoutAdmin from '@/layouts/AppLayoutAdmin.vue';
+import OrderTable from '@/components/Order/OrderTable.vue';
+import AppEmptyList from '@/components/Global/AppEmptyList.vue';
 
 defineOptions({
     layout: (h, page) => {
         return h(
             page.props.user.role === Roles.ADMIN ? AppLayoutAdmin : AppLayout,
-            () => page
-        )
+            () => page,
+        );
     },
 });
 
-const props = defineProps<{ user: User }>();
+defineProps<{ user: User }>();
 
 const modal = inject(modalKey);
 

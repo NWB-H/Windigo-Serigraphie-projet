@@ -1,5 +1,5 @@
-import { Address } from "@/models/Address";
-import { Order } from "@/models/Order";
+import { Address } from '@/models/Address';
+import { Order } from '@/models/Order';
 
 export const Roles = {
     USER: 'ROLE_USER',
@@ -7,7 +7,7 @@ export const Roles = {
     BLOCKED: 'ROLE_BLOCKED',
 } as const;
 
-export type Role = typeof Roles[keyof typeof Roles];
+export type Role = (typeof Roles)[keyof typeof Roles];
 
 export interface User {
     id: number;

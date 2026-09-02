@@ -1,8 +1,7 @@
-import { computed, ref } from "vue";
-import {contentModal, ModalName } from "@/registries/modal";
+import { contentModal, ModalName } from '@/registries/modal';
+import { computed, ref } from 'vue';
 
-export function useModal()
-{
+export function useModal() {
     const currentModal = ref<ModalName | null>(null);
     const showModal = computed(() => currentModal.value !== null);
     const modalProps = ref<Record<string, unknown>>({});
@@ -24,12 +23,11 @@ export function useModal()
         currentModal.value = null;
     }
 
-
     return {
         showModal,
         modalProps,
         currentModalComponent,
         updateModal,
         toggleModal,
-    }
+    };
 }

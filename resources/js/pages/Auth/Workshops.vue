@@ -88,9 +88,9 @@
                             <ToolTip tooltip="Gérer les sessions">
                                 <Link
                                     :to="{
-                                    name: 'admin.workshop.sessions',
-                                    params: { id: workshop.id },
-                                }"
+                                        name: 'admin.workshop.sessions',
+                                        params: { id: workshop.id },
+                                    }"
                                     class="block rounded bg-blue-500 px-2 py-1 text-white !no-underline"
                                 >
                                     📅
@@ -120,10 +120,10 @@ import WorkshopForm from '@/components/Form/WorkshopForm.vue';
 import { ref } from 'vue';
 import AppButton from '@/components/Global/AppButton.vue';
 import WorkshopRepository from '@/services/WorkshopRepository';
-import ToolTip from "@/components/ToolTip.vue";
+import ToolTip from '@/components/ToolTip.vue';
 
 defineOptions({
-    layout: [AppLayoutAdmin, { title: 'Administration des ateliers'}],
+    layout: [AppLayoutAdmin, { title: 'Administration des ateliers' }],
 });
 defineProps<{ workshops: ResourcePaginated<Workshop>; types: string[] }>();
 

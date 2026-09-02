@@ -25,11 +25,17 @@ import { Head } from '@inertiajs/vue3';
 import AppModalFullScreen from '@/components/AppModalFullScreen.vue';
 import { provide } from 'vue';
 import { modalKey } from '@/keys';
-import { useModal } from "@/composable/useModal";
+import { useModal } from '@/composable/useModal';
 
 defineProps<{ title?: string }>();
 
-const { showModal, currentModalComponent, modalProps, updateModal, toggleModal } = useModal()
+const {
+    showModal,
+    currentModalComponent,
+    modalProps,
+    updateModal,
+    toggleModal,
+} = useModal();
 
 provide(modalKey, {
     updateModal,

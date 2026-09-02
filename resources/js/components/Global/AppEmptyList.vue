@@ -1,5 +1,7 @@
 <template>
-    <div class="flex items-center justify-between rounded-2xl border bg-white p-6 shadow-sm">
+    <div
+        class="flex items-center justify-between rounded-2xl border bg-white p-6 shadow-sm"
+    >
         <div class="flex items-center gap-4">
             <div class="rounded-xl bg-slate-100 p-3">
                 <slot name="icon">
@@ -34,8 +36,6 @@
     </div>
 </template>
 
-<script setup lang="ts">
-</script>
+<script setup lang="ts"></script>
 
-<style scoped>
-</style>
+<style scoped></style>

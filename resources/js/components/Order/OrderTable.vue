@@ -16,8 +16,12 @@
                 :key="order.id"
                 class="hover:bg-gray-50"
             >
-                <td class="px-4 py-4 font-medium text-gray-900">{{ order.id }}</td>
-                <td class="px-4 py-4 text-gray-600">{{ useDateFormat(order.created_at, 'DD MMMM YYYY') }}</td>
+                <td class="px-4 py-4 font-medium text-gray-900">
+                    {{ order.id }}
+                </td>
+                <td class="px-4 py-4 text-gray-600">
+                    {{ useDateFormat(order.created_at, 'DD MMMM YYYY') }}
+                </td>
                 <td class="px-4 py-4 text-gray-600">{{ order.status }}</td>
                 <td class="px-4 py-4 text-gray-600">{{ order.total }}</td>
                 <td class="px-4 py-4 text-right">
@@ -28,18 +32,16 @@
                         Voir
                     </a>
                 </td>
-        </tr>
+            </tr>
         </tbody>
     </table>
 </template>
 
 <script setup lang="ts">
-import {Order} from "@/models";
-import { useDateFormat } from "@vueuse/shared";
+import { Order } from '@/models';
+import { useDateFormat } from '@vueuse/shared';
 
-defineProps<{ orders: Order[] }>()
+defineProps<{ orders: Order[] }>();
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>
