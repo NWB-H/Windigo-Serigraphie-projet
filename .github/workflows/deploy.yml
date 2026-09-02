@@ -176,6 +176,7 @@ jobs:
               --no-interaction \
               --optimize-autoloader
 
+            php artisan storage:link
             php artisan k:g
             php artisan migrate --force
             php artisan optimize
