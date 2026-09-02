@@ -124,7 +124,7 @@ import ToolTip from '@/components/ToolTip.vue';
 import AppButton from '@/components/Global/AppButton.vue';
 
 defineOptions({
-    layout: AppLayoutAdmin,
+    layout: [AppLayoutAdmin, { title: 'Administration des produits'}],
 });
 const { productsPaginated } = defineProps<{
     productsPaginated: ResourcePaginated<Product>;

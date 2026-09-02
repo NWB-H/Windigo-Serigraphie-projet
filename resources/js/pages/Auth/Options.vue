@@ -1,6 +1,5 @@
 <template>
-    <AppLayoutAdmin title="Administration options">
-        <div class="container my-5">
+    <div class="container my-5">
             <div class="flex gap-2">
                 <h2>Gestion des Options</h2>
                 <button @click.prevent="newOption" class="btn btn-success">
@@ -54,8 +53,7 @@
                 :currentPage="options.pagination.currentPage"
                 :path="options.pagination.path"
             />
-        </div>
-    </AppLayoutAdmin>
+    </div>
 </template>
 
 <script setup lang="ts">
@@ -68,7 +66,7 @@ import { router } from '@inertiajs/vue3';
 import { ref } from 'vue';
 
 defineOptions({
-    layout: AppLayoutAdmin,
+    layout: [AppLayoutAdmin, { title: 'Administration des options' }],
 });
 const { options } = defineProps<{ options: ResourcePaginated<Option> }>();
 
