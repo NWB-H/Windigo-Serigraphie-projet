@@ -80,15 +80,14 @@ import { computed } from 'vue';
 const props = defineProps<{
     product: Product;
 }>();
-const emits = defineEmits<{ (e: 'remove', product: Product): void }>()
+const emits = defineEmits<{ (e: 'remove', product: Product): void }>();
 
 const { getItem } = useCartStore();
 
-const quantity = computed(() => getItem(props.product)?.quantity ?? 0)
+const quantity = computed(() => getItem(props.product)?.quantity ?? 0);
 
-function handleRemove()
-{
-    emits('remove', props.product)
+function handleRemove() {
+    emits('remove', props.product);
 }
 </script>
 

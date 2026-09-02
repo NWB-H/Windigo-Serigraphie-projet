@@ -32,9 +32,7 @@
         <div
             class="flex items-center justify-between gap-4 rounded-lg bg-gray-50 px-4 py-3 sm:block sm:min-w-24 sm:text-center"
         >
-            <span class="text-sm text-gray-500">
-                Quantité
-            </span>
+            <span class="text-sm text-gray-500"> Quantité </span>
 
             <p class="text-lg font-bold text-gray-800 sm:mt-1">
                 {{ quantity }}
@@ -42,15 +40,13 @@
         </div>
 
         <!-- Total -->
-        <div class="flex items-center justify-between sm:min-w-32 sm:block sm:text-right">
-            <span class="text-sm text-gray-500 sm:hidden">
-                Total
-            </span>
+        <div
+            class="flex items-center justify-between sm:block sm:min-w-32 sm:text-right"
+        >
+            <span class="text-sm text-gray-500 sm:hidden"> Total </span>
 
             <div>
-                <p class="hidden text-sm text-gray-500 sm:block">
-                    Total
-                </p>
+                <p class="hidden text-sm text-gray-500 sm:block">Total</p>
 
                 <p class="text-xl font-bold text-gray-800">
                     {{ formatPrice(product.price * quantity) }}

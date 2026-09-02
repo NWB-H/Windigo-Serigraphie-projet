@@ -28,7 +28,7 @@
                 <AddressList
                     :addresses="user.addresses"
                     :actions="addressListProps"
-                    @edit="address => handleAddressListEdit(address)"
+                    @edit="(address) => handleAddressListEdit(address)"
                     v-if="selectedMode"
                 />
                 <AddressDetail
@@ -38,10 +38,7 @@
                 />
             </template>
 
-            <DetailPayment
-                :totalPrice
-                :productsCart="products"
-            />
+            <DetailPayment :totalPrice :productsCart="products" />
 
             <!-- Actions -->
             <div class="mt-6 flex flex-col gap-3 sm:flex-row">
@@ -91,12 +88,12 @@
 import AppLayout from '@/layouts/AppLayout.vue';
 import { Link } from '@inertiajs/vue3';
 import type { ProductCart } from '@/models';
-import {Address} from "@/models/Address";
-import DetailPayment from "@/components/Cart/DetailPayment.vue";
-import AddressDetail from "@/components/Cart/AddressDetail.vue";
-import AddressList, {Actions} from "@/components/Address/AddressList.vue";
-import {User} from "@/types";
-import {ref} from "vue";
+import { Address } from '@/models/Address';
+import DetailPayment from '@/components/Cart/DetailPayment.vue';
+import AddressDetail from '@/components/Cart/AddressDetail.vue';
+import AddressList, { Actions } from '@/components/Address/AddressList.vue';
+import { User } from '@/types';
+import { ref } from 'vue';
 
 defineOptions({
     layout: [AppLayout, { title: 'Récapitulatif du panier' }],
@@ -106,11 +103,11 @@ const props = defineProps<{
     totalProducts: number;
     products: ProductCart[];
     totalPrice: number;
-    user: User
+    user: User;
 }>();
 
-const selectedAddress = ref<Address | null>(props.user.addresses.at(0) ?? null)
-const selectedMode = ref(false)
+const selectedAddress = ref<Address | null>(props.user.addresses.at(0) ?? null);
+const selectedMode = ref(false);
 
 const form = ref({
     totalPrice: props.totalPrice,
@@ -121,7 +118,7 @@ const form = ref({
         product_price: productCart.product.price,
     })),
     address: formatAddress(selectedAddress.value),
-})
+});
 
 const addressListProps: Actions = {
     addAddress: false,
@@ -131,23 +128,22 @@ const addressListProps: Actions = {
         hover: true,
         footer: false,
     },
-}
+};
 
 function handleAddressListEdit(address: Address) {
-    selectedMode.value = false
-    selectedAddress.value = address
-    form.value.address = formatAddress(address)
+    selectedMode.value = false;
+    selectedAddress.value = address;
+    form.value.address = formatAddress(address);
 }
 
-function formatAddress(address: Address)
-{
+function formatAddress(address: Address) {
     return {
         line1: address.address_line1,
         line2: address?.address_line2,
         postal_code: address.postal_code,
         city: address.city,
         country: address.country,
-    }
+    };
 }
 </script>
 

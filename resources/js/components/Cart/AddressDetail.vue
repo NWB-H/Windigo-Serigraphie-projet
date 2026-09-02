@@ -40,22 +40,19 @@
             <p class="text-gray-700">
                 {{ address.country }}
             </p>
-
         </div>
     </div>
 </template>
 
 <script setup lang="ts">
-import {Address} from "@/models/Address";
-import AppButton from "@/components/Global/AppButton.vue";
+import { Address } from '@/models/Address';
+import AppButton from '@/components/Global/AppButton.vue';
 
-defineProps<{ address: Address }>()
+defineProps<{ address: Address }>();
 
 defineEmits<{
-    (e: 'edit')
-}>()
+    (e: 'edit');
+}>();
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

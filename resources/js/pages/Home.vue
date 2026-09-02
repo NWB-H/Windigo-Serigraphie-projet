@@ -59,7 +59,9 @@
                                     <div class="product-img-wrapper">
                                         <AppImage
                                             :alt="product.name"
-                                            :url="product.highlighted_image?.url"
+                                            :url="
+                                                product.highlighted_image?.url
+                                            "
                                             class="card-img-top product-img"
                                         />
                                     </div>

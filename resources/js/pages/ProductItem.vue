@@ -12,7 +12,11 @@
                 <!-- Image principale -->
                 <div class="mb-3 text-center">
                     <AppImage
-                        :url="product.images[selectedIndex] ? product.images[selectedIndex].url : product.highlighted_image?.url"
+                        :url="
+                            product.images[selectedIndex]
+                                ? product.images[selectedIndex].url
+                                : product.highlighted_image?.url
+                        "
                         imgCssClass="main-image rounded h-[400px] w-full"
                         alt="Produit selectionné"
                     />
