@@ -36,16 +36,25 @@ final class WorkshopController
             );
 
             foreach ($validated['images'] as $key => $image) {
-                $isHighlighted = (bool) $image['isHighlighted'];
+                $isHighlighted = $key === 0 || (bool) $image['isHighlighted'];
+
+                if ($workshop->media->count() !== 0 && false === (bool) $image['isHighlighted']) {
+                    $isHighlighted = false;
+                }
 
                 if ($isHighlighted) {
                     $workshop->resetHighlightedImages();
                 }
 
                 if ($request->hasFile("images.$key.file")) {
-                    $workshop
+                    $media = $workshop
                         ->addMedia($request->file("images.$key.file"))
                         ->toMediaCollection('workshops');
+
+                    if ($isHighlighted) {
+                        $media->setCustomProperty('isHighlighted', true);
+                        $media->save();
+                    }
                 }
             }
 
