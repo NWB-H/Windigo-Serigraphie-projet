@@ -39,7 +39,9 @@ const form = useForm(contactFormStore().method, contactFormStore().url, {
 
 function onSubmit() {
     form.submit({
-        onSuccess: () => {},
+        onSuccess: () => {
+
+        },
     });
 }
 </script>

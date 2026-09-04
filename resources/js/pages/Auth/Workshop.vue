@@ -1,36 +1,17 @@
 <template>
     <div class="container my-2">
-        <div class="mb-6 rounded-lg border border-gray-200 bg-white p-5 shadow-sm">
-            <div class="flex flex-col gap-5">
-                <div>
-                    <h1 class="text-xl font-semibold text-gray-900">
-                        {{ workshop.name }}
-                    </h1>
-
-                    <div class="mt-2 flex flex-wrap gap-x-5 gap-y-1 text-sm text-gray-600">
-                        <span>
-                            Durée :
-                            <strong>{{ workshop.duration }} min</strong>
-                        </span>
-
-                        <span>
-                            Prix :
-                            <strong>{{ workshop.price }} €</strong>
-                        </span>
-
-                        <span>
-                            Âge :
-                            <strong>{{ workshop.age }} ans</strong>
-                        </span>
-                    </div>
-                </div>
-                <WorkshopSessionForm />
+        <div class="max-w-6xl mx-auto p-6">
+            <div
+                class="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-[0_8px_30px_rgba(0,0,0,0.06)]"
+            >
+                <FormResumeCart :workshop="workshop" />
             </div>
         </div>
         <table class="table-striped table">
             <thead>
                 <tr>
                     <th>Date</th>
+                    <th>Capacité</th>
                     <th>Places restantes</th>
                     <th>Actions</th>
                 </tr>
@@ -38,6 +19,7 @@
                 <tbody>
                     <template
                         v-for="(sessions, date) in sessionsList.items"
+                        :key="date"
                     >
                         <tr class="bg-gray-100">
                             <td colspan="4" class="px-4 py-2 font-semibold text-gray-700">{{ useDateFormat(date, 'DD MMMM YYYY') }}</td>
@@ -48,6 +30,7 @@
                             class="bg-white hover:bg-gray-50"
                         >
                             <td>{{ useDateFormat(session.date, 'HH:mm')}} - {{ useDateFormat(finishSession(session.date), 'HH:mm')}}</td>
+                            <td>{{ session.capacity }}</td>
                             <td>todo</td>
                             <td class="flex gap-2">
                                 <AppButton
@@ -85,7 +68,7 @@ import AppLayoutAdmin from "@/layouts/AppLayoutAdmin.vue";
 import AppButton from "@/components/Global/AppButton.vue";
 import { Link } from "@inertiajs/vue3";
 import AppPagination from "@/components/AppPagination.vue";
-import WorkshopSessionForm from "@/components/Form/WorkshopSessionForm.vue";
+import FormResumeCart from '@/components/WorkshopSession/FormResumeCart.vue';
 
 const props = defineProps<{ workshop: Workshop, sessionsList: ResourcePaginated<Record<string, WorkshopSession>> }>();
 

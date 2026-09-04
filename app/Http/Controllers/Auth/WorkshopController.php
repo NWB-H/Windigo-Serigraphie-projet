@@ -10,9 +10,9 @@ use App\Http\Resources\PaginatedResourceArray;
 use App\Http\Resources\PaginatedResourceCollection;
 use App\Models\Workshop;
 use App\Models\WorkshopSession;
+use App\Rules\WorkshopSessionFree;
 use App\Services\Notifications\NotificationType;
 use Illuminate\Http\Request;
-use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
 use Inertia\Inertia;
@@ -76,12 +76,12 @@ final class WorkshopController
     {
         $sessions = $workshop
             ->workshopSessions()
+            ->where('date', '>=', now())
             ->orderBy('date')
-            ->orderBy('id')
             ->paginate(10); // nombre de sessions par page
 
         $sessions->setCollection(
-            $sessions->getCollection()->groupBy('date')
+            $sessions->getCollection()->groupBy(fn ($session) => $session->date->format('Y-m-d'))
         );
 
         return Inertia::render(
@@ -96,7 +96,7 @@ final class WorkshopController
     public function sessionStore(Request $request, Workshop $workshop)
     {
         $validated = $request->validate([
-            'date' => ['required', 'date'],
+            'date' => ['bail', 'required', 'date', new WorkshopSessionFree($workshop)],
             'capacity' => ['required', 'integer', 'min:1'],
         ]);
 

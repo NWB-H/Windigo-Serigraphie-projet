@@ -46,6 +46,7 @@ Route::middleware('auth')->group(function () {
             Route::post('', [WorkshopController::class, 'store'])->name('admin.workshops.store');
             Route::get('/{workshop}', [WorkshopController::class, 'show'])->name('admin.workshops.show');
             Route::delete('/{workshop}/sessions/{session}', [WorkshopController::class, 'delete'])->name('admin.workshops.sessions.delete');
+            Route::post('/{workshop}/sessions', [WorkshopController::class, 'sessionStore'])->name('admin.workshops.sessions.store');
         });
 
         Route::prefix('users')->group(function () {
