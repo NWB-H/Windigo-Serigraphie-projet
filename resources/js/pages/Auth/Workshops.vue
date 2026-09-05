@@ -55,7 +55,6 @@
                         />
                     </td>
 
-                    <!-- Description tronquée -->
                     <td>
                         {{
                             workshop.description
@@ -68,35 +67,43 @@
                     </td>
                     <td>
                         <div class="flex gap-2">
-                            <AppButton
-                                ignoreStyle
-                                @click="editWorkshop(workshop)"
-                                class="rounded bg-yellow-400 px-2 py-1"
-                            >
-                                ✏️
-                            </AppButton>
-                            <AppButton
-                                ignoreStyle
-                                @click="deleteWorkshop(workshop)"
-                                class="rounded bg-red-500 px-2 py-1 text-white"
-                            >
-                                🗑️
-                            </AppButton>
-                            <Link
-                                :to="{
-                                    name: 'admin.workshop.sessions',
-                                    params: { id: workshop.id },
-                                }"
-                                class="rounded bg-blue-500 px-2 py-1 text-white !no-underline"
-                            >
-                                📅
-                            </Link>
+                            <ToolTip tooltip="Modifier">
+                                <AppButton
+                                    ignoreStyle
+                                    @click="editWorkshop(workshop)"
+                                    class="rounded bg-yellow-400 px-2 py-1"
+                                >
+                                    ✏️
+                                </AppButton>
+                            </ToolTip>
+                            <ToolTip tooltip="Supprimer">
+                                <AppButton
+                                    ignoreStyle
+                                    @click="deleteWorkshop(workshop)"
+                                    class="rounded bg-red-500 px-2 py-1 text-white"
+                                >
+                                    🗑️
+                                </AppButton>
+                            </ToolTip>
+                            <ToolTip tooltip="Gérer les sessions">
+                                <Link
+                                    :href="
+                                        route('admin.workshops.show', {
+                                            workshop: workshop.id,
+                                        })
+                                    "
+                                    class="block rounded bg-blue-500 px-2 py-1 text-white !no-underline"
+                                >
+                                    📅
+                                </Link>
+                            </ToolTip>
                         </div>
                     </td>
                 </tr>
             </tbody>
         </table>
         <AppPagination
+            v-if="workshops.pagination.totalPage > 1"
             :totalPage="workshops.pagination.totalPage"
             :currentPage="workshops.pagination.currentPage"
             :path="workshops.pagination.path"
@@ -114,9 +121,10 @@ import WorkshopForm from '@/components/Form/WorkshopForm.vue';
 import { ref } from 'vue';
 import AppButton from '@/components/Global/AppButton.vue';
 import WorkshopRepository from '@/services/WorkshopRepository';
+import ToolTip from '@/components/ToolTip.vue';
 
 defineOptions({
-    layout: AppLayoutAdmin,
+    layout: [AppLayoutAdmin, { title: 'Administration des ateliers' }],
 });
 defineProps<{ workshops: ResourcePaginated<Workshop>; types: string[] }>();
 

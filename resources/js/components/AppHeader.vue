@@ -18,13 +18,7 @@
 
             <div class="user-actions">
                 <div v-if="user" class="logged-in">
-                    <Link
-                        v-if="user.role === 'ROLE_ADMIN'"
-                        :href="route('admin.product.index')"
-                        class="text-black! no-underline! hover:text-gray-600!"
-                        ><ProfileIcon
-                    /></Link>
-                    <ToolTip v-else tooltip="Profile" direction="down">
+                    <ToolTip tooltip="Profile" direction="down">
                         <Link
                             class="text-black! no-underline! hover:text-gray-600!"
                             :href="route('profile')"
@@ -67,17 +61,17 @@
 
 <script setup lang="ts">
 import { useCartStore } from '@/stores/Cart';
-import { User } from '../types';
+import { User } from '@/types';
 import { Link, usePage } from '@inertiajs/vue3';
 import { storeToRefs } from 'pinia';
-import { ref } from 'vue';
+import { computed } from 'vue';
 import LogoutIcon from '@/components/Icon/LogoutIcon.vue';
 import ProfileIcon from '@/components/Icon/ProfileIcon.vue';
 import ToolTip from '@/components/ToolTip.vue';
 
 const page = usePage();
 
-const user = ref<User | null>(page.props.auth?.user);
+const user = computed<User | null>(() => page.props.auth?.user);
 
 const { totalCartItem } = storeToRefs(useCartStore());
 </script>

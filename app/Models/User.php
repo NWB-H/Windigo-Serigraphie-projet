@@ -22,6 +22,9 @@ class User extends Authenticatable
         'addresses',
         'reset_password_token',
         'reset_password_token_expires_at',
+        'created_at',
+        'updated_at',
+        'last_login_at',
     ];
 
     protected $hidden = [
@@ -52,6 +55,11 @@ class User extends Authenticatable
         return $this->hasMany(Address::class);
     }
 
+    public function orders(): HasMany
+    {
+        return $this->hasMany(Order::class);
+    }
+
     public function cartProducts()
     {
         return $this->hasMany(Product::class);
@@ -60,11 +68,6 @@ class User extends Authenticatable
     public function customerReviews()
     {
         return $this->hasMany(CustomerReview::class);
-    }
-
-    public function orders()
-    {
-        return $this->hasMany(Order::class, 'order_id');
     }
 
     public function reservationSessions()

@@ -49,6 +49,7 @@
             </tbody>
         </table>
         <AppPagination
+            v-if="options.pagination.totalPage > 1"
             :totalPage="options.pagination.totalPage"
             :currentPage="options.pagination.currentPage"
             :path="options.pagination.path"

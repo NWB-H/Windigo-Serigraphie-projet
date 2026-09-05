@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\RoleEnum;
+use App\Events\OnLoginSuccess;
 use App\Http\Requests\Form\ForgotPasswordFormRequest;
 use App\Http\Requests\Form\LoginFormRequest;
 use App\Http\Requests\Form\RegisterFormRequest;
@@ -36,13 +38,15 @@ class SecurityController
             Auth::attemptWhen(
                 $credentials,
                 function (User $user) {
-                    return $user->email_verified_at !== null;
+                    return $user->email_verified_at !== null && !$user->hasRole(RoleEnum::ROLE_BLOCKED);
                 }
             )
         ) {
             $request->session()->regenerate();
 
             Inertia::notification('Bienvenue sur votre espace personnels.', NotificationType::SUCCESS);
+
+            OnLoginSuccess::dispatch($request->user());
 
             return redirect()->intended(route('home'));
         }
@@ -178,7 +182,7 @@ class SecurityController
         return Inertia::render(
             'Profile',
             [
-                'user' => fn () => User::where('id', Auth::user()->id)->with('addresses')->firstOrFail(),
+                'user' => fn () => User::where('id', Auth::user()->id)->with(['addresses', 'orders'])->firstOrFail(),
             ],
         );
     }

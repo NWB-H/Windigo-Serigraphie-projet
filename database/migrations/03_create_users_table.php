@@ -15,10 +15,8 @@ return new class extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->enum('role', RoleEnum::values())->default('ROLE_USER');
+            $table->enum('role', RoleEnum::values())->default(RoleEnum::ROLE_USER);
             $table->string('email')->unique();
-//            $table->foreignId('delivery_address')->nullable()->constrained('cities');
-//            $table->foreignId('billing_address')->nullable()->constrained('cities');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->string('token')->nullable();

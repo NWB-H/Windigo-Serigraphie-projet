@@ -41,6 +41,42 @@ const Ziggy = {
             uri: 'user\/confirm-password',
             methods: ['POST'],
         },
+        'two-factor.login': {
+            uri: 'two-factor-challenge',
+            methods: ['GET', 'HEAD'],
+        },
+        'two-factor.login.store': {
+            uri: 'two-factor-challenge',
+            methods: ['POST'],
+        },
+        'two-factor.enable': {
+            uri: 'user\/two-factor-authentication',
+            methods: ['POST'],
+        },
+        'two-factor.confirm': {
+            uri: 'user\/confirmed-two-factor-authentication',
+            methods: ['POST'],
+        },
+        'two-factor.disable': {
+            uri: 'user\/two-factor-authentication',
+            methods: ['DELETE'],
+        },
+        'two-factor.qr-code': {
+            uri: 'user\/two-factor-qr-code',
+            methods: ['GET', 'HEAD'],
+        },
+        'two-factor.secret-key': {
+            uri: 'user\/two-factor-secret-key',
+            methods: ['GET', 'HEAD'],
+        },
+        'two-factor.recovery-codes': {
+            uri: 'user\/two-factor-recovery-codes',
+            methods: ['GET', 'HEAD'],
+        },
+        'two-factor.regenerate-recovery-codes': {
+            uri: 'user\/two-factor-recovery-codes',
+            methods: ['POST'],
+        },
         'sanctum.csrf-cookie': {
             uri: 'sanctum\/csrf-cookie',
             methods: ['GET', 'HEAD'],
@@ -168,6 +204,19 @@ const Ziggy = {
             methods: ['GET', 'HEAD'],
         },
         'admin.workshops.store': { uri: 'admin\/workshops', methods: ['POST'] },
+        'admin.users.index': { uri: 'admin\/users', methods: ['GET', 'HEAD'] },
+        'admin.users.lock': {
+            uri: 'admin\/users\/{user}\/lock',
+            methods: ['POST'],
+            parameters: ['user'],
+            bindings: { user: 'id' },
+        },
+        'admin.users.unlock': {
+            uri: 'admin\/users\/{user}\/unlock',
+            methods: ['POST'],
+            parameters: ['user'],
+            bindings: { user: 'id' },
+        },
         'admin.addresses.store': { uri: 'addresses', methods: ['POST'] },
         'storage.local': {
             uri: 'storage\/{path}',

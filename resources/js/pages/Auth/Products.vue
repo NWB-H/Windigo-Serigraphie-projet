@@ -65,7 +65,7 @@
                             <AppButton
                                 ignoreStyle
                                 class="rounded bg-yellow-400 px-2 py-1"
-                                type="button"
+                                type="default"
                                 @click="edit(product)"
                             >
                                 ✏️
@@ -73,7 +73,7 @@
                             <AppButton
                                 ignoreStyle
                                 class="rounded bg-red-500 px-2 py-1 text-white"
-                                type="button"
+                                type="default"
                                 @click="deleteProduct(product)"
                             >
                                 🗑️
@@ -103,6 +103,7 @@
             </tbody>
         </table>
         <AppPagination
+            v-if="productsPaginated.pagination.totalPage > 1"
             :totalPage="productsPaginated.pagination.totalPage"
             :currentPage="productsPaginated.pagination.currentPage"
             :path="productsPaginated.pagination.path"
