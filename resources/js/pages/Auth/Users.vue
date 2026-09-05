@@ -26,6 +26,9 @@
                         {{ useDateFormat(user.last_login_at, 'DD MMMM YYYY') }}
                     </td>
                     <td>
+                        {{ useDateFormat(user.updated_at, 'DD MMMM YYYY') }}
+                    </td>
+                    <td>
                         <ToolTip :tooltip="tooltipText(user.email_verified_at)">
                             <CheckBadgeIcon
                                 class="size-10"

@@ -8,6 +8,7 @@ use Database\Factories\WorkshopFactory;
 use Illuminate\Database\Eloquent\Attributes\UseFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Illuminate\Database\Eloquent\Casts\Attribute;
@@ -33,9 +34,9 @@ class Workshop extends Model implements HasMedia
     }
 
     /**
-     * Relation avec les sessions
+     * @return HasMany<WorkshopSession>
      */
-    public function workshopSessions()
+    public function workshopSessions(): HasMany
     {
         return $this->hasMany(WorkshopSession::class);
     }
