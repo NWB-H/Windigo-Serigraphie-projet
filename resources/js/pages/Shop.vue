@@ -1,15 +1,18 @@
 <template>
     <div class="container my-5">
-        <h2 class="mb-4">Boutique</h2>
-        <div class="row">
-            <div
-                v-for="product in products"
-                :key="product.id"
-                class="col-md-4 mb-4"
-            >
-                <ProductCartItem :product="product" />
+        <div v-if="products.length > 0">
+            <h2 class="mb-4">Boutique</h2>
+            <div class="row">
+                <div
+                    v-for="product in products"
+                    :key="product.id"
+                    class="col-md-4 mb-4"
+                >
+                    <ProductCartItem :product="product" />
+                </div>
             </div>
         </div>
+        <CardItem v-else>Aucun produits actuellement</CardItem>
     </div>
 </template>
 
@@ -17,6 +20,7 @@
 import ProductCartItem from '@/components/Shop/ProductCartItem.vue';
 import AppLayout from '@/layouts/AppLayout.vue';
 import { Product } from '@/models/Product';
+import CardItem from '@/components/CardItem.vue';
 
 defineOptions({
     layout: [AppLayout, { title: 'Boutique' }],

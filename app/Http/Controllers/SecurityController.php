@@ -75,19 +75,18 @@ class SecurityController
         $formFields = $request->validated();
         $formFields['password'] = Hash::make($formFields['password']);
 
-        $user = new User;
-        $user->fill($formFields);
-        $user->token = Str::random(40);
-
-        $user->save();
+        $user = User::create($formFields);
 
         try {
             Mail::to($user->email)->send(new RegisterEmail($user));
 
             Inertia::notification('Un email vous à été envoyé.', NotificationType::SUCCESS);
         } catch (\Throwable $e) {
+            $user->delete();
             Log::error("Erreur lors de l'envoie de l'email d'inscription", ['error' => $e->getMessage()]);
             Inertia::notification('Une erreur est survenue.', NotificationType::ERROR);
+
+            return back();
         }
 
         return to_route('login');
