@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Console\Commands;
+namespace App\Console\Commands\Email;
 
 use App\Mail\RegisterEmail;
 use App\Models\User;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Mail;
 
-class WelcomeEmail extends Command
+class SendRegisterEmail extends Command
 {
-    protected $signature = 'app:welcome-email {userId}';
+    protected $signature = 'app:email:register {userId}';
 
-    protected $description = 'Send welcome email';
+    protected $description = 'Send the register/welcome email (email-register) to a user';
 
     public function handle(): void
     {
@@ -23,7 +23,7 @@ class WelcomeEmail extends Command
             }
 
             $this->info(
-                sprintf('Sending welcome email to: %s', $user->name)
+                sprintf('Sending register email to: %s', $user->name)
             );
 
             Mail::to($user->email)->send(new RegisterEmail($user));
