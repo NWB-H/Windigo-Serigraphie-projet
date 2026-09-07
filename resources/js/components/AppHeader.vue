@@ -17,6 +17,7 @@
             </nav>
 
             <div class="user-actions">
+                <CartLink :count="totalCartItem" v-if="totalCartItem > 0" />
                 <div v-if="user" class="logged-in">
                     <ToolTip tooltip="Profile" direction="down">
                         <Link
@@ -39,12 +40,6 @@
                         </Link>
                     </ToolTip>
                 </div>
-                <Link :href="route('cart')" v-if="totalCartItem > 0">
-                    <p class="cart bg-secondary">
-                        Panier
-                        <span class="badge-cart">{{ totalCartItem }}</span>
-                    </p>
-                </Link>
                 <ToolTip tooltip="Connexion" direction="down">
                     <Link
                         v-if="!user"
@@ -68,6 +63,7 @@ import { computed } from 'vue';
 import LogoutIcon from '@/components/Icon/LogoutIcon.vue';
 import ProfileIcon from '@/components/Icon/ProfileIcon.vue';
 import ToolTip from '@/components/ToolTip.vue';
+import CartLink from '@/components/Header/CartLink.vue';
 
 const page = usePage();
 
