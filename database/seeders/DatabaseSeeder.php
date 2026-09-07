@@ -18,5 +18,10 @@ class DatabaseSeeder extends Seeder
         Workshop::factory()
             ->count(10)
             ->create();
+
+        $this->call([
+            UserSeeder::class,
+            OrderSeeder::class,
+        ]);
     }
 }
