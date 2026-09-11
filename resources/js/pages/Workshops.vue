@@ -3,7 +3,7 @@
         <h2 class="mb-4 text-center">Nos Ateliers</h2>
         <div class="row g-4">
             <div
-                v-for="workshop in workshops"
+                v-for="workshop in workshops.items"
                 :key="workshop.id"
                 class="col-md-6 col-lg-4 col-12"
             >
@@ -11,7 +11,7 @@
                     <div class="card shadow-sm">
                         <div class="card--header">
                             <AppImage
-                                :src="workshop.first_image_url"
+                                :url="workshop.highlighted_image?.url"
                                 :alt="workshop.name"
                                 class="card-header--image"
                                 imgFit="fill"
@@ -52,11 +52,13 @@ import AppImage from '@/components/AppImage.vue';
 import AppLayout from '@/layouts/AppLayout.vue';
 import { Workshop } from '@/models/Workshop';
 import { Link } from '@inertiajs/vue3';
+import { ResourcePaginated } from '@/models';
 
 defineOptions({
-    layout: AppLayout,
+    layout: [AppLayout, { title: 'Not ateliers'}],
 });
-defineProps<{ workshops: Workshop[] }>();
+
+defineProps<{ workshops: ResourcePaginated<Workshop> }>();
 </script>
 
 <style scoped>

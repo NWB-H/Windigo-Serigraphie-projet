@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\PaginatedResourceCollection;
 use App\Models\Workshop;
 use Inertia\Inertia;
 
@@ -12,7 +13,7 @@ class WorkshopController
         return Inertia::render(
             'Workshops',
             [
-                'workshops' => Workshop::all(),
+                'workshops' => fn () => new PaginatedResourceCollection(Workshop::all()),
             ]
         );
     }

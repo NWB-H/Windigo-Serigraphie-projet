@@ -20,6 +20,7 @@ class PaginatedResourceArray extends JsonResource
                 'total' => $this->resource->total(),
                 'totalPage' => $this->resource->lastPage(),
                 'path' => $this->resource->path(),
+                'pageName' => $this->resource->getPageName(),
             ],
         ];
     }
@@ -32,6 +33,7 @@ class PaginatedResourceArray extends JsonResource
                 'total' => $paginated['total'],
                 'totalPage' => $paginated['last_page'],
                 'path' => $paginated['path'],
+                'pageName' => $paginated['pageName'],
             ],
         ];
     }

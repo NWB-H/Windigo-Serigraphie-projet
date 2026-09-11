@@ -25,7 +25,7 @@ class RegisterEmail extends Mailable
         );
 
         return new Content(
-            view: 'email-register',
+            view: 'emails/user-register',
             with: [
                 'user' => $this->user,
                 'verificationUrl' => $url,

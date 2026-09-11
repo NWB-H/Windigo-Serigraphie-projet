@@ -74,21 +74,32 @@ final class WorkshopController
 
     public function show(Workshop $workshop)
     {
-        $sessions = $workshop
+        $nextSessions = $workshop
             ->workshopSessions()
             ->where('date', '>=', now())
             ->orderBy('date')
-            ->paginate(10); // nombre de sessions par page
+            ->paginate(perPage: 10, pageName: 'nextSessions');
 
-        $sessions->setCollection(
-            $sessions->getCollection()->groupBy(fn ($session) => $session->date->format('Y-m-d'))
+        $previousSessions = $workshop
+            ->workshopSessions()
+            ->where('date', '<', now())
+            ->orderBy('date')
+            ->paginate(perPage: 10, pageName: 'previousSessions');
+
+        $nextSessions->setCollection(
+            $nextSessions->getCollection()->groupBy(fn ($session) => $session->date->format('Y-m-d'))
+        );
+
+        $previousSessions->setCollection(
+            $previousSessions->getCollection()->groupBy(fn ($session) => $session->date->format('Y-m-d'))
         );
 
         return Inertia::render(
             'Auth/Workshop',
             [
                 'workshop' => $workshop,
-                'sessionsList' => fn () => new PaginatedResourceArray($sessions),
+                'nextSessionsList' => fn () => new PaginatedResourceArray($nextSessions),
+                'previousSessionsList' => fn () => new PaginatedResourceArray($previousSessions),
             ],
         );
     }

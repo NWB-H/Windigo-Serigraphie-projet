@@ -5,7 +5,7 @@
     >
         <a
             v-if="currentPage > 1"
-            :href="path + '?page=' + (currentPage - 1)"
+            :href="buildUrl(currentPage - 1)"
             class="rounded-lg border px-3 py-2 text-gray-600 hover:bg-gray-100"
         >
             Précédent
@@ -23,7 +23,7 @@
                     (page === totalPage && currentPage !== totalPage) ||
                     (page === 1 && currentPage !== 1)
                 "
-                :href="path + '?page=' + page"
+                :href="buildUrl(page)"
                 class="rounded-lg border px-3 py-2"
                 :class="[
                     page === currentPage
@@ -41,7 +41,7 @@
         </template>
         <a
             v-if="currentPage < totalPage"
-            :href="path + '?page=' + (currentPage + 1)"
+            :href="buildUrl(currentPage + 1)"
             class="rounded-lg border px-3 py-2 text-gray-600 hover:bg-gray-100"
         >
             Suivant
@@ -50,11 +50,19 @@
 </template>
 
 <script setup lang="ts">
-defineProps<{
+const props = withDefaults(defineProps<{
     totalPage: number;
     currentPage: number;
     path: string;
-}>();
+    pageName: string;
+}>(), {
+    pageName: 'page',
+});
+
+function buildUrl(page: number)
+{
+    return props.path + '?' + props.pageName + '=' + page;
+}
 </script>
 
 <style scoped></style>
