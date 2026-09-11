@@ -12,6 +12,7 @@ export interface Pagination {
     total: number;
     totalPage: number;
     path: string;
+    pageName: string;
 }
 
 export interface ResourcePaginated<T> {

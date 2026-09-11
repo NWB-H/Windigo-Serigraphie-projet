@@ -14,7 +14,7 @@ Route::get('/produits/{product}', [ShopController::class, 'item'])->name('produc
 Route::get('/politique-confidentialite', [InformationController::class, 'confidentialite'])->name('confidentialite');
 Route::get('/apropos', [InformationController::class, 'about'])->name('about');
 Route::get('/portfolio', [InformationController::class, 'portfolio'])->middleware(['disable'])->name('portfolio');
-Route::get('/ateliers', [WorkshopController::class, 'workshops'])->middleware(['disable'])->name('workshops');
+Route::get('/ateliers', [WorkshopController::class, 'workshops'])->name('workshops');
 Route::get('/ateliers/{workshop}', [WorkshopController::class, 'workshop'])->middleware(['disable'])->name('workshop');
 Route::get('/panier', [ShopController::class, 'cart'])->name('cart');
 Route::get('/verify-account', [SecurityController::class, 'verifyAccount'])->name('verify-account');
@@ -23,7 +23,7 @@ Route::get('/forgot-password', [SecurityController::class, 'forgotPassword'])->n
 Route::post('/forgot-password', [SecurityController::class, 'forgotPasswordStore'])->name('forgot-password.store');
 Route::get('/reset-password', [SecurityController::class, 'resetPassword'])->name('password.reset');
 Route::post('/reset-password', [SecurityController::class, 'resetPasswordStore'])->name('password.reset.store');
-Route::post('/contact-form', [ContactFormController::class, 'contactFormStore'])->name('contact.form.store'); 
+Route::post('/contact-form', [ContactFormController::class, 'contactFormStore'])->name('contact.form.store');
 
 require __DIR__.'/api.php';
 require __DIR__.'/auth.php';

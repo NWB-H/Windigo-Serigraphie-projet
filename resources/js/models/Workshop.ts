@@ -32,3 +32,13 @@ export interface WorkshopForm {
     description?: string;
     images: ImageForm[];
 }
+
+
+export type WorkshopSessionTab = 'next' | 'past';
+
+export interface WorkshopSessionTabItem {
+    label: string;
+    value: WorkshopSessionTab;
+    count: number;
+    isActive: boolean;
+}
