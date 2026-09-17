@@ -19,11 +19,7 @@ class ShopController
         return Inertia::render(
             'Shop',
             [
-                'products' => Cache::remember(
-                    'shop.index.products',
-                    now()->addMinutes(10),
-                    fn () => Product::with('media')->get(),
-                ),
+                'products' => fn () => Product::with('media')->get(),
             ],
         );
     }

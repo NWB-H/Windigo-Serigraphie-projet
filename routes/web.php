@@ -15,7 +15,7 @@ Route::get('/politique-confidentialite', [InformationController::class, 'confide
 Route::get('/apropos', [InformationController::class, 'about'])->name('about');
 Route::get('/portfolio', [InformationController::class, 'portfolio'])->middleware(['disable'])->name('portfolio');
 Route::get('/ateliers', [WorkshopController::class, 'workshops'])->name('workshops');
-Route::get('/ateliers/{workshop}', [WorkshopController::class, 'workshop'])->middleware(['disable'])->name('workshop');
+Route::get('/ateliers/{workshop}', [WorkshopController::class, 'workshop'])->name('workshop');
 Route::get('/panier', [ShopController::class, 'cart'])->name('cart');
 Route::get('/verify-account', [SecurityController::class, 'verifyAccount'])->name('verify-account');
 Route::get('/mentions-legales', [InformationController::class, 'mentions'])->name('mentions');

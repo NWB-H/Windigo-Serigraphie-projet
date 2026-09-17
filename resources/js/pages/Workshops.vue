@@ -14,7 +14,11 @@
                                 :url="workshop.highlighted_image?.url"
                                 :alt="workshop.name"
                                 class="card-header--image"
-                                imgFit="fill"
+                                :imgFit="
+                                    workshop.highlighted_image?.url
+                                        ? 'cover'
+                                        : 'fill'
+                                "
                             />
                         </div>
 
@@ -36,9 +40,11 @@
                                 {{ workshop.age }} ans
                             </p>
 
-                            <button class="btn btn-primary mt-3 w-100">
-                                Voir détails & Réserver
-                            </button>
+                            <Link
+                                :href="route('workshop', workshop.id)"
+                                class="btn btn-primary mt-3 w-100"
+                                >Voir détails & réserver</Link
+                            >
                         </div>
                     </div>
                 </Link>
@@ -55,7 +61,7 @@ import { Link } from '@inertiajs/vue3';
 import { ResourcePaginated } from '@/models';
 
 defineOptions({
-    layout: [AppLayout, { title: 'Not ateliers'}],
+    layout: [AppLayout, { title: 'Nos ateliers' }],
 });
 
 defineProps<{ workshops: ResourcePaginated<Workshop> }>();

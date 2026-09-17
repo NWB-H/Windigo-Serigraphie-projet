@@ -12,7 +12,7 @@
 <script setup lang="ts">
 defineOptions({ inheritAttrs: false });
 
-type ButtonTypes = 'default' | 'cancel' | 'submit';
+type ButtonTypes = 'default' | 'cancel' | 'submit' | 'button';
 
 const {
     loading = false,

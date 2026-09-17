@@ -37,7 +37,7 @@
 
 <script setup lang="ts">
 import { ref, computed, PropType } from 'vue';
-import { Image } from '@/models/Product';
+import { Image } from '@/models/Common';
 import AppImage from '@/components/AppImage.vue';
 
 const { images, imagePerRow = 4 } = defineProps({
@@ -52,9 +52,9 @@ const { images, imagePerRow = 4 } = defineProps({
         },
     },
 });
-const emits = defineEmits<{ (e: 'click'): number }>();
+const emits = defineEmits<{ (e: 'click', index: number): void }>();
 
-const currentIndex = ref(0);
+const currentIndex = ref<number>(0);
 
 const selectedImage = computed(() =>
     images.slice(currentIndex.value, currentIndex.value + imagePerRow),

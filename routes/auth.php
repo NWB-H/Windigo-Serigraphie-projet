@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\CartController;
 use App\Http\Controllers\Auth\CategoryController;
 use App\Http\Controllers\Auth\OptionController;
 use App\Http\Controllers\Auth\ProductController;
+use App\Http\Controllers\Auth\TestController;
 use App\Http\Controllers\Auth\UserController;
 use App\Http\Controllers\Auth\WorkshopController;
 use App\Http\Controllers\SecurityController;
@@ -59,4 +60,8 @@ Route::middleware('auth')->group(function () {
     Route::prefix('addresses')->group(function () {
         Route::post('', [AddressController::class, 'store'])->name('admin.addresses.store');
     });
+});
+
+Route::middleware(['auth:sanctum', 'role:ROLE_DEV'])->prefix('dev')->group(function () {
+    Route::get('', [TestController::class, 'index'])->name('admin.dev.index');
 });
