@@ -7,7 +7,6 @@
             @decreaseMonth="handleDecreaseMonth"
             @selectDate="handleSelectDate"
         />
-        {{ date }}
     </div>
 </template>
 

@@ -1,16 +1,16 @@
 <template>
-    <div>
-        <div class="mb-3 text-center">
+    <div
+        class="@container flex h-full max-h-150 w-full flex-col gap-2 @lg:gap-3"
+    >
+        <div class="min-h-0 flex-8">
             <AppImage
                 :url="images[selectedIndex]?.url"
-                imgCssClass="main-image rounded h-[400px] w-full"
+                class="h-full w-full"
+                imgCssClass="main-image rounded w-full h-full"
                 alt="Produit selectionné"
             />
         </div>
-        <div
-            class="justify-content-center flex-wrap gap-2"
-            v-if="images.length > 1"
-        >
+        <div class="min-h-0 flex-2" v-if="images.length > 1">
             <AppCarousel :images="images" @click="handleClick" />
         </div>
     </div>
