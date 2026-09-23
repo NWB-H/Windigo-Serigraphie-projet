@@ -1,5 +1,5 @@
 <template>
-    <div class="@container flex flex-1 w-full flex-col p-4 @lg:p-6 @3xl:p-8">
+    <div class="@container flex w-full flex-1 flex-col p-4 @lg:p-6 @3xl:p-8">
         <div
             class="mb-6 flex shrink-0 items-center justify-between @lg:mb-8 @3xl:mb-12"
         >
@@ -18,7 +18,7 @@
                 <button
                     type="button"
                     class="text-2xl text-gray-800 transition hover:opacity-60 @lg:text-3xl @3xl:text-5xl"
-                    @click="selectedYear--"
+                    @click="changeYear(-1)"
                 >
                     ‹
                 </button>
@@ -30,7 +30,7 @@
                 <button
                     type="button"
                     class="text-2xl text-gray-800 transition hover:opacity-60 @lg:text-3xl @3xl:text-5xl"
-                    @click="selectedYear++"
+                    @click="changeYear(1)"
                 >
                     ›
                 </button>
@@ -50,7 +50,7 @@
                         ? 'border-[#B48F78] bg-[#B48F78] text-white'
                         : 'border-gray-100 bg-white text-gray-600',
                 ]"
-                class="h-full w-full min-h-14 rounded border-2 text-sm @lg:min-h-20 @lg:text-base @3xl:min-h-28 @3xl:border-3 @3xl:text-lg"
+                class="h-full min-h-14 w-full rounded border-2 text-sm @lg:min-h-20 @lg:text-base @3xl:min-h-28 @3xl:border-3 @3xl:text-lg"
             >
                 {{ month.label }}
             </button>
@@ -59,17 +59,17 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { computed } from 'vue';
 import CalendarIcon from '@/components/Icon/CalendarIcon.vue';
 
-const props = defineProps<{ date: Date }>()
+const props = defineProps<{ date: Date }>();
 
 const emits = defineEmits<{
     (e: 'click', value: Date): void;
 }>();
 
-const selectedYear = ref(props.date.getFullYear());
-const selectedMonth = ref(props.date.getMonth() + 1);
+const selectedYear = computed(() => props.date.getFullYear());
+const selectedMonth = computed(() => props.date.getMonth() + 1);
 
 const months = [
     { label: 'Jan.', value: 1 },
@@ -87,9 +87,14 @@ const months = [
 ];
 
 function handleClick(month: number) {
-    selectedMonth.value = month;
-
     emits('click', new Date(selectedYear.value, month - 1, 1));
+}
+
+function changeYear(delta: number) {
+    emits(
+        'click',
+        new Date(selectedYear.value + delta, selectedMonth.value - 1, 1),
+    );
 }
 </script>
 

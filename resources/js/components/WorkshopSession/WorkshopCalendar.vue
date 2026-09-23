@@ -73,10 +73,7 @@
         <div
             class="grid flex-1 auto-rows-fr grid-cols-7 gap-y-1 @lg:gap-y-2 @3xl:gap-y-3"
         >
-            <div
-                v-for="passDay in currentMonth.getDay() - 1"
-                :key="passDay"
-            ></div>
+            <div v-for="n in leadingBlanks" :key="'blank-' + n"></div>
 
             <div
                 v-for="day in totalDaysInMonth"
@@ -109,24 +106,26 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue';
+import { computed } from 'vue';
 import AppButton from '@/components/Global/AppButton.vue';
 import { useDateFormat } from '@vueuse/shared';
+import { WorkshopSession } from '@/models';
 
-const { sessionsDays = [], date = new Date() } = defineProps<{
-    sessionsDays?: number[];
+const { sessions = undefined, date = new Date() } = defineProps<{
+    sessions?: Record<number, WorkshopSession[]>;
     date?: Date;
 }>();
 
 const emits = defineEmits<{
-    (e: 'selectDate', date: number): void;
-    (e: 'addMonth'): void;
-    (e: 'decreaseMonth'): void;
+    (e: 'selectDate', date: Date): void;
+    (e: 'changeMonth', date: Date): void;
 }>();
 
 const currentMonth = computed(
     () => new Date(date.getFullYear(), date.getMonth(), 1),
 );
+
+const leadingBlanks = computed(() => (currentMonth.value.getDay() + 6) % 7);
 
 const totalDaysInMonth = computed(() =>
     new Date(
@@ -136,23 +135,28 @@ const totalDaysInMonth = computed(() =>
     ).getDate(),
 );
 
-const selectedDate = ref(date.getDate());
+const selectedDate = computed(() => date.getDate());
 
 function hasSession(day: number) {
-    return sessionsDays.includes(day);
+    return (sessions?.[day]?.length ?? 0) > 0;
 }
 
 function handleSelectDate(day: number) {
-    selectedDate.value = day;
-    emits('selectDate', day);
+    emits('selectDate', new Date(date.getFullYear(), date.getMonth(), day));
 }
 
 function handleAddMonth() {
-    emits('addMonth');
+    emits(
+        'changeMonth',
+        new Date(date.getFullYear(), date.getMonth() + 1, selectedDate.value),
+    );
 }
 
 function handleDecreaseMonth() {
-    emits('decreaseMonth');
+    emits(
+        'changeMonth',
+        new Date(date.getFullYear(), date.getMonth() - 1, selectedDate.value),
+    );
 }
 </script>
 

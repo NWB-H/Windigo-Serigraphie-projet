@@ -1,5 +1,6 @@
-import { Workshop } from '@/models';
+import { Workshop, WorkshopSession } from '@/models';
 import axios from 'axios';
+import { useDateFormat } from '@vueuse/shared';
 
 class WorkshopRepository {
     public async delete(workshop: Workshop) {
@@ -14,6 +15,27 @@ class WorkshopRepository {
         return axios.patch(
             `/api/workshops/${workshop.id}/medias/${image.id}/highlighted`,
         );
+    }
+
+    public async filterWorkshopSessions(
+        workshop: Workshop,
+        date: Date,
+    ): Promise<Record<string, WorkshopSession[]>> {
+        try {
+            const params = new URLSearchParams({
+                date: useDateFormat(date, 'YYYY-MM-DD').value
+            })
+
+            const { data } = await axios.get(`/api/workshop/${workshop.id}/sessions?` + params.toString());
+
+            return data;
+        } catch (error) {
+            console.error(
+                'Erreur lors du filtrage des sessions de workshop',
+                error,
+            );
+            throw error;
+        }
     }
 }
 

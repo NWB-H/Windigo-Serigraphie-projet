@@ -47,11 +47,15 @@
                     Complet
                 </span>
             </button>
+            <AppEmptyList v-if="sessions.length === 0">
+                <template #content>Aucune sessions</template>
+                <template #subcontent>Actuellement aucune session de prévu à cette date</template>
+            </AppEmptyList>
         </div>
         <button
             type="button"
             class="w-full rounded bg-[#B98F76] py-6 text-3xl font-medium text-white"
-            :disabled="sessions[selectedSession].remaining_places === 0"
+            :disabled="sessions[selectedSession]?.remaining_places === 0"
         >
             Réserver cette session
         </button>
@@ -62,6 +66,7 @@
 import { WorkshopSession } from '@/models';
 import { useDateFormat } from '@vueuse/shared';
 import { ref } from 'vue';
+import AppEmptyList from '@/components/Global/AppEmptyList.vue';
 
 const props = defineProps<{
     selectedDate: Date;

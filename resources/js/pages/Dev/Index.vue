@@ -1,37 +1,43 @@
 <template>
     <div class="container">
-        <WorkshopCalendar
-            :sessionsDays="[10, 21]"
-            :date="date"
-            @addMonth="handleAddMonth"
-            @decreaseMonth="handleDecreaseMonth"
-            @selectDate="handleSelectDate"
+        <WorkshopSelector
+            :selectedDate="date"
+            :duration="60"
+            workshopName="test"
+            :sessions="sessions"
         />
     </div>
 </template>
 
 <script setup lang="ts">
 import AppLayoutAdmin from '@/layouts/AppLayoutAdmin.vue';
-import WorkshopCalendar from '@/components/WorkshopSession/WorkshopCalendar.vue';
 import { ref } from 'vue';
+import WorkshopSelector from '@/components/WorkshopSession/WorkshopSelector.vue';
+import { WorkshopSession } from '@/models';
 
 defineOptions({
     layout: AppLayoutAdmin,
 });
 
 const date = ref(new Date());
-
-function handleAddMonth() {
-    date.value = new Date(date.value.getFullYear(), date.value.getMonth() + 1, date.value.getDate());
-}
-
-function handleDecreaseMonth() {
-    date.value = new Date(date.value.getFullYear(), date.value.getMonth() - 1, date.value.getDate());
-}
-
-function handleSelectDate(day: number) {
-    date.value = new Date(date.value.getFullYear(), date.value.getMonth(), day);
-}
+const sessions = ref<WorkshopSession[]>([
+    {
+        id: 1,
+        workshop_id: 1,
+        session_number: 1,
+        date: '12/12/2012',
+        remaining_places: 10,
+        capacity: 20,
+    },
+    {
+        id: 2,
+        workshop_id: 1,
+        session_number: 1,
+        date: '12/12/2012',
+        remaining_places: 0,
+        capacity: 20,
+    },
+]);
 </script>
 
 <style scoped></style>
