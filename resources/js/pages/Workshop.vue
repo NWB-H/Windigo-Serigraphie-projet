@@ -1,120 +1,105 @@
 <template>
-    <div class="container my-5">
-        <div class="row mb-4">
-            <div class="col-md-6">
-                <Link
-                    class="btn btn-outline-primary mb-3"
-                    :href="route('workshops')"
-                >
-                    ← Retour à la boutique
-                </Link>
-
-                <!-- Carrousel principal -->
-                <div
-                    id="workshopCarousel"
-                    class="carousel slide"
-                    data-bs-ride="carousel"
-                >
-                    <div class="carousel-inner">
-                        <div
-                            v-for="(img, index) in workshop.images"
-                            :key="index"
-                            :class="['carousel-item', { active: index === 0 }]"
-                        >
-                            <AppImage
-                                :src="`https://back.windigoprint.com/storage/${img}`"
-                                class="d-block w-100 rounded"
-                            />
-                        </div>
-                    </div>
-                    <button
-                        class="carousel-control-prev"
-                        type="button"
-                        data-bs-target="#workshopCarousel"
-                        data-bs-slide="prev"
-                    >
-                        <span class="carousel-control-prev-icon"></span>
-                    </button>
-                    <button
-                        class="carousel-control-next"
-                        type="button"
-                        data-bs-target="#workshopCarousel"
-                        data-bs-slide="next"
-                    >
-                        <span class="carousel-control-next-icon"></span>
-                    </button>
-                </div>
-                <!-- Miniatures -->
-                <div
-                    v-if="workshop.images?.length > 1"
-                    ref="thumbnailsContainer"
-                    class="d-flex justify-content-center mt-3 flex-wrap gap-2"
-                >
-                    <AppImage
-                        v-for="(img, index) in workshop.images"
-                        :key="'thumb-' + index"
-                        :src="`https://back.windigoprint.com/storage/${img}`"
-                        class="thumbnail"
-                        style="
-                            width: 80px;
-                            height: 80px;
-                            object-fit: cover;
-                            cursor: pointer;
-                        "
-                        :data-bs-target="'#workshopCarousel'"
-                        :data-bs-slide-to="index"
-                    />
-                </div>
-
-                <div v-else class="rounded border p-3 text-center text-muted">
-                    Aucune image disponible
-                </div>
+    <div class="container">
+        <Link class="btn btn-outline-primary mb-3" :href="route('workshops')">
+            ← Retour à la boutique
+        </Link>
+        <div class="grid grid-cols-10 gap-6 gap-y-6">
+            <div class="col-span-6">
+                <CarouselWithMiniatures
+                    :images="workshop.images"
+                    :selectedImageUrl="workshop.highlighted_image?.url"
+                />
             </div>
-
-            <div class="col-md-6">
+            <div class="col-span-4 flex flex-col">
                 <h2>{{ workshop.name }}</h2>
                 <h5 class="text-muted">{{ workshop.type }}</h5>
                 <p><strong>Prix :</strong> {{ workshop.price }} €</p>
                 <p><strong>Durée :</strong> {{ workshop.duration }} min</p>
                 <p><strong>Âge minimum :</strong> {{ workshop.age }} ans</p>
                 <p class="mt-3">{{ workshop.description }}</p>
+                <AppMonthSelector
+                    :date="selectedDate"
+                    @click="handleChangeDate"
+                />
+            </div>
+            <div class="col-span-5">
+                <WorkshopCalendar
+                    :date="selectedDate"
+                    :sessions="sessions"
+                    @selectDate="(value) => (selectedDate = value)"
+                    @changeMonth="handleChangeDate"
+                />
+            </div>
+            <div class="col-span-5">
+                <WorkshopSelector
+                    :selectedDate="selectedDate"
+                    :duration="workshop.duration"
+                    :workshopName="workshop.name"
+                    :sessions="selectedDateSessions"
+                />
             </div>
         </div>
-
-        <h4 class="mt-5">Sessions disponibles</h4>
-        <!-- Sessions -->
-        <div v-if="workshop.workshop_sessions?.length" class="mt-auto">
-            <h6>Sessions :</h6>
-            <ul class="list-group list-group-flush">
-                <li
-                    v-for="session in workshop.workshop_sessions"
-                    :key="session.id"
-                    class="list-group-item d-flex justify-content-between align-items-center"
-                >
-                    {{ formatDate(session.date) }} - N°{{
-                        session.session_number
-                    }}
-                    <span class="badge rounded-pill bg-primary"
-                        >{{ session.remaining_places }} places</span
-                    >
-                    <button @click="handleBooking(session.id)">Reserver</button>
-                </li>
-            </ul>
-        </div>
-        <p v-else>Aucune session prévue pour le moment.</p>
     </div>
 </template>
 
 <script setup lang="ts">
-import AppImage from '@/components/AppImage.vue';
 import AppLayout from '@/layouts/AppLayout.vue';
-import { Workshop } from '@/models/Workshop';
+import { Workshop, WorkshopSession } from '@/models/Workshop';
 import { Link } from '@inertiajs/vue3';
+import CarouselWithMiniatures from '@/components/Carousel/CarouselWithMiniatures.vue';
+import AppMonthSelector from '@/components/Global/AppMonthSelector.vue';
+import WorkshopCalendar from '@/components/WorkshopSession/WorkshopCalendar.vue';
+import { ref, computed, watch, onMounted } from 'vue';
+import WorkshopRepository from '@/services/WorkshopRepository';
+import WorkshopSelector from '@/components/WorkshopSession/WorkshopSelector.vue';
 
 defineOptions({
-    layout: AppLayout,
+    layout: (props: { workshop: Workshop }) => [
+        AppLayout,
+        { title: props.workshop.name },
+    ],
 });
-defineProps<{ workshop: Workshop }>();
+const props = defineProps<{ workshop: Workshop }>();
+
+const selectedDate = ref(new Date());
+const sessions = ref<Record<number, WorkshopSession[]>>();
+const selectedDateSessions = computed<WorkshopSession[]>(
+    () => sessions.value?.[selectedDate.value.getDate()] ?? [],
+);
+
+const monthKey = computed(
+    () =>
+        `${selectedDate.value.getFullYear()}-${selectedDate.value.getMonth()}`,
+);
+
+watch(
+    monthKey,
+    () => {
+        fillSessions(selectedDate.value);
+    },
+    { immediate: true },
+);
+
+onMounted(() => fillSessions(selectedDate.value));
+
+async function fillSessions(date: Date) {
+    sessions.value = {};
+
+    const items = await WorkshopRepository.filterWorkshopSessions(
+        props.workshop,
+        date,
+    );
+
+    for (const [key, value] of Object.entries(items)) {
+        const date = new Date(key);
+
+        sessions.value = { [date.getDate()]: value, ...sessions.value };
+    }
+}
+
+function handleChangeDate(newDate: Date) {
+    selectedDate.value = newDate;
+}
 </script>
 
 <style scoped></style>

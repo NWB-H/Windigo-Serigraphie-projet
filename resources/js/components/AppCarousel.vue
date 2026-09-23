@@ -1,20 +1,20 @@
 <template>
-    <div class="relative w-full">
+    <div class="relative h-full w-full">
         <div
-            class="flex gap-2 overflow-hidden transition-transform duration-500 ease-in-out"
+            class="flex h-full gap-2 overflow-hidden transition-transform duration-500 ease-in-out"
         >
             <TransitionGroup
                 name="slide-horizontal"
                 tag="div"
-                class="flex w-full gap-2"
+                class="flex h-full w-full gap-2"
             >
                 <AppImage
                     v-for="(image, index) in selectedImage"
                     @click="handleClick(index)"
                     :key="image.id"
                     :url="image.url"
-                    imgCssClass="object-cover rounded h-[100px] w-full"
-                    class="image-slide"
+                    imgCssClass="object-cover rounded h-full w-full"
+                    class="image-slide h-full"
                 />
             </TransitionGroup>
         </div>
@@ -37,7 +37,7 @@
 
 <script setup lang="ts">
 import { ref, computed, PropType } from 'vue';
-import { Image } from '@/models/Product';
+import { Image } from '@/models/Common';
 import AppImage from '@/components/AppImage.vue';
 
 const { images, imagePerRow = 4 } = defineProps({
@@ -52,9 +52,9 @@ const { images, imagePerRow = 4 } = defineProps({
         },
     },
 });
-const emits = defineEmits<{ (e: 'click'): number }>();
+const emits = defineEmits<{ (e: 'click', index: number): void }>();
 
-const currentIndex = ref(0);
+const currentIndex = ref<number>(0);
 
 const selectedImage = computed(() =>
     images.slice(currentIndex.value, currentIndex.value + imagePerRow),

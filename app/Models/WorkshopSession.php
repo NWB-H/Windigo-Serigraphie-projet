@@ -26,9 +26,11 @@ class WorkshopSession extends Model
 
     protected $appends = ['remaining_places'];
 
-    public function getRemainingPlacesAttribute()
+    protected $hidden = ['reservations', 'reservations_count'];
+
+    public function getRemainingPlacesAttribute(): int
     {
-        return $this->capacity - count($this->reservations);
+        return $this->capacity - ($this->reservations_count ?? $this->reservations()->count());
     }
 
     public function workshop()

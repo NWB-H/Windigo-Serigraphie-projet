@@ -23,7 +23,7 @@ class WorkshopController
         return Inertia::render(
             'Workshop',
             [
-                'workshop' => $workshop,
+                'workshop' => $workshop->load('workshopSessions'),
             ]
         );
     }

@@ -53,3 +53,9 @@ Route::middleware('auth:sanctum')
             ->middleware('can:delete,address')
             ->name('api.addresses.delete');
     });
+
+
+Route::prefix('api/workshop/{workshop}/sessions')
+    ->group(function () {
+        Route::get('/', [WorkshopController::class, 'filterWorkshopSessions'])->name('api.workshop.sessions.filter');
+    });

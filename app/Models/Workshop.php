@@ -26,6 +26,7 @@ class Workshop extends Model implements HasMedia
         'duration',
         'age',
         'description',
+        'workshop_sessions',
     ];
 
     protected function collectionName(): string
